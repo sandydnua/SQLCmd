@@ -17,7 +17,7 @@ public class DataSet {
     }
 
     public DataSet(String srt) {
-        text = new ArrayList<>();
+        text  = new ArrayList<>();
         table = new ArrayList<>();
         addString(srt);
     }
