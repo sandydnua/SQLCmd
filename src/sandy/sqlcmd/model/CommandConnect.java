@@ -1,14 +1,15 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.sandy.sqlcmd.model.MainProcessExepion;
-
 public class CommandConnect extends Command {
 
     public CommandConnect(String[] params){
         setParams(params);
     }
+    public CommandConnect(){
+
+    }
     @Override
-    protected DataSet mainProcess() throws MainProcessExepion {
+    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
         String database = params[1];
         String userName = params[2];
         String password = params[3];

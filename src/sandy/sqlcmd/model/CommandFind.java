@@ -1,7 +1,5 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.sandy.sqlcmd.model.MainProcessExepion;
-
 public class CommandFind extends Command {
 
     private String sqlQuery = "select * from ";
@@ -9,9 +7,11 @@ public class CommandFind extends Command {
     public CommandFind(String[] params){
         setParams(params);
     }
+    public CommandFind(){
 
+    }
     @Override
-    protected DataSet mainProcess() throws MainProcessExepion {
+    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
         sqlQuery += params[1];
         DataSet data = dbManager.executeQuery(sqlQuery);
         if( data.getSizeTable() <= 1 ){

@@ -7,10 +7,6 @@ public class DataSet {
     private ArrayList<ArrayList<String>> table;
     private ArrayList<String> text;
 
-    public int getSizeTable() {
-        return table.size();
-    }
-
     public DataSet() {
         text = new ArrayList<>();
         table = new ArrayList<>();
@@ -26,9 +22,8 @@ public class DataSet {
         return text.iterator();
     }
 
-    public int addRow(String str) {
-        int i = addRow();
-        addField(i, str);
+    public int addRow() {
+        table.add(new ArrayList<String>());
         return table.size() - 1;
     }
 
@@ -40,22 +35,6 @@ public class DataSet {
         for (String s : strings) {
             addString(s);
         }
-    }
-
-    public int addRow() {
-        table.add(new ArrayList<String>());
-        return table.size() - 1;
-    }
-
-    public void addRows(String[] strings) {
-        for (String s : strings) {
-            addRow(s);
-        }
-    }
-
-    public int addRow(ArrayList<String> row) {
-        table.add(row);
-        return table.size() - 1;
     }
 
     public void addField(int indexRow, String field) {
@@ -73,20 +52,12 @@ public class DataSet {
         }
     }
 
-    public int quantityRows() {
+    public int getSizeTable() {
         return table.size();
     }
 
-    public int QuantityStrings() {
-        return text.size();
-    }
-
-    public String getString(int i) {
-        if (i >= 0 && i < text.size()) {
-            return text.get(i);
-        } else {
-            return null;
-        }
+    public int quantityRows() {
+        return table.size();
     }
 
     public int quantityFieldsInRow(int i) {

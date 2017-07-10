@@ -1,12 +1,13 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.sandy.sqlcmd.model.MainProcessExepion;
-
 public class CommandCreate extends Command {
     String sqlQuery = "CREATE TABLE <table> ( <columns> )";
     public CommandCreate(String[] params) {
         super();
         setParams(params);
+
+    }
+    public CommandCreate(){
 
     }
     private void prepareSql(){
@@ -21,7 +22,7 @@ public class CommandCreate extends Command {
         sqlQuery = sqlQuery.replace("<columns>",columns);
     }
     @Override
-    protected DataSet mainProcess() throws MainProcessExepion {
+    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
         prepareSql();
         dbManager.executeUpdate(sqlQuery);
         return new DataSet("Таблица создана");

@@ -2,18 +2,16 @@ package sandy.sqlcmd.controller;
 
 import sandy.sqlcmd.model.Command;
 import sandy.sqlcmd.model.FactoryCommand;
-import sandy.sqlcmd.sandy.sqlcmd.model.DatabaseManager;
-import sandy.sqlcmd.sandy.sqlcmd.model.JDBCDatabaseManager;
 import sandy.sqlcmd.view.View;
 
 public class Controller {
     View view = null;
     Command command = null;
-    DatabaseManager dbManager;
+    FactoryCommand.DatabaseManager dbManager;
 
     public Controller(View view) {
         this.view = view;
-        dbManager = new JDBCDatabaseManager();
+        dbManager = new FactoryCommand.JDBCDatabaseManager();
     }
 
     public void run() {
@@ -32,7 +30,6 @@ public class Controller {
         for (int i = 0; i < params.length; i++) {
             params[i] = params[i].trim();
         }
-        params[0] = params[0].toUpperCase();
         return params;
     }
 }

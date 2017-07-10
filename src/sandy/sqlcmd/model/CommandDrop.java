@@ -1,7 +1,5 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.sandy.sqlcmd.model.MainProcessExepion;
-
 public class CommandDrop extends Command {
     String sqlQuery = "DROP TABLE ";
 
@@ -9,9 +7,11 @@ public class CommandDrop extends Command {
         super();
         setParams(params);
     }
+    public CommandDrop(){
 
+    }
     @Override
-    protected DataSet mainProcess() throws MainProcessExepion {
+    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
         sqlQuery += params[1];
         dbManager.executeUpdate(sqlQuery);
 //        String strMessage = "Таблица "+params[1]+" удалена";

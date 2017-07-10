@@ -1,7 +1,5 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.sandy.sqlcmd.model.MainProcessExepion;
-
 public class CommandDelete extends Command {
     String sqlQuery = "DELETE FROM <table> WHERE <colunm>=<value>";
     String sqlQuerySelect = "SELECT * FROM <table> WHERE <colunm>=<value>";
@@ -10,7 +8,9 @@ public class CommandDelete extends Command {
         setParams(params);
 
     }
+    public CommandDelete(){
 
+    }
     private String prepareSql(String query) {
         query = query.replaceFirst("<table>",params[1]);
         query = query.replaceFirst("<colunm>",params[2]);
@@ -20,7 +20,7 @@ public class CommandDelete extends Command {
 
 
     @Override
-    protected DataSet mainProcess() throws MainProcessExepion {
+    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
         sqlQuerySelect = prepareSql(sqlQuerySelect);
         sqlQuery = prepareSql(sqlQuery);
 

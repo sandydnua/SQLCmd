@@ -1,6 +1,9 @@
 package sandy.sqlcmd.model;
 
 public class UnknownCommnad extends Command {
+    public UnknownCommnad(){
+
+    }
     @Override
     public void setParams(String[] params) {
 

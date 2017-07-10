@@ -1,20 +1,17 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.sandy.sqlcmd.model.DatabaseManager;
-import sandy.sqlcmd.sandy.sqlcmd.model.MainProcessExepion;
-
 public abstract class Command {
 
     protected String[] params = null;
-    protected DatabaseManager dbManager = null;
+    protected FactoryCommand.DatabaseManager dbManager = null;
 
-    protected abstract DataSet mainProcess() throws MainProcessExepion;
+    protected abstract DataSet mainProcess() throws CommandUpdate.MainProcessExepion;
     protected abstract void canExecute() throws CanExecuteExeption;
 
     public void setParams(String[] params){
         this.params = params;
     }
-    public void setDbManager(DatabaseManager dbManager) {
+    public void setDbManager(FactoryCommand.DatabaseManager dbManager) {
         this.dbManager = dbManager;
     }
     public DataSet execute(){
@@ -25,7 +22,7 @@ public abstract class Command {
         }catch (CanExecuteExeption ex){
             String[] strings = ex.getMessage().split("; ");
             data.addString(strings);
-        }catch (MainProcessExepion ex){
+        }catch (CommandUpdate.MainProcessExepion ex){
             String[] strings = ex.getMessage().split("; ");
             data.addString(strings);
         }

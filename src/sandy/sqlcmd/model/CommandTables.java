@@ -1,7 +1,5 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.sandy.sqlcmd.model.MainProcessExepion;
-
 public class CommandTables extends Command {
 
     private final String sqlQuery = "select table_name " +
@@ -11,9 +9,11 @@ public class CommandTables extends Command {
     public CommandTables(String[] params) {
         setParams(params);
     }
+    public CommandTables(){
 
+    }
     @Override
-    protected DataSet mainProcess() throws MainProcessExepion {
+    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
         return dbManager.executeQuery(sqlQuery);
     }
 

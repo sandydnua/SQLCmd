@@ -1,15 +1,15 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.sandy.sqlcmd.model.MainProcessExepion;
-
 public class CommandDisonnect extends Command {
     public CommandDisonnect(String[] params) {
         super();
         setParams(params);
     }
+    public CommandDisonnect(){
 
+    }
     @Override
-    protected DataSet mainProcess() throws MainProcessExepion {
+    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
         dbManager.disconnect();
         return new DataSet("Подкючение закрыто");
     }

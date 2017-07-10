@@ -1,14 +1,14 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.sandy.sqlcmd.model.MainProcessExepion;
-
 public class CommandInsert extends Command {
     String sqlQuery = "INSERT INTO <table> ( <columns> ) VALUES ( <values> )";
     public CommandInsert(String[] params) {
         super();
         setParams(params);
     }
+    public CommandInsert(){
 
+    }
     private void prepareSql() {
         String  columns = "";
         String  values = "";
@@ -26,7 +26,7 @@ public class CommandInsert extends Command {
     }
 
     @Override
-    protected DataSet mainProcess() throws MainProcessExepion {
+    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
         prepareSql();
         dbManager.executeUpdate(sqlQuery);
         return new DataSet("Операция прошла успешно");

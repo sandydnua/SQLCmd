@@ -2,7 +2,9 @@ package sandy.sqlcmd.model;
 
 public class CommandHelp extends Command {
     DataSet data;
+    public CommandHelp(){
 
+    }
     @Override
     public void setParams(String[] params) {
         DataSet data = new DataSet();

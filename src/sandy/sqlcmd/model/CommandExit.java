@@ -1,7 +1,5 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.sandy.sqlcmd.model.MainProcessExepion;
-
 public class CommandExit extends Command {
 
     public CommandExit(){
@@ -13,7 +11,7 @@ public class CommandExit extends Command {
         if(null != dbManager && dbManager.isConnect()){
             try {
                 dbManager.disconnect();
-            } catch (MainProcessExepion mainProcessExepion) {
+            } catch (CommandUpdate.MainProcessExepion mainProcessExepion) {
 
             }
         }
