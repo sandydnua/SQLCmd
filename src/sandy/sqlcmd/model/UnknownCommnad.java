@@ -10,7 +10,7 @@ public class UnknownCommnad extends Command {
     }
 
     @Override
-    protected DataSet mainProcess() {
+    protected DataSet executeMainProcess() {
         DataSet data = new DataSet();
         data.addString("Что Ты ввёл?");
         data.addString("Введи Help для справки");

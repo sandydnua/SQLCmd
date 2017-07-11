@@ -11,10 +11,10 @@ public class CommandFind extends Command {
 
     }
     @Override
-    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
+    protected DataSet executeMainProcess() throws MainProcessExeption {
         sqlQuery += params[1];
         DataSet data = dbManager.executeQuery(sqlQuery);
-        if( data.getSizeTable() <= 1 ){
+        if( data.quantityRows() <= 1 ){
             data.addString("Таблица пуста. Содержит следующие поля");
         }
         return data;

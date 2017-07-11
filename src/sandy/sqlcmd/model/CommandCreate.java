@@ -22,7 +22,7 @@ public class CommandCreate extends Command {
         sqlQuery = sqlQuery.replace("<columns>",columns);
     }
     @Override
-    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
+    protected DataSet executeMainProcess() throws MainProcessExeption {
         prepareSql();
         dbManager.executeUpdate(sqlQuery);
         return new DataSet("Таблица создана");

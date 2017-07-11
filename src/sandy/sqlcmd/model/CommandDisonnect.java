@@ -9,7 +9,7 @@ public class CommandDisonnect extends Command {
 
     }
     @Override
-    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
+    protected DataSet executeMainProcess() throws MainProcessExeption {
         dbManager.disconnect();
         return new DataSet("Подкючение закрыто");
     }

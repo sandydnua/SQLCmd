@@ -26,7 +26,7 @@ public class CommandInsert extends Command {
     }
 
     @Override
-    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
+    protected DataSet executeMainProcess() throws MainProcessExeption {
         prepareSql();
         dbManager.executeUpdate(sqlQuery);
         return new DataSet("Операция прошла успешно");

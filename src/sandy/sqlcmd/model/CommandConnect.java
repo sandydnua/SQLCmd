@@ -9,7 +9,7 @@ public class CommandConnect extends Command {
 
     }
     @Override
-    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
+    protected DataSet executeMainProcess() throws MainProcessExeption {
         String database = params[1];
         String userName = params[2];
         String password = params[3];

@@ -1,17 +1,19 @@
 package sandy.sqlcmd.controller;
 
 import sandy.sqlcmd.model.Command;
+import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.FactoryCommand;
+import sandy.sqlcmd.model.JDBCDatabaseManager;
 import sandy.sqlcmd.view.View;
 
 public class Controller {
     View view = null;
     Command command = null;
-    FactoryCommand.DatabaseManager dbManager;
+    DatabaseManager dbManager;
 
     public Controller(View view) {
         this.view = view;
-        dbManager = new FactoryCommand.JDBCDatabaseManager();
+        dbManager = new JDBCDatabaseManager();
     }
 
     public void run() {

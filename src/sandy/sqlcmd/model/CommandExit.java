@@ -7,11 +7,11 @@ public class CommandExit extends Command {
     }
 
     @Override
-    protected DataSet mainProcess() {
+    protected DataSet executeMainProcess() {
         if(null != dbManager && dbManager.isConnect()){
             try {
                 dbManager.disconnect();
-            } catch (CommandUpdate.MainProcessExepion mainProcessExepion) {
+            } catch (MainProcessExeption mainProcessExepion) {
 
             }
         }

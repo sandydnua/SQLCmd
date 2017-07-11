@@ -3,26 +3,26 @@ package sandy.sqlcmd.model;
 public abstract class Command {
 
     protected String[] params = null;
-    protected FactoryCommand.DatabaseManager dbManager = null;
+    protected DatabaseManager dbManager = null;
 
-    protected abstract DataSet mainProcess() throws CommandUpdate.MainProcessExepion;
+    protected abstract DataSet executeMainProcess() throws MainProcessExeption;
     protected abstract void canExecute() throws CanExecuteExeption;
 
     public void setParams(String[] params){
         this.params = params;
     }
-    public void setDbManager(FactoryCommand.DatabaseManager dbManager) {
+    public void setDbManager(DatabaseManager dbManager) {
         this.dbManager = dbManager;
     }
     public DataSet execute(){
         DataSet data = new DataSet();;
         try{
             canExecute();
-            data = mainProcess();
+            data = executeMainProcess();
         }catch (CanExecuteExeption ex){
             String[] strings = ex.getMessage().split("; ");
             data.addString(strings);
-        }catch (CommandUpdate.MainProcessExepion ex){
+        }catch (MainProcessExeption ex){
             String[] strings = ex.getMessage().split("; ");
             data.addString(strings);
         }
@@ -42,7 +42,6 @@ public abstract class Command {
     }
 
     protected void checkConnectAndMinQuantityParameters(int minQuantity) throws CanExecuteExeption {
-
 
         String errorMessages = "";
         try{

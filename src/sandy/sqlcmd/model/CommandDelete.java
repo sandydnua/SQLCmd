@@ -20,13 +20,13 @@ public class CommandDelete extends Command {
 
 
     @Override
-    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
+    protected DataSet executeMainProcess() throws MainProcessExeption {
         sqlQuerySelect = prepareSql(sqlQuerySelect);
         sqlQuery = prepareSql(sqlQuery);
 
         DataSet data = new DataSet();
         data = dbManager.executeQuery(sqlQuerySelect);
-        if(data.getSizeTable() > 1){
+        if(data.quantityRows() > 1){
             dbManager.executeUpdate(sqlQuery);
             data.addString("Удалены следующие строки");
         }else{

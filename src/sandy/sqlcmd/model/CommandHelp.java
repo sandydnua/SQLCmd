@@ -13,7 +13,7 @@ public class CommandHelp extends Command {
     }
 
     @Override
-    protected DataSet mainProcess() {
+    protected DataSet executeMainProcess() {
         return data;
     }
 

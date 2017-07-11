@@ -10,14 +10,14 @@ public class CommandClear extends Command {
 
     }
     @Override
-    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
+    protected DataSet executeMainProcess() throws MainProcessExeption {
         sqlQuery += params[1];
         DataSet data = new DataSet();
         try {
             dbManager.executeUpdate(sqlQuery);
             String strMessage = "Таблица "+params[1]+" очищена";
             data.addString(strMessage);
-        } catch (CommandUpdate.MainProcessExepion mainProcessExepion) {
+        } catch (MainProcessExeption mainProcessExepion) {
             throw mainProcessExepion;
         }
         return data;

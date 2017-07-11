@@ -13,8 +13,7 @@ public class DataSet {
     }
 
     public DataSet(String srt) {
-        text  = new ArrayList<>();
-        table = new ArrayList<>();
+        this();
         addString(srt);
     }
 
@@ -50,10 +49,6 @@ public class DataSet {
         } else {
             return null;
         }
-    }
-
-    public int getSizeTable() {
-        return table.size();
     }
 
     public int quantityRows() {

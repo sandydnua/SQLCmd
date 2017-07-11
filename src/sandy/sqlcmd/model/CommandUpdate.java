@@ -24,12 +24,12 @@ public class CommandUpdate extends Command {
     }
 
     @Override
-    protected DataSet mainProcess() throws MainProcessExepion {
+    protected DataSet executeMainProcess() throws MainProcessExeption {
         prepareSql();
         DataSet data = new DataSet();
         data = dbManager.executeQuery(sqlQuerySelect);
 
-        if (data.getSizeTable() > 1) {
+        if (data.quantityRows() > 1) {
             dbManager.executeUpdate(sqlQueryUpdate);
             data.addString("Cтроки, которые будут обновлены");
         } else {
@@ -43,17 +43,5 @@ public class CommandUpdate extends Command {
         checkConnectAndMinQuantityParameters(6);
     }
 
-    public static class MainProcessExepion extends Throwable {
-        public MainProcessExepion(String message) {
-            super(message);
-        }
-    /*
-        public MainProcessExepion(SQLException e) {
-            super(e);
-        }*/
-    /*
-        public MainProcessExepion(RuntimeException e) {
-            super(e);
-        }*/
-    }
+
 }

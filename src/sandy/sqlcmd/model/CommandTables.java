@@ -13,7 +13,7 @@ public class CommandTables extends Command {
 
     }
     @Override
-    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
+    protected DataSet executeMainProcess() throws MainProcessExeption {
         return dbManager.executeQuery(sqlQuery);
     }
 

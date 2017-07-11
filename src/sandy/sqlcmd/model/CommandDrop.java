@@ -11,7 +11,7 @@ public class CommandDrop extends Command {
 
     }
     @Override
-    protected DataSet mainProcess() throws CommandUpdate.MainProcessExepion {
+    protected DataSet executeMainProcess() throws MainProcessExeption {
         sqlQuery += params[1];
         dbManager.executeUpdate(sqlQuery);
 //        String strMessage = "Таблица "+params[1]+" удалена";
