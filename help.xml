@@ -1,34 +1,33 @@
 ﻿<root>
 	<description>
-		<value>
+		<description>
 		Команды можно вводить в любом регистре: help, Help, HELP, hElP. 
 Для справки по конкретной команде введите help | commandName
-Реализованы следующие команды. 
-		</value>
+		</description>
 	</description>
 <main>	
-	<exit><value>
+	<exit title = "Завершение работы"><description>
 		Завершениe работы.
-		</value>
+		</description>
 	</exit>
-	<tables>
-		<value>	
+	<tables title = "Перечень всех таблиц">
+		<description>	
 		Команда без параметров для получения списка всех таблиц.
-		</value>
+		</description>
 	</tables>
-	<find>
-		<value>
+	<find title = "'find | tableName' - Содержание таблицы tableName">
+		<description>
 		find - 
-		</value>
+		</description>
 	</find>
-	<connect>
-		<value>
+	<connect title = "'connect | database | userName | password' - Подключение к базе">
+		<description>
 		Команда для подключения к соответствующей БД
 	Формат команды: connect | database | username | password
-	где: database - имя БД
+	database - имя БД
 	username -  имя пользователя БД
 	password - пароль пользователя БД
-		</value>
+		</description>
 	</connect>
 </main>
 </root>
