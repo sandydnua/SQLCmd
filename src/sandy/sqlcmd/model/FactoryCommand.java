@@ -9,7 +9,7 @@ public class FactoryCommand {
         }
         switch (params[0].toUpperCase()) {
             case "HELP":
-                return new CommandHelp();
+                return new CommandHelp(params);
             case "EXIT":
                 return new CommandExit();
             case "CONNECT":
