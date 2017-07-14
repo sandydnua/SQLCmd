@@ -1,17 +1,17 @@
 package sandy.sqlcmd.model;
 
+import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
+
 public class CommandFind extends Command {
 
     private String sqlQuery = "select * from ";
 
     public CommandFind(String[] params){
-        setParams(params);
-    }
-    public CommandFind(){
-
+        super(params);
     }
     @Override
-    protected DataSet executeMainProcess() throws MainProcessExeption {
+    protected DataSet executeMainProcess() throws MainProcessException {
         sqlQuery += params[1];
         DataSet data = dbManager.executeQuery(sqlQuery);
         if( data.quantityRows() <= 1 ){
@@ -21,7 +21,7 @@ public class CommandFind extends Command {
     }
 
     @Override
-    protected void canExecute() throws CanExecuteExeption {
+    protected void canExecute() throws CanExecuteException {
         checkConnectAndParameters(2);
     }
 }

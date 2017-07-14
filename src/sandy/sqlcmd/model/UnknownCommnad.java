@@ -1,11 +1,10 @@
 package sandy.sqlcmd.model;
 
-public class UnknownCommnad extends Command {
-    public UnknownCommnad(){
+import sandy.sqlcmd.model.Exceptions.CanExecuteException;
 
-    }
-    @Override
-    public void setParams(String[] params) {
+public class UnknownCommnad extends Command {
+    public UnknownCommnad(String[] params){
+        super(params);
 
     }
 
@@ -18,6 +17,6 @@ public class UnknownCommnad extends Command {
     }
 
     @Override
-    protected void canExecute() throws CanExecuteExeption {
+    protected void canExecute() throws CanExecuteException {
     }
 }

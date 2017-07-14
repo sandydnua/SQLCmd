@@ -1,15 +1,7 @@
 package sandy.sqlcmd.model;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-
-import static org.w3c.dom.Node.ELEMENT_NODE;
+import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandHelp extends Command {
     private static final int FIRST_NODE = 0;
@@ -18,22 +10,18 @@ public class CommandHelp extends Command {
     private static final int FULL_HELP = 0;
     DataSet data;
 
-    public CommandHelp(){
-
-    }
     public CommandHelp(String[] params){
-        super();
-        setParams(params);
+        super(params);
     }
 
     @Override
-    protected DataSet executeMainProcess() throws MainProcessExeption {
+    protected DataSet executeMainProcess() throws MainProcessException {
         DataSet data = new DataSet();
         HelpReader helpReader;
         try {
             helpReader = new XMLHelpReader(NAME_FILE_XML);
         } catch (Exception e) {
-            throw new MainProcessExeption("Не найден файл"+ NAME_FILE_XML + " или нарушена его структура. " + e.getMessage());
+            throw new MainProcessException("Не найден файл"+ NAME_FILE_XML + " или нарушена его структура. " + e.getMessage());
         }
 
         if(params.length == 2) {
@@ -47,7 +35,7 @@ public class CommandHelp extends Command {
     }
 
     @Override
-    protected void canExecute() throws CanExecuteExeption {
+    protected void canExecute() throws CanExecuteException {
     }
 
 

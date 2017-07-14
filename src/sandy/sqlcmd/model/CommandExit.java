@@ -1,8 +1,13 @@
 package sandy.sqlcmd.model;
 
+import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
+
 public class CommandExit extends Command {
 
-    public CommandExit(){
+    public CommandExit(String[] params){
+        super(params);
 
     }
 
@@ -11,15 +16,14 @@ public class CommandExit extends Command {
         if(null != dbManager && dbManager.isConnect()){
             try {
                 dbManager.disconnect();
-            } catch (MainProcessExeption mainProcessExepion) {
+            } catch (MainProcessException mainProcessExepion) {
 
             }
         }
-        System.exit(0);
-        return null;
+        throw new CompletionOfWorkException("Завершение работы.");
     }
 
     @Override
-    protected void canExecute() throws CanExecuteExeption {
+    protected void canExecute() throws CanExecuteException {
     }
 }

@@ -1,12 +1,19 @@
 package sandy.sqlcmd.model;
 
+import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
+
 public abstract class Command {
 
     protected String[] params = null;
     protected DatabaseManager dbManager = null;
 
-    protected abstract DataSet executeMainProcess() throws MainProcessExeption;
-    protected abstract void canExecute() throws CanExecuteExeption;
+    protected abstract DataSet executeMainProcess() throws MainProcessException;
+    protected abstract void canExecute() throws CanExecuteException;
+
+    public Command(String[] params){
+        setParams(params);
+    }
 
     public void setParams(String[] params){
         this.params = params;
@@ -19,49 +26,49 @@ public abstract class Command {
         try{
             canExecute();
             data = executeMainProcess();
-        }catch (CanExecuteExeption ex){
+        }catch (CanExecuteException ex){
             String[] strings = ex.getMessage().split("; ");
             data.addString(strings);
-        }catch (MainProcessExeption ex){
+        }catch (MainProcessException ex){
             String[] strings = ex.getMessage().split("; ");
             data.addString(strings);
         }
         return data;
     }
-    protected void checkConnectAndParameters(int quantity) throws CanExecuteExeption {
+    protected void checkConnectAndParameters(int quantity) throws CanExecuteException {
         String errorMessages = "";
         try{
             checkConnect();
-        }catch (CanExecuteExeption ex){
+        }catch (CanExecuteException ex){
             errorMessages = ex.getMessage();
         }
         if(params.length != quantity){
             errorMessages += "Неверное число парметров; ";
         }
-        if( !"".equals(errorMessages))  throw new CanExecuteExeption(errorMessages);
+        if( !"".equals(errorMessages))  throw new CanExecuteException(errorMessages);
     }
 
-    protected void checkConnectAndMinQuantityParameters(int minQuantity) throws CanExecuteExeption {
+    protected void checkConnectAndMinQuantityParameters(int minQuantity) throws CanExecuteException {
 
         String errorMessages = "";
         try{
             checkConnect();
-        }catch (CanExecuteExeption ex){
+        }catch (CanExecuteException ex){
             errorMessages = ex.getMessage();
         }
         if(params.length < minQuantity){
             errorMessages += "Неверное число парметров; ";
         }
-        if( !"".equals(errorMessages))  throw new CanExecuteExeption(errorMessages);
+        if( !"".equals(errorMessages))  throw new CanExecuteException(errorMessages);
 
     }
-    protected void checkConnect() throws CanExecuteExeption {
+    protected void checkConnect() throws CanExecuteException {
         String errorMessages = "";
         if( null == dbManager){
             errorMessages += "Не передан DatabaseManager; ";
         }else if( false == dbManager.isConnect()){
             errorMessages += "Нет подключения к базе; ";
         }
-        if( !"".equals(errorMessages))  throw new CanExecuteExeption(errorMessages);
+        if( !"".equals(errorMessages))  throw new CanExecuteException(errorMessages);
     }
 }

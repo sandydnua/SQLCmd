@@ -5,13 +5,13 @@ import java.sql.*;
 public class FactoryCommand {
     public static Command getCommand(String[] params) {
         if (null == params || params.length <= 0 || null == params[0]) {
-            return new UnknownCommnad();
+            return new UnknownCommnad( new String[]{"unkown"});
         }
         switch (params[0].toUpperCase()) {
             case "HELP":
                 return new CommandHelp(params);
             case "EXIT":
-                return new CommandExit();
+                return new CommandExit(params);
             case "CONNECT":
                 return new CommandConnect(params);
             case "DISCONNECT":
@@ -33,7 +33,7 @@ public class FactoryCommand {
             case "INSERT":
                 return new CommandInsert(params);
             default:
-                return new UnknownCommnad();
+                return new UnknownCommnad(params);
         }
     }
 

@@ -4,6 +4,7 @@ import java.util.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,24 +23,24 @@ public class XMLHelpReader implements HelpReader {
     }
 
     @Override
-    public String[] getGeneralDescription() throws MainProcessExeption {
+    public String[] getGeneralDescription() throws MainProcessException {
         String[] result = new String[1];
         try {
             result[0] = document.getElementsByTagName("description").item(0).getTextContent().trim();
         }catch (Exception e) {
-            throw new MainProcessExeption("Ошибка при получении общего описания. ");
+            throw new MainProcessException("Ошибка при получении общего описания. ");
         }
         return result;
     }
 
     @Override
-    public String[] getListSupportedComnads() throws MainProcessExeption {
+    public String[] getListSupportedComnads() throws MainProcessException {
         List<String> text = new ArrayList<>();
         NodeList nodeList;
         try{
             nodeList = document.getElementsByTagName("main").item(0).getChildNodes();
         }catch (Exception e){
-            throw new MainProcessExeption("Ошибка получения списка команд. ");
+            throw new MainProcessException("Ошибка получения списка команд. ");
         }
         int length = nodeList.getLength();
         for (int i = 0; i < length; i++) {

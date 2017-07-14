@@ -1,5 +1,7 @@
 package sandy.sqlcmd.model;
 
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
+
 import java.sql.*;
 
 public class JDBCDatabaseManager implements DatabaseManager {
@@ -11,11 +13,11 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public void connect(String database, String userName, String password) throws MainProcessExeption {
+    public void connect(String database, String userName, String password) throws MainProcessException {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException ex) {
-            throw new MainProcessExeption("org.postgresql.Driver не подключен");
+            throw new MainProcessException("org.postgresql.Driver не подключен");
         }
         if( isConnect()) {
             disconnect();
@@ -25,40 +27,40 @@ public class JDBCDatabaseManager implements DatabaseManager {
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + database+ "?loggerLevel=OFF", userName, password);
         }catch (SQLException e) {
             connection = null;
-            throw new MainProcessExeption("Ошибка подключения к базе");
+            throw new MainProcessException("Ошибка подключения к базе");
         }
     }
 
     @Override
-    public void disconnect() throws MainProcessExeption {
+    public void disconnect() throws MainProcessException {
         if( null != connection ) try {
             connection.close();
         } catch (SQLException e) {
             connection = null;
-            throw new MainProcessExeption("Ошибка при закрытии подключения");
+            throw new MainProcessException("Ошибка при закрытии подключения");
         }else{
-            throw new MainProcessExeption("Подключения не было");
+            throw new MainProcessException("Подключения не было");
         }
     }
 
     @Override
-    public DataSet executeQuery(String sqlQuery) throws MainProcessExeption {
+    public DataSet executeQuery(String sqlQuery) throws MainProcessException {
         DataSet data;
         try(Statement stmt = getStmt(); ResultSet result = stmt.executeQuery(sqlQuery)) {
             data = formResult(result);
 
         } catch (SQLException e) {
-            throw new MainProcessExeption("Ошибка при выполнении запроса к базе "+e.getMessage());
+            throw new MainProcessException("Ошибка при выполнении запроса к базе "+e.getMessage());
         }
         return data;
     }
 
     @Override
-    public void executeUpdate(String sqlQuery) throws MainProcessExeption {
+    public void executeUpdate(String sqlQuery) throws MainProcessException {
         try(Statement stmt = getStmt()) {
             stmt.executeUpdate(sqlQuery);
         } catch (SQLException e) {
-            throw new MainProcessExeption("Ошибка при выполнении запроса к базе: "+e.getMessage());
+            throw new MainProcessException("Ошибка при выполнении запроса к базе: "+e.getMessage());
         }
     }
 

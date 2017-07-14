@@ -1,50 +1,49 @@
 package sandy.sqlcmd.model;
 
+import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
+
 public class CommandInsert extends Command {
     String sqlQuery = "INSERT INTO <table> ( <columns> ) VALUES ( <values> )";
     public CommandInsert(String[] params) {
-        super();
-        setParams(params);
-    }
-    public CommandInsert(){
-
+        super(params);
     }
     private void prepareSql() {
-        String  columns = "";
-        String  values = "";
+        StringBuilder  columns = new StringBuilder("");
+        StringBuilder  values = new StringBuilder("");
         for( int i = 3 ; i < params.length; i+=2 ){
-             columns += params[i-1];
-             values +="'" + params[i] + "'";
+             columns.append(params[i-1]);
+             values.append("'" + params[i] + "'");
              if( i < params.length-1){
-                  values += ",";
-                  columns += ",";
+                  values.append(",");
+                  columns.append(",");
              }
         }
         sqlQuery = sqlQuery.replace("<table>",params[1]);
-        sqlQuery = sqlQuery.replace("<columns>",columns);
-        sqlQuery = sqlQuery.replace("<values>",values);
+        sqlQuery = sqlQuery.replace("<columns>",columns.toString());
+        sqlQuery = sqlQuery.replace("<values>",values.toString());
     }
 
     @Override
-    protected DataSet executeMainProcess() throws MainProcessExeption {
+    protected DataSet executeMainProcess() throws MainProcessException {
         prepareSql();
         dbManager.executeUpdate(sqlQuery);
         return new DataSet("Операция прошла успешно");
     }
 
     @Override
-    protected void canExecute() throws CanExecuteExeption {
+    protected void canExecute() throws CanExecuteException {
         String errorMessage = "";
         try{
             checkConnectAndMinQuantityParameters(4);
-        }catch (CanExecuteExeption ex){
+        }catch (CanExecuteException ex){
             errorMessage +=ex.getMessage();
         }
         if( (params.length % 2) !=0 ){
             errorMessage += "Вы забыли указать или поле, или значение; ";
         }
         if( !"".equals(errorMessage) ){
-            throw new CanExecuteExeption(errorMessage);
+            throw new CanExecuteException(errorMessage);
         }
 
     }

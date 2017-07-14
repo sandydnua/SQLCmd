@@ -1,10 +1,12 @@
 package sandy.sqlcmd.model;
 
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
+
 public interface DatabaseManager{
 
-    void connect(String database, String userName, String password) throws MainProcessExeption;
-    void disconnect() throws MainProcessExeption;
-    DataSet executeQuery(String sqlQuery) throws MainProcessExeption;
-    void executeUpdate(String sqlQuery) throws MainProcessExeption;
+    void connect(String database, String userName, String password) throws MainProcessException;
+    void disconnect() throws MainProcessException;
+    DataSet executeQuery(String sqlQuery) throws MainProcessException;
+    void executeUpdate(String sqlQuery) throws MainProcessException;
     boolean isConnect();
 }

@@ -1,5 +1,8 @@
 package sandy.sqlcmd.model;
 
+import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
+
 public class CommandTables extends Command {
 
     private final String sqlQuery = "select table_name " +
@@ -7,18 +10,15 @@ public class CommandTables extends Command {
                                     "where table_schema='public'";
 
     public CommandTables(String[] params) {
-        setParams(params);
-    }
-    public CommandTables(){
-
+        super(params);
     }
     @Override
-    protected DataSet executeMainProcess() throws MainProcessExeption {
+    protected DataSet executeMainProcess() throws MainProcessException {
         return dbManager.executeQuery(sqlQuery);
     }
 
     @Override
-    protected void canExecute() throws CanExecuteExeption {
+    protected void canExecute() throws CanExecuteException {
         checkConnectAndParameters(1);
     }
 }

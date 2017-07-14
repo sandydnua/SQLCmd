@@ -1,7 +1,9 @@
 package sandy.sqlcmd.model;
 
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
+
 public interface HelpReader {
-    String[] getGeneralDescription() throws MainProcessExeption;
-    String[] getListSupportedComnads() throws MainProcessExeption;
-    String[] getCommandDescription(String commandName) throws MainProcessExeption;
+    String[] getGeneralDescription() throws MainProcessException;
+    String[] getListSupportedComnads() throws MainProcessException;
+    String[] getCommandDescription(String commandName) throws MainProcessException;
 }
