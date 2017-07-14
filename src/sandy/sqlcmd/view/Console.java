@@ -21,11 +21,13 @@ public class Console implements View {
         if (null == data) return;
         writeText(data);
         writeTable(data);
-
     }
 
     private void writeText(DataSet data){
-        for(Iterator iterator = data.iteratorText(); iterator.hasNext(); System.out.println(iterator.next()) ){ }
+        Iterator iterator = data.iteratorText();
+        while ( iterator.hasNext() ){
+            System.out.println(iterator.next());
+        }
     }
     private void writeTable(DataSet data){
         int quantiyRows = data.quantityRows();

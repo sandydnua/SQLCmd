@@ -21,7 +21,7 @@ public class Controller {
 
         view.write("Для справки введите HELP");
         try {
-            for (; ; ) {
+            while ( true ) {
                 String str = view.read();
                 command = FactoryCommand.getCommand(prepareParams(str));
                 command.setDbManager(dbManager);
@@ -30,7 +30,7 @@ public class Controller {
         }catch(CompletionOfWorkException ex){
             view.write(ex.getMessage());
         }
-
+        return;
     }
 
     private String[] prepareParams(String str) {
