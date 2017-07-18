@@ -1,33 +1,30 @@
-package sandy.sqlcmd.model;
+package sandy.sqlcmd.controller.command;
 
+import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
+import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
+import sandy.sqlcmd.model.SQLConstructor;
 
 public class CommandInsert extends Command {
-    String sqlQuery = "INSERT INTO <table> ( <columns> ) VALUES ( <values> )";
     public CommandInsert(String[] params) {
         super(params);
     }
-    private void prepareSql() {
-        StringBuilder  columns = new StringBuilder("");
-        StringBuilder  values = new StringBuilder("");
+
+    private String prepareSql() throws IncorretParametersQuery {
+        SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
+        sqlConstructor.addTables(params[1]);
+
         for( int i = 3 ; i < params.length; i+=2 ){
-             columns.append(params[i-1]);
-             values.append("'" + params[i] + "'");
-             if( i < params.length-1){
-                  values.append(", ");
-                  columns.append(", ");
-             }
+            sqlConstructor.addColumnForSelectAndInsert(params[i-1]);
+            sqlConstructor.addValuesForInsert(params[i]);
         }
-        sqlQuery = sqlQuery.replace("<table>",params[1]);
-        sqlQuery = sqlQuery.replace("<columns>",columns.toString());
-        sqlQuery = sqlQuery.replace("<values>",values.toString());
+        return sqlConstructor.getQueryInsert();
     }
 
     @Override
-    protected DataSet executeMainProcess() throws MainProcessException {
-        prepareSql();
-
+    protected DataSet executeMainProcess() throws MainProcessException, IncorretParametersQuery {
+        String sqlQuery = prepareSql();
 
         dbManager.executeUpdate(sqlQuery);
         return new DataSet("Операция прошла успешно");

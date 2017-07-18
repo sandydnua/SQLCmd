@@ -1,6 +1,9 @@
-package sandy.sqlcmd.model;
+package sandy.sqlcmd.controller.command;
 
+import sandy.sqlcmd.model.DataSet;
+import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
+import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public abstract class Command {
@@ -16,7 +19,7 @@ public abstract class Command {
         this.params = params;
     }
 
-    protected abstract DataSet executeMainProcess() throws MainProcessException;
+    protected abstract DataSet executeMainProcess() throws MainProcessException, IncorretParametersQuery;
 
     public DataSet execute(){
         DataSet data = new DataSet();
@@ -28,6 +31,9 @@ public abstract class Command {
             data.addString(strings);
         }catch (MainProcessException ex){
             String[] strings = ex.getMessage().split("; ");
+            data.addString(strings);
+        }catch (IncorretParametersQuery ex){
+            String strings = ex.getMessage();
             data.addString(strings);
         }
         return data;

@@ -1,5 +1,7 @@
 package sandy.sqlcmd.model;
 
+import sandy.sqlcmd.controller.command.*;
+
 public class FactoryCommand {
 
     public static Command getCommand(String[] params) {

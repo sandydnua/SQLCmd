@@ -1,9 +1,11 @@
-package sandy.sqlcmd.model;
+package sandy.sqlcmd.controller.command;
 
+import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandCreate extends Command {
+// TODO
     String sqlQuery = "CREATE TABLE <table> ( <columns> )";
     public CommandCreate(String[] params) {
         super(params);
@@ -12,7 +14,8 @@ public class CommandCreate extends Command {
         StringBuilder columns = new StringBuilder("");
 
         for( int i = 2 ; i < params.length; i++ ){
-            columns.append( params[i]+" varchar(255)" );
+            columns.append( params[i]+" " +
+                    "varchar(255)" );
             if( i < params.length-1){
                 columns.append(",");
             }

@@ -1,9 +1,10 @@
-package sandy.sqlcmd.model;
+package sandy.sqlcmd.controller.command;
 
 
 import org.junit.Test;
+import sandy.sqlcmd.controller.command.Command;
+import sandy.sqlcmd.controller.command.CommandExit;
 import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
-import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 import static junit.framework.TestCase.assertEquals;
 

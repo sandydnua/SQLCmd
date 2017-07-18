@@ -1,9 +1,11 @@
-package sandy.sqlcmd.model;
+package sandy.sqlcmd.controller.command;
 
+import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandDelete extends Command {
+    // TODO
     String sqlQuery = "DELETE FROM <table> WHERE <colunm> = <value>";
     String sqlQuerySelect = "SELECT * FROM <table> WHERE <colunm> = <value>";
     public CommandDelete(String[] params) {

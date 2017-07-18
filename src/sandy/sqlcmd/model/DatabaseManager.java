@@ -9,4 +9,5 @@ public interface DatabaseManager{
     DataSet executeQuery(String sqlQuery) throws MainProcessException;
     void executeUpdate(String sqlQuery) throws MainProcessException;
     boolean isConnect();
+    SQLConstructor getSQLConstructor();
 }

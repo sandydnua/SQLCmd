@@ -1,5 +1,6 @@
-package sandy.sqlcmd.model;
+package sandy.sqlcmd.controller.command;
 
+import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 

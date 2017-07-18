@@ -89,4 +89,9 @@ public class JDBCDatabaseManager implements DatabaseManager {
     public boolean isConnect(){
         return (null == connection)? false : true;
     }
+
+    @Override
+    public SQLConstructor getSQLConstructor() {
+        return new SQLConstructorPostgre();
+    }
 }

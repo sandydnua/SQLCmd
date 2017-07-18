@@ -1,6 +1,6 @@
 package sandy.sqlcmd.controller;
 
-import sandy.sqlcmd.model.Command;
+import sandy.sqlcmd.controller.command.Command;
 import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
 import sandy.sqlcmd.model.FactoryCommand;

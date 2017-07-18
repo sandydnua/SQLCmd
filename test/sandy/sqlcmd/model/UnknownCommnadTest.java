@@ -2,6 +2,7 @@ package sandy.sqlcmd.model;
 
 import org.junit.Test;
 import org.mockito.Mock;
+import sandy.sqlcmd.controller.command.Command;
 
 import static org.junit.Assert.*;
 

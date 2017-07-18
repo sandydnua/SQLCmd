@@ -1,13 +1,13 @@
-package sandy.sqlcmd.model;
+package sandy.sqlcmd.controller.command;
 
+import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
+import sandy.sqlcmd.model.HelpReader;
+import sandy.sqlcmd.model.XMLHelpReader;
 
 public class CommandHelp extends Command {
-//    private static final int FIRST_NODE = 0;
     private static final String NAME_FILE_XML = "help.xml";
-//    private static final int SHORT_HELP = 1;
-//    private static final int FULL_HELP = 0;
     DataSet data;
 
     public CommandHelp(String[] params){

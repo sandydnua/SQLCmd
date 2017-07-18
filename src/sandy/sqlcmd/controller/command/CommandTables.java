@@ -1,20 +1,21 @@
-package sandy.sqlcmd.model;
+package sandy.sqlcmd.controller.command;
 
+import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
+import sandy.sqlcmd.model.SQLConstructor;
 
 public class CommandTables extends Command {
 
-    private final String sqlQuery = "select table_name " +
-                                    "from information_schema.tables " +
-                                    "where table_schema='public'";
 
     public CommandTables(String[] params) {
         super(params);
     }
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
-        return dbManager.executeQuery(sqlQuery);
+        SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
+        String sql = sqlConstructor.getQueryTables();
+        return dbManager.executeQuery(sql);
     }
 
     @Override

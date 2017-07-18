@@ -4,13 +4,15 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import sandy.sqlcmd.controller.command.*;
+
 import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class FactoryCommandTest extends TestCase {
     private  String[] params;
-    private  Command expCommand;
+    private Command expCommand;
 
     public FactoryCommandTest(String[] params, Command expCommand){
         this.params = params;

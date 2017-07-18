@@ -1,11 +1,12 @@
-package sandy.sqlcmd.model;
+package sandy.sqlcmd.controller.command;
 
+import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
+import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
+import sandy.sqlcmd.model.SQLConstructor;
 
 public class CommandFind extends Command {
-
-    private String sqlQuery = "SELECT * FROM ";
 
     public CommandFind(String[] params){
         super(params);
@@ -13,7 +14,14 @@ public class CommandFind extends Command {
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
-        sqlQuery += params[1];
+        SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
+        String sqlQuery = null;
+        try {
+            sqlConstructor.addTables(params[1]);
+            sqlQuery = sqlConstructor.getQueryFind();
+        } catch (IncorretParametersQuery incorretParametersQuery) {
+            throw new MainProcessException( incorretParametersQuery.getMessage());
+        }
         DataSet data = dbManager.executeQuery(sqlQuery);
         if( data.quantityRows() <= 1 ){
             data.addString("Таблица пуста. Содержит следующие поля:");
