@@ -1,13 +1,12 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandConnect extends Command {
 
     public CommandConnect(String[] params){
         super(params);
-        //        setParams(params);
     }
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
@@ -18,7 +17,7 @@ public class CommandConnect extends Command {
         return new DataSet("Подключился к базе");
     }
     @Override
-    protected void canExecute() throws CanExecuteException {
+    protected void canExecute() throws CantExecuteException {
         String errorMessages = "";
         if( null == dbManager){
             errorMessages += "Не передан DatabaseManager; ";
@@ -26,6 +25,6 @@ public class CommandConnect extends Command {
         if(params.length != 4){
             errorMessages += "Неверное число парметров; ";
         }
-        if( !"".equals(errorMessages))  throw new CanExecuteException(errorMessages);
+        if( !"".equals(errorMessages))  throw new CantExecuteException(errorMessages);
     }
 }

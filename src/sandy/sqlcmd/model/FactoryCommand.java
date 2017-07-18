@@ -1,9 +1,9 @@
 package sandy.sqlcmd.model;
 
-import java.sql.*;
-
 public class FactoryCommand {
+
     public static Command getCommand(String[] params) {
+
         if (null == params || params.length <= 0 || null == params[0]) {
             return new UnknownCommnad( new String[]{"unkown"});
         }

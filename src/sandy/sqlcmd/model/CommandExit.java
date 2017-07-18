@@ -1,6 +1,6 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
@@ -20,10 +20,10 @@ public class CommandExit extends Command {
 
             }
         }
-        throw new CompletionOfWorkException("Завершение работы.");
+       throw new CompletionOfWorkException("Завершение работы.");
     }
 
     @Override
-    protected void canExecute() throws CanExecuteException {
+    protected void canExecute() throws CantExecuteException {
     }
 }

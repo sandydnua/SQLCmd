@@ -21,6 +21,9 @@ public class XMLHelpReader implements HelpReader {
         documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         document = documentBuilder.parse(nameFileXml);
     }
+    public XMLHelpReader(Document document) {
+        this.document = document;
+    }
 
     @Override
     public String[] getGeneralDescription() throws MainProcessException {
@@ -28,7 +31,7 @@ public class XMLHelpReader implements HelpReader {
         try {
             result[0] = document.getElementsByTagName("description").item(0).getTextContent().trim();
         }catch (Exception e) {
-            throw new MainProcessException("Ошибка при получении общего описания. ");
+            throw new MainProcessException("Ошибка при получении общего описания.");
         }
         return result;
     }

@@ -1,13 +1,13 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandHelp extends Command {
-    private static final int FIRST_NODE = 0;
+//    private static final int FIRST_NODE = 0;
     private static final String NAME_FILE_XML = "help.xml";
-    private static final int SHORT_HELP = 1;
-    private static final int FULL_HELP = 0;
+//    private static final int SHORT_HELP = 1;
+//    private static final int FULL_HELP = 0;
     DataSet data;
 
     public CommandHelp(String[] params){
@@ -16,6 +16,7 @@ public class CommandHelp extends Command {
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
+
         DataSet data = new DataSet();
         HelpReader helpReader;
         try {
@@ -35,7 +36,7 @@ public class CommandHelp extends Command {
     }
 
     @Override
-    protected void canExecute() throws CanExecuteException {
+    protected void canExecute() throws CantExecuteException {
     }
 
 

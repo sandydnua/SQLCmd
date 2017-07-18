@@ -55,4 +55,5 @@ public class FactoryCommandTest extends TestCase {
         expCommand = this.expCommand;
         assertTrue( expCommand.getClass() == FactoryCommand.getCommand(params).getClass() );
     }
+
 }

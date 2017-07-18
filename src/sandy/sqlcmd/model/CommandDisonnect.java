@@ -1,6 +1,6 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandDisonnect extends Command {
@@ -10,11 +10,11 @@ public class CommandDisonnect extends Command {
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
         dbManager.disconnect();
-        return new DataSet("Подкючение закрыто");
+        return new DataSet("Подключение закрыто");
     }
 
     @Override
-    protected void canExecute() throws CanExecuteException {
-        checkConnectAndParameters(2);
+    protected void canExecute() throws CantExecuteException {
+        checkConnectAndParameters(1);
     }
 }

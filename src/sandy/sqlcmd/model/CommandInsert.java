@@ -1,6 +1,6 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandInsert extends Command {
@@ -15,8 +15,8 @@ public class CommandInsert extends Command {
              columns.append(params[i-1]);
              values.append("'" + params[i] + "'");
              if( i < params.length-1){
-                  values.append(",");
-                  columns.append(",");
+                  values.append(", ");
+                  columns.append(", ");
              }
         }
         sqlQuery = sqlQuery.replace("<table>",params[1]);
@@ -27,23 +27,25 @@ public class CommandInsert extends Command {
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
         prepareSql();
+
+
         dbManager.executeUpdate(sqlQuery);
         return new DataSet("Операция прошла успешно");
     }
 
     @Override
-    protected void canExecute() throws CanExecuteException {
+    protected void canExecute() throws CantExecuteException {
         String errorMessage = "";
         try{
             checkConnectAndMinQuantityParameters(4);
-        }catch (CanExecuteException ex){
+        }catch (CantExecuteException ex){
             errorMessage +=ex.getMessage();
         }
         if( (params.length % 2) !=0 ){
             errorMessage += "Вы забыли указать или поле, или значение; ";
         }
         if( !"".equals(errorMessage) ){
-            throw new CanExecuteException(errorMessage);
+            throw new CantExecuteException(errorMessage);
         }
 
     }

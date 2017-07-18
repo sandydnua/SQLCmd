@@ -1,11 +1,11 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandUpdate extends Command {
     String sqlQueryUpdate = "UPDATE <table> SET <column2> = <value2> WHERE <column1> = <value1>";
-    String sqlQuerySelect = "SELECT * FROM <table> WHERE <column1>=<value1>";
+    String sqlQuerySelect = "SELECT * FROM <table> WHERE <column1> = <value1>";
 
     public CommandUpdate(String[] params) {
         super(params);
@@ -38,7 +38,7 @@ public class CommandUpdate extends Command {
     }
 
     @Override
-    protected void canExecute() throws CanExecuteException {
+    protected void canExecute() throws CantExecuteException {
         checkConnectAndMinQuantityParameters(6);
     }
 

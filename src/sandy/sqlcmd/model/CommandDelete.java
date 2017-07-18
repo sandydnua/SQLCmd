@@ -1,15 +1,13 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandDelete extends Command {
-    String sqlQuery = "DELETE FROM <table> WHERE <colunm>=<value>";
-    String sqlQuerySelect = "SELECT * FROM <table> WHERE <colunm>=<value>";
+    String sqlQuery = "DELETE FROM <table> WHERE <colunm> = <value>";
+    String sqlQuerySelect = "SELECT * FROM <table> WHERE <colunm> = <value>";
     public CommandDelete(String[] params) {
         super(params);
-//        setParams(params);
-
     }
     private String prepareSql(String query) {
         query = query.replaceFirst("<table>",params[1]);
@@ -37,7 +35,7 @@ public class CommandDelete extends Command {
     }
 
     @Override
-    protected void canExecute() throws CanExecuteException {
+    protected void canExecute() throws CantExecuteException {
         checkConnectAndParameters(4);
     }
 }

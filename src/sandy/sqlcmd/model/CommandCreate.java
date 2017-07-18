@@ -1,14 +1,12 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.model.Exceptions.CanExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandCreate extends Command {
     String sqlQuery = "CREATE TABLE <table> ( <columns> )";
     public CommandCreate(String[] params) {
         super(params);
-        //setParams(params);
-
     }
     private void prepareSql(){
         StringBuilder columns = new StringBuilder("");
@@ -31,7 +29,7 @@ public class CommandCreate extends Command {
     }
 
     @Override
-    protected void canExecute() throws CanExecuteException {
+    protected void canExecute() throws CantExecuteException {
         checkConnectAndMinQuantityParameters(2);
     }
 
