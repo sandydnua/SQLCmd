@@ -6,8 +6,11 @@ import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.SQLConstructorPostgre;
 
+
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
+
+
 
 public class CommandFindTest {
 
@@ -26,7 +29,7 @@ public class CommandFindTest {
         String[] params = {"find","tableName"};
         String sqlQuery = "SELECT * FROM tableName";
 
-        Command command = new CommandFind(params);
+        Command command = new sandy.sqlcmd.controller.command.CommandFind(params);
         command.setDbManager(dbManager);
 
         DataSet data = new DataSet();

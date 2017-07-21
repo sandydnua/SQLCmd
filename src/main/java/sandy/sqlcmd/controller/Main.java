@@ -1,8 +1,9 @@
 package sandy.sqlcmd.controller;
 
 import sandy.sqlcmd.view.View;
-
 import sandy.sqlcmd.view.Console;
+import sandy.sqlcmd.controller.Controller;
+
 
 public class Main {
 
