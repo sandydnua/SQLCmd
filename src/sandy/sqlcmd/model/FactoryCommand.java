@@ -7,35 +7,38 @@ public class FactoryCommand {
     public static Command getCommand(String[] params) {
 
         if (null == params || params.length <= 0 || null == params[0]) {
+
             return new UnknownCommnad( new String[]{"unkown"});
+
         }
-        switch (params[0].toUpperCase()) {
+
+        switch ( params[0].toUpperCase() ) {
             case "HELP":
-                return new CommandHelp(params);
+                return new CommandHelp( params );
             case "EXIT":
-                return new CommandExit(params);
+                return new CommandExit( params );
             case "CONNECT":
-                return new CommandConnect(params);
+                return new CommandConnect( params );
             case "DISCONNECT":
-                return new CommandDisonnect(params);
+                return new CommandDisonnect( params );
             case "TABLES":
-                return new CommandTables(params);
+                return new CommandTables( params );
             case "FIND":
-                return new CommandFind(params);
+                return new CommandFind( params );
             case "DROP":
-                return new CommandDrop(params);
+                return new CommandDrop( params );
             case "CLEAR":
-                return new CommandClear(params);
+                return new CommandClear( params );
             case "DELETE":
-                return new CommandDelete(params);
+                return new CommandDelete( params );
             case "CREATE":
-                return new CommandCreate(params);
+                return new CommandCreate( params );
             case "UPDATE":
-                return new CommandUpdate(params);
+                return new CommandUpdate( params );
             case "INSERT":
-                return new CommandInsert(params);
+                return new CommandInsert( params );
             default:
-                return new UnknownCommnad(params);
+                return new UnknownCommnad( params );
         }
     }
 

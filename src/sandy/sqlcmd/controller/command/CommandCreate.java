@@ -3,37 +3,36 @@ package sandy.sqlcmd.controller.command;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
+import sandy.sqlcmd.model.SQLConstructor;
+
+import java.util.Arrays;
 
 public class CommandCreate extends Command {
-// TODO
-    String sqlQuery = "CREATE TABLE <table> ( <columns> )";
+    private static final int INDEX_OF_TABLE_NAME = 1;
+    private static final int FIRST_INDEX_OF_COLUMNS = 2;
+    private static final int MIN_QUANTITY_PARAMETERS = 3;
+
     public CommandCreate(String[] params) {
         super(params);
     }
-    private void prepareSql(){
-        StringBuilder columns = new StringBuilder("");
 
-        for( int i = 2 ; i < params.length; i++ ){
-            columns.append( params[i]+" " +
-                    "varchar(255)" );
-            if( i < params.length-1){
-                columns.append(",");
-            }
-        }
-
-        sqlQuery = sqlQuery.replace("<table>",params[1]);
-        sqlQuery = sqlQuery.replace("<columns>",columns.toString());
-    }
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
-        prepareSql();
-        dbManager.executeUpdate(sqlQuery);
+
+        SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
+        sqlConstructor.addTables(params[INDEX_OF_TABLE_NAME]);
+        sqlConstructor.addColumnForSelectInsertCreate( Arrays.copyOfRange( params, FIRST_INDEX_OF_COLUMNS, params.length));
+
+        String sqlQuery = sqlConstructor.getQueryCreateTable();
+        dbManager.executeUpdate( sqlQuery );
+
         return new DataSet("Таблица создана");
     }
 
     @Override
     protected void canExecute() throws CantExecuteException {
-        checkConnectAndMinQuantityParameters(2);
+
+        checkConnectAndMinQuantityParameters(MIN_QUANTITY_PARAMETERS);
     }
 
 }

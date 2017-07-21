@@ -2,8 +2,6 @@ package sandy.sqlcmd.controller.command;
 
 import org.junit.Before;
 import org.junit.Test;
-import sandy.sqlcmd.controller.command.Command;
-import sandy.sqlcmd.controller.command.CommandUpdate;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
@@ -16,34 +14,50 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class CommandUpdateTest {
+
     DatabaseManager dbManager;
+
     String sqlQueryUpdate;
     String sqlQuerySelect;
+
     Command command;
     DataSet data;
 
     @Before
     public void setup() throws MainProcessException {
-        dbManager = mock(DatabaseManager.class);
+
+        sqlQueryUpdate = "UPDATE tableName SET columnName = columnValueNew WHERE column = 'value'";
+        sqlQuerySelect = "SELECT * FROM tableName WHERE column = 'value'";
         String[] params = {"update", "tableName", "column", "value", "columnName", "columnValueNew"};
-        sqlQueryUpdate = "UPDATE tableName SET columnName = columnValueNew WHERE column = value";
-        sqlQuerySelect = "SELECT * FROM tableName WHERE column = value";
+
+        dbManager = mock(DatabaseManager.class);
         command = new CommandUpdate(params);
         command.setDbManager(dbManager);
-        data = new DataSet();
+
         when(dbManager.isConnect()).thenReturn(true);
-        when(dbManager.executeQuery(anyString())).thenReturn(data);
         when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());
+        when(dbManager.existTable(anyString())).thenReturn(true);
+        when(dbManager.existColumns(anyString(),anyInt(), anyString(),anyString())).thenReturn(true);
     }
 
     @Test
     public void executeMainProcess() throws Exception {
 
+        data = new DataSet();
         data.addRow();
         data.addRow();
-        data.addString("Cтроки, которые будут обновлены");
+
+        when(dbManager.executeQuery(anyString())).thenReturn(data);
+
+        DataSet expected = new DataSet("Cтроки, которые будут обновлены");
+        expected.addRow();
+        expected.addRow();
         DataSet actual = command.execute();
-        assertTrue(data.equals(actual));
+
+        assertTrue(expected.equals(actual));
+
+        verify(dbManager, times(1)).existTable("tableName");
+        verify(dbManager, times(1)).existColumns("tableName",DatabaseManager.EXISTENCE_THESE_FIELDS, "column", "columnName");
         verify(dbManager, times(1)).executeQuery(sqlQuerySelect);
         verify(dbManager, times(1)).executeUpdate(sqlQueryUpdate);
     }
@@ -51,9 +65,14 @@ public class CommandUpdateTest {
     @Test
     public void executeMainProcessWhenRowNotFaund() throws Exception {
 
-        data.addString("С такими параметрами строки не найдены.");
+        data = new DataSet();
+        data.addRow();
+
+        when(dbManager.executeQuery(anyString())).thenReturn(data);
+        DataSet expected = new DataSet("С такими параметрами строки не найдены.");
         DataSet actual = command.execute();
-        assertTrue(data.equals(actual));
+
+        assertTrue(expected.equals(actual));
         verify(dbManager, times(1)).executeQuery(sqlQuerySelect);
         verify(dbManager, times(0)).executeUpdate(sqlQueryUpdate);
     }

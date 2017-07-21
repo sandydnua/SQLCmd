@@ -2,8 +2,6 @@ package sandy.sqlcmd.controller.command;
 
 import org.junit.Before;
 import org.junit.Test;
-import sandy.sqlcmd.controller.command.Command;
-import sandy.sqlcmd.controller.command.CommandDisonnect;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.SQLConstructorPostgre;
@@ -13,12 +11,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CommandDisonnectTest {
+
     DatabaseManager dbManager;
     String[] params;
     Command command;
+
     @Before
     public void setup() {
+
         params = new String[]{"disconnect"};
+
         dbManager = mock(DatabaseManager.class);
         when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());
         command = new CommandDisonnect(params);
@@ -30,13 +32,6 @@ public class CommandDisonnectTest {
 
         when(dbManager.isConnect()).thenReturn(true);
         DataSet expected = new DataSet("Подключение закрыто");
-        DataSet actual = command.execute();
-        assertTrue( expected.equals(actual) );
-    }
-    @Test
-    public void executeMainProcessWithoutConnect() throws Exception {
-        when(dbManager.isConnect()).thenReturn(false);
-        DataSet expected = new DataSet("Нет подключения к базе");
         DataSet actual = command.execute();
         assertTrue( expected.equals(actual) );
     }

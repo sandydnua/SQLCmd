@@ -35,16 +35,5 @@ public class CommandConnectTest {
         assertTrue( expected.equals(result) );
         verify(dbManager, times(1)).connect("dbName", "userName", "password");
     }
-    @Test
-    public void executeMainProcessWithExepion() throws Exception {
-
-        String[] params = {"connect", "dbName", "userName", "password"};
-        Command command = new CommandConnect(params);
-        command.setDbManager(dbManager);
-        doThrow( new MainProcessException("Error") ).when(dbManager).connect(anyString(), anyString(), anyString());
-        DataSet actual = command.execute();
-        DataSet expected = new DataSet("Error");
-        assertTrue( expected.equals(actual) );
-    }
 
 }

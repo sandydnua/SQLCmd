@@ -7,25 +7,33 @@ import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
 
 public class CommandClear extends Command {
+
+    private static final int INDEX_OF_TABLE_NAME = 1;
+    private static final int EXPECTED_QUANTITY_OF_PARAMETERS = 2;
+
     public CommandClear(String[] params) {
         super(params);
     }
+
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorretParametersQuery {
-        DataSet data = new DataSet();
-        SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
-        sqlConstructor.addTables(params[1]);
-        String sqlQuery = sqlConstructor.getQueryClear();
 
+
+        SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
+        sqlConstructor.addTables(params[INDEX_OF_TABLE_NAME]);
+
+        String sqlQuery = sqlConstructor.getQueryClear();
         dbManager.executeUpdate(sqlQuery);
-        String strMessage = "Таблица "+params[1]+" очищена";
-        data.addString(strMessage);
+
+        String strMessage = "Таблица "+params[INDEX_OF_TABLE_NAME]+" очищена";
+        DataSet data = new DataSet(strMessage);
 
         return data;
     }
 
     @Override
     protected void canExecute() throws CantExecuteException {
-       checkConnectAndParameters(2);
+
+       checkConnectAndParameters(EXPECTED_QUANTITY_OF_PARAMETERS);
     }
 }

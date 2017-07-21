@@ -8,17 +8,17 @@ public interface SQLConstructor {
 
     void addTables(String... tables);
 
-    void addColumnForSelectAndInsert(String... columns);
+    void addColumnForSelectInsertCreate(String... columns);
 
     void addValuesForInsert(String... values);
+
+    void setForColumnNewValue(String param, String param1);
 
     String getQueryTables();
 
     String getQueryFind() throws IncorretParametersQuery;
 
     String getQueryClear() throws IncorretParametersQuery;
-
-    void setForColumnNewValue(String param, String param1);
 
     String getQuerySelect() throws IncorretParametersQuery;
 
@@ -27,4 +27,10 @@ public interface SQLConstructor {
     String getQueryDrop() throws IncorretParametersQuery;
 
     String getQueryInsert() throws IncorretParametersQuery;
+
+    String getQueryDelete() throws IncorretParametersQuery;
+
+    String getQueryCreateTable();
+
+    String getQueryExistTable();
 }

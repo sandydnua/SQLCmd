@@ -12,9 +12,12 @@ public class UnknownCommnadTest {
 
     @Test
     public void executeMainProcess() throws Exception {
+
         DataSet expeted = new DataSet();
+
         expeted.addString("Что Ты ввёл?!");
         expeted.addString("Введи Help для справки.");
+
         Command command = new UnknownCommnad(params);
 
         DataSet actual = command.execute();

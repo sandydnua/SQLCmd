@@ -11,6 +11,7 @@ import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class FactoryCommandTest extends TestCase {
+
     private  String[] params;
     private Command expCommand;
 
@@ -18,8 +19,6 @@ public class FactoryCommandTest extends TestCase {
         this.params = params;
         this.expCommand = expCommand;
     }
-
-
 
     @Parameterized.Parameters
     public static Collection numbers(){
@@ -53,6 +52,7 @@ public class FactoryCommandTest extends TestCase {
 
     @Test
     public void testGetCommand(){
+
         params = this.params;
         expCommand = this.expCommand;
         assertTrue( expCommand.getClass() == FactoryCommand.getCommand(params).getClass() );

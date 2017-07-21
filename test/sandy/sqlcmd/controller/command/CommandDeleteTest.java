@@ -13,21 +13,27 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class CommandDeleteTest {
+
     DatabaseManager dbManager;
+
     String sqlQueryDelete;
     String sqlQuerySelect;
+
     Command command;
     DataSet data;
 
     @Before
     public void setup() throws MainProcessException {
-        dbManager = mock(DatabaseManager.class);
+
+        sqlQueryDelete = "DELETE FROM tableName WHERE columnName = 'columnValue'";
+        sqlQuerySelect = "SELECT * FROM tableName WHERE columnName = 'columnValue'";
         String[] params = {"delete", "tableName", "columnName", "columnValue"};
-        sqlQueryDelete = "DELETE FROM tableName WHERE columnName = columnValue";
-        sqlQuerySelect = "SELECT * FROM tableName WHERE columnName = columnValue";
+
+        dbManager = mock(DatabaseManager.class);
         command = new CommandDelete(params);
         command.setDbManager(dbManager);
         data = new DataSet();
+
         when(dbManager.isConnect()).thenReturn(true);
         when(dbManager.executeQuery(anyString())).thenReturn(data);
         when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());

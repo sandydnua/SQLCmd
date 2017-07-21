@@ -3,10 +3,13 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 public class DataSetTest extends TestCase {
+
     @Test
     public void testEquals() throws Exception {
+
         DataSet dataFirst = new DataSet();
         DataSet dataSecond = new DataSet();
+
         dataFirst.addString("Первая строка");
         dataFirst.addString(new String[]{"Вторая строка", "Третья строка"});
         dataFirst.addRow();
@@ -23,11 +26,13 @@ public class DataSetTest extends TestCase {
         assertEquals(false , dataFirst.equals(dataSecond));
 
         dataSecond.addField(0,"Второе поле первой строки");
+
         assertEquals( true, dataFirst.equals(dataSecond));
     }
 
     @Test
     public void QuantityRowsEmptyDataSetExpectZero(){
+
         DataSet dataSet = new DataSet();
         int expected = 0;
         int result = dataSet.quantityRows();
@@ -37,6 +42,7 @@ public class DataSetTest extends TestCase {
 
     @Test
     public void QuantityRows(){
+
         DataSet dataSet = new DataSet();
         int expected = 1;
         dataSet.addRow();
@@ -44,6 +50,4 @@ public class DataSetTest extends TestCase {
 
         assertEquals(expected,result);
     }
-
-
 }

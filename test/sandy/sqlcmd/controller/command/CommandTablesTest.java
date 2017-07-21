@@ -10,10 +10,12 @@ import sandy.sqlcmd.model.SQLConstructorPostgre;
 import static org.mockito.Mockito.*;
 
 public class CommandTablesTest{
+
     private DatabaseManager dbManager;
 
     @Before
     public void setup(){
+
         dbManager = mock(DatabaseManager.class);
         when(dbManager.isConnect()).thenReturn(true);
         when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());

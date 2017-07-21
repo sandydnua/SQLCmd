@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class DataSet {
+
     private ArrayList<ArrayList<String>> table;
     private ArrayList<String> text;
-
 
     public DataSet() {
         text = new ArrayList<>();
@@ -20,19 +20,22 @@ public class DataSet {
 
     @Override
     public boolean equals(Object data){
+
         if( null == data || data.getClass() != this.getClass()){
             return false;
         }
+
         Iterator iteratotThis = this.iteratorText();
         Iterator iteratotData = ((DataSet) data).iteratorText();
+
         while (iteratotData.hasNext() && iteratotThis.hasNext() ) {
             if( !iteratotData.next().equals(iteratotThis.next())){
                 return false;
             }
         }
+
         if( true == iteratotData.hasNext() || true == iteratotThis.hasNext()){
             return false;
-
         }
 
         if( this.quantityRows() != ((DataSet) data).quantityRows()){
@@ -40,11 +43,14 @@ public class DataSet {
         }
 
         int quantityRows = this.quantityRows();
+
         for (int i = 0; i < quantityRows; i++) {
+
             int quantityFields = this.quantityFieldsInRow(i);
             if( quantityFields != ((DataSet) data).quantityFieldsInRow(i)){
                 return false;
             }
+
             for(int j = 0; j < quantityFields; j ++){
                 if( !this.getField( i, j ).equals(((DataSet) data).getField( i, j ))){
                     return false;
@@ -53,9 +59,6 @@ public class DataSet {
         }
 
         return true;
-
-
-
     }
 
     public Iterator<String> iteratorText() {
@@ -63,7 +66,9 @@ public class DataSet {
     }
 
     public int addRow() {
+
         table.add(new ArrayList<String>());
+
         return table.size() - 1;
     }
 

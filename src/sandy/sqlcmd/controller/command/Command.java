@@ -3,6 +3,7 @@ package sandy.sqlcmd.controller.command;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
+import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
 import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
@@ -19,23 +20,13 @@ public abstract class Command {
         this.params = params;
     }
 
-    protected abstract DataSet executeMainProcess() throws MainProcessException, IncorretParametersQuery;
+    protected abstract DataSet executeMainProcess() throws MainProcessException, IncorretParametersQuery, CompletionOfWorkException;
 
-    public DataSet execute(){
+    public DataSet execute() throws CantExecuteException, IncorretParametersQuery, MainProcessException, CompletionOfWorkException {
         DataSet data = new DataSet();
-        try{
-            canExecute();
-            data = executeMainProcess();
-        }catch (CantExecuteException ex){
-            String[] strings = ex.getMessage().split("; ");
-            data.addString(strings);
-        }catch (MainProcessException ex){
-            String[] strings = ex.getMessage().split("; ");
-            data.addString(strings);
-        }catch (IncorretParametersQuery ex){
-            String strings = ex.getMessage();
-            data.addString(strings);
-        }
+        canExecute();
+        data = executeMainProcess();
+
         return data;
     }
     public void setDbManager(DatabaseManager dbManager) {
@@ -46,13 +37,14 @@ public abstract class Command {
 
     protected void checkConnectAndParameters(int quantity) throws CantExecuteException {
         String errorMessages = "";
+
         try{
             checkConnect();
         }catch (CantExecuteException ex){
             errorMessages = ex.getMessage();
         }
         if(params.length != quantity){
-            errorMessages += "Неверное число парметров; ";
+            errorMessages += "Неверное число парметров; | ";
         }
         if( !"".equals(errorMessages))  throw new CantExecuteException(errorMessages);
     }
@@ -66,7 +58,7 @@ public abstract class Command {
             errorMessages = ex.getMessage();
         }
         if(params.length < minQuantity){
-            errorMessages += "Неверное число парметров; ";
+            errorMessages += "Неверное число парметров; |";
         }
         if( !"".equals(errorMessages))  throw new CantExecuteException(errorMessages);
 
@@ -75,9 +67,9 @@ public abstract class Command {
     protected void checkConnect() throws CantExecuteException {
         String errorMessages = "";
         if( null == dbManager){
-            errorMessages += "Не передан DatabaseManager; ";
+            errorMessages += "Не передан DatabaseManager; |";
         }else if( false == dbManager.isConnect()){
-            errorMessages += "Нет подключения к базе; ";
+            errorMessages += "Нет подключения к базе; |";
         }
         if( !"".equals(errorMessages))  throw new CantExecuteException(errorMessages);
     }

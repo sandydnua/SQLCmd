@@ -8,30 +8,34 @@ import sandy.sqlcmd.model.XMLHelpReader;
 
 public class CommandHelp extends Command {
     private static final String NAME_FILE_XML = "help.xml";
-    DataSet data;
+    private static final int INDEX_OF_COMMAND_NAME = 1;
+    private DataSet data;
 
-    public CommandHelp(String[] params){
+    public CommandHelp(String[] params ){
         super(params);
     }
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
 
-        DataSet data = new DataSet();
         HelpReader helpReader;
+
         try {
             helpReader = new XMLHelpReader(NAME_FILE_XML);
         } catch (Exception e) {
-            throw new MainProcessException("Не найден файл"+ NAME_FILE_XML + " или нарушена его структура. " + e.getMessage());
+            throw new MainProcessException( String.format("Не найден файл %s или нарушена его структура.", NAME_FILE_XML) );
         }
 
+        DataSet data = new DataSet();
+
         if(params.length == 2) {
-            data.addString(helpReader.getCommandDescription(params[1]));
+            data.addString(helpReader.getCommandDescription(params[INDEX_OF_COMMAND_NAME]));
         }else {
             data.addString(helpReader.getGeneralDescription());
             data.addString("Реализованне команды:");
             data.addString(helpReader.getListSupportedComnads());
         }
+
         return data;
     }
 
