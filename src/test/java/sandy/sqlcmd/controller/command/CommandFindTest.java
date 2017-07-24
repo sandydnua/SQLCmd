@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 
 public class CommandFindTest {
 
-    DatabaseManager dbManager;
+    private DatabaseManager dbManager;
 
     @Before
     public void setup() {
@@ -42,20 +42,20 @@ public class CommandFindTest {
         verify(dbManager, times(1)).executeQuery(sqlQuery);
     }
     @Test
-    public void tastExecuteMainProcessWhenTableIsEmpty() throws Exception {
+    public void testExecuteMainProcessWhenTableIsEmpty() throws Exception {
 
         String[] params = {"find","tableName"};
         Command command = new CommandFind(params);
         command.setDbManager(dbManager);
 
         DataSet data = new DataSet();
-        DataSet expeted = new DataSet();
-        expeted.addString("Таблица пуста. Содержит следующие поля:");
+        DataSet expected = new DataSet();
+        expected.addString("Таблица пуста. Содержит следующие поля:");
         when(dbManager.existTable(anyString())).thenReturn(true);
         when(dbManager.executeQuery(anyString())).thenReturn(data);
 
         DataSet actual = command.execute();
-        assertTrue(expeted.equals(actual));
+        assertTrue(expected.equals(actual));
     }
 
 }

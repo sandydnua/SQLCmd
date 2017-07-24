@@ -2,13 +2,13 @@ package sandy.sqlcmd.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
+import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 
 import static org.junit.Assert.assertEquals;
 
 public class SQLConstructorPostgreTest {
 
-    SQLConstructorPostgre sqlConstructor;
+    private SQLConstructorPostgre sqlConstructor;
 
     @Before
     public void setup() {
@@ -24,7 +24,7 @@ public class SQLConstructorPostgreTest {
     }
 
     @Test
-    public void testGetQueryDrop() throws IncorretParametersQuery {
+    public void testGetQueryDrop() throws IncorrectParametersQuery {
 
         String expected = "DROP TABLE tableName";
         sqlConstructor.addTables("tableName");
@@ -33,7 +33,7 @@ public class SQLConstructorPostgreTest {
     }
 
     @Test
-    public void testGetQueryFind() throws IncorretParametersQuery {
+    public void testGetQueryFind() throws IncorrectParametersQuery {
 
         String expected = "SELECT * FROM tableName";
 
@@ -44,7 +44,7 @@ public class SQLConstructorPostgreTest {
     }
 
     @Test
-    public void testGetQueryFindWithColumns() throws IncorretParametersQuery {
+    public void testGetQueryFindWithColumns() throws IncorrectParametersQuery {
 
         String expected = "SELECT id, title FROM tableName";
         sqlConstructor.addColumnForSelectInsertCreate("id", "title");
@@ -54,25 +54,25 @@ public class SQLConstructorPostgreTest {
         assertEquals( expected, actual);
     }
 
-    @Test ( expected = IncorretParametersQuery.class)
-    public void testGetQueryFindMissingTable() throws IncorretParametersQuery {
+    @Test ( expected = IncorrectParametersQuery.class)
+    public void testGetQueryFindMissingTable() throws IncorrectParametersQuery {
 
         String expected = "SELECT * FROM tableName";
         String actual = sqlConstructor.getQueryFind();
         assertEquals( expected, actual);
     }
 
-    @Test ( expected = IncorretParametersQuery.class)
-    public void testGetQueryFindEmptyTable() throws IncorretParametersQuery {
+    @Test ( expected = IncorrectParametersQuery.class)
+    public void testGetQueryFindEmptyTable() throws IncorrectParametersQuery {
 
         String expected = "SELECT * FROM tableName";
-        sqlConstructor.addTables( null );
+        sqlConstructor.addTables((String[]) null);
         String actual = sqlConstructor.getQueryFind();
         assertEquals( expected, actual);
     }
 
     @Test
-    public void testGetQueryFindShowTwoField() throws IncorretParametersQuery {
+    public void testGetQueryFindShowTwoField() throws IncorrectParametersQuery {
 
         String expected = "SELECT firstField, secondField FROM tableName";
         sqlConstructor.addColumnForSelectInsertCreate("firstField", "secondField");
@@ -83,7 +83,7 @@ public class SQLConstructorPostgreTest {
     }
 
     @Test
-    public void testGetQueryClear() throws IncorretParametersQuery {
+    public void testGetQueryClear() throws IncorrectParametersQuery {
 
         String expected = "DELETE FROM tableName";
         sqlConstructor.addTables("tableName");
@@ -93,7 +93,7 @@ public class SQLConstructorPostgreTest {
     }
 
     @Test
-    public void  testGetQuerySelect() throws IncorretParametersQuery {
+    public void  testGetQuerySelect() throws IncorrectParametersQuery {
 
         String expected = "SELECT * FROM tableName WHERE column = 'value'";
         sqlConstructor.addTables("tableName");
@@ -104,8 +104,8 @@ public class SQLConstructorPostgreTest {
     }
 
     @Test
-    public void  testGetQueryUpdate() throws IncorretParametersQuery {
-        String expected = "UPDATE tableName SET column = newValue WHERE column = 'value'";
+    public void  testGetQueryUpdate() throws IncorrectParametersQuery {
+        String expected = "UPDATE tableName SET column = 'newValue' WHERE column = 'value'";
         sqlConstructor.addTables("tableName");
         sqlConstructor.setColumnAndValueForWhere("column", "value");
         sqlConstructor.setForColumnNewValue( "column", "newValue");
@@ -115,7 +115,7 @@ public class SQLConstructorPostgreTest {
     }
 
     @Test
-    public void  testGetQueryInsert() throws IncorretParametersQuery {
+    public void  testGetQueryInsert() throws IncorrectParametersQuery {
 
         String expected = "INSERT INTO tableName ( id, title ) VALUES ( '1', 'bla-bla' )";
         sqlConstructor.addTables("tableName");
@@ -126,17 +126,16 @@ public class SQLConstructorPostgreTest {
         assertEquals( expected, actual);
     }
 
-    @Test (expected = IncorretParametersQuery.class )
-    public void  testGetQueryInsertWithoutValues() throws IncorretParametersQuery {
+    @Test (expected = IncorrectParametersQuery.class )
+    public void  testGetQueryInsertWithoutValues() throws IncorrectParametersQuery {
 
-        String expected = "INSERT INTO tableName ( id, title ) VALUES ( '1', 'bla-bla' )";
         sqlConstructor.addTables("tableName");
         sqlConstructor.addColumnForSelectInsertCreate("id", "title");
-        String actual = sqlConstructor.getQueryInsert();
+        sqlConstructor.getQueryInsert();
     }
 
     @Test
-    public void  testGetQueryDelete() throws IncorretParametersQuery {
+    public void  testGetQueryDelete() throws IncorrectParametersQuery {
 
         String expected = "DELETE FROM tableName WHERE column = 'value str'";
         sqlConstructor.addTables("tableName");

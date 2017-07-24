@@ -1,9 +1,6 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
-import sandy.sqlcmd.view.Console;
-import sandy.sqlcmd.view.View;
 
 import java.sql.*;
 import java.util.Arrays;
@@ -35,7 +32,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + database+ "?loggerLevel=OFF", userName, password);
         }catch (SQLException e) {
             connection = null;
-            throw new MainProcessException(String.format("Ошибка подключения к базе. (%s,%s,%s)",database,userName,password));
+            throw new MainProcessException("Ошибка подключения к базе.");
         }
     }
 
@@ -75,7 +72,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
 
 
-    protected Statement getStmt() throws SQLException {
+    Statement getStmt() throws SQLException {
         return connection.createStatement();
     }
 
@@ -100,7 +97,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
     @Override
     public boolean isConnect(){
-        return (null == connection)? false : true;
+        return null != connection;
     }
 
     @Override
@@ -120,11 +117,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
         sqlConstructor.getQueryExistTable();
         DataSet data = this.executeQuery(sqlConstructor.getQueryExistTable());
 
-        if ( data.quantityRows() > 1 ) {
-            return true;
-        } else {
-            return false;
-        }
+        return data.quantityRows() > 1;
     }
 
     @Override
@@ -133,7 +126,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
         SQLConstructor sqlConstructor= this.getSQLConstructor();
         sqlConstructor.addTables(tableName);
         DataSet data;
-        String sqlQuery = null;
+        String sqlQuery;
         try {
             sqlQuery = sqlConstructor.getQuerySelect();
             data = this.executeQuery(sqlQuery);
@@ -144,8 +137,8 @@ public class JDBCDatabaseManager implements DatabaseManager {
         if ( mode == FULL_COVERAGES && data.quantityFieldsInRow(0) != columns.length) {
             return false;
         }
-        Set<String> setFromParameters = new HashSet(Arrays.asList(columns));
-        Set<String> setFromTables = new HashSet();
+        Set<String> setFromParameters = new HashSet<>(Arrays.asList(columns));
+        Set<String> setFromTables = new HashSet<>();
 
         for (int i = 0; i < data.quantityFieldsInRow(0); i++) {
             setFromTables.add(data.getField(0, i));
@@ -154,20 +147,14 @@ public class JDBCDatabaseManager implements DatabaseManager {
         if( mode == FULL_COVERAGES) {
 
             setFromTables.removeAll(setFromParameters);
-            if ( setFromTables.size() == 0 ) {
-                return true;
-            } else {
-                return false;
-            }
+
+            return setFromTables.size() == 0;
         }
         if( mode == EXISTENCE_THESE_FIELDS ) {
 
             setFromParameters.removeAll(setFromTables);
-            if ( setFromParameters.size() == 0 ) {
-                return true;
-            } else {
-                return false;
-            }
+
+            return setFromParameters.size() == 0;
         }
 
         return true;

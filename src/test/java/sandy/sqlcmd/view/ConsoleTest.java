@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ConsoleTest {
 
-    String lineSeparator;
+    private String lineSeparator;
     private ByteArrayOutputStream out;
     private PrintStream systemOut;
     private View view;

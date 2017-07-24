@@ -12,11 +12,11 @@ public class CommandHelpTest {
     public void executeMainProcessFullHelp() throws Exception {
 
         Command command = new CommandHelp( new String[]{"help"});
-        DataSet expendet = new DataSet();
+        DataSet expected = new DataSet();
 
         DataSet actual = command.execute();
 
-        assertFalse( expendet.equals(actual) );
+        assertFalse( expected.equals(actual) );
     }
 
 }

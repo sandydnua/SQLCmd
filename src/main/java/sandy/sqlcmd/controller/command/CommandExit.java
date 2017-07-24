@@ -17,7 +17,7 @@ public class CommandExit extends Command {
         if(null != dbManager && dbManager.isConnect()){
             try {
                 dbManager.disconnect();
-            } catch (MainProcessException mainProcessExepion) {
+            } catch (MainProcessException mainProcessException) {
                 throw new CompletionOfWorkException("Не удалось закрыть соединение с базой! Завершение работы.");
             }
         }

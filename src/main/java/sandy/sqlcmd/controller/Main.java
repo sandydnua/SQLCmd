@@ -5,7 +5,7 @@ import sandy.sqlcmd.view.Console;
 import sandy.sqlcmd.controller.Controller;
 
 
-public class Main {
+class Main {
 
     public static void main(String[] args){
         View view = new Console();

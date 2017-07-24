@@ -3,9 +3,7 @@ package sandy.sqlcmd.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.PrepareDB;
-import sandy.sqlcmd.view.View;
 
 import java.io.*;
 
@@ -13,12 +11,11 @@ import static org.junit.Assert.*;
 
 public class IntegrationMainTest {
 
-    String lineSeparator;
+    private String lineSeparator;
 
     private ByteArrayOutputStream out;
     private InputStream systemIn;
     private PrintStream systemOut;
-    private View view;
 
     private StdIn in;
 
@@ -63,7 +60,7 @@ public class IntegrationMainTest {
     @Test
     public void testMainConnectCommand() throws Exception {
 
-        in.add("connect "+PrepareDB.getNameDbTest()+" usertest 7561");
+        in.add(String.format("connect %s %s %s", PrepareDB.DB_TEST, PrepareDB.USER_TEST, PrepareDB.PASS));
         in.add("disconnect");
         in.add("exit");
 
@@ -81,13 +78,13 @@ public class IntegrationMainTest {
     @Test
     public void testMainConnectCreateInsertDeleteFind() throws Exception {
 
-        in.add("connect "+PrepareDB.getNameDbTest()+" usertest 7561");
-        in.add("create newtable title");
-        in.add("insert newtable title \"First String\"");
-        in.add("insert newtable title \"Second String\"");
-        in.add("find newtable");
-        in.add("delete newtable title \"First String\"");
-        in.add("find newtable");
+        in.add(String.format("connect %s %s %s", PrepareDB.DB_TEST, PrepareDB.USER_TEST, PrepareDB.PASS));
+        in.add("create new_table title");
+        in.add("insert new_table title \"First String\"");
+        in.add("insert new_table title \"Second String\"");
+        in.add("find new_table");
+        in.add("delete new_table title \"First String\"");
+        in.add("find new_table");
 
         in.add("exit");
 
@@ -142,8 +139,6 @@ public class IntegrationMainTest {
 
         try {
             PrepareDB.closeAndDelete(dbTest);
-        } catch (MainProcessException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

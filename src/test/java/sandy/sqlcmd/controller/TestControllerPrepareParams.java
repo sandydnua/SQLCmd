@@ -12,8 +12,8 @@ import static org.junit.Assert.assertArrayEquals;
 @RunWith( Parameterized.class )
 public class TestControllerPrepareParams {
 
-    private String strParams;
-    private String[] paramsExpected;
+    private final String strParams;
+    private final String[] paramsExpected;
 
     public TestControllerPrepareParams ( String strParams, String[] params) {
 
@@ -22,18 +22,18 @@ public class TestControllerPrepareParams {
     }
 
     @Parameterized.Parameters
-    public static List<Object[]> parametersForConctructor() {
+    public static List<Object[]> parametersForConstructor() {
 
         return Arrays.asList( new Object[][]
                 {
-                        { new String("exit" ), new String[]{"exit"} },
-                        { new String("exit help" ), new String[]{"exit","help"} },
-                        { new String("exit \" \"" ), new String[]{"exit", " "} },
-                        { new String("exit \"\"" ), new String[]{"exit", ""} },
-                        { new String("insert tableName title \"Two words\"" ), new String[]{"insert", "tableName", "title", "Two words"} },
-                        { new String("insert tableName title \"Words\"" ), new String[]{"insert", "tableName", "title", "Words"} },
-                        { new String("insert tableName title \"Three different words\"" ), new String[]{"insert", "tableName", "title", "Three different words"} },
-                        { new String("find table" ), new String[]{"find", "table"} }
+                        {"exit", new String[]{"exit"} },
+                        {"exit help", new String[]{"exit","help"} },
+                        {"exit \" \"", new String[]{"exit", " "} },
+                        {"exit \"\"", new String[]{"exit", ""} },
+                        {"insert tableName title \"Two words\"", new String[]{"insert", "tableName", "title", "Two words"} },
+                        {"insert tableName title \"Words\"", new String[]{"insert", "tableName", "title", "Words"} },
+                        {"insert tableName title \"Three different words\"", new String[]{"insert", "tableName", "title", "Three different words"} },
+                        {"find table", new String[]{"find", "table"} }
                 }
         );
     }

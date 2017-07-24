@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
 
 public class CommandCreateTest {
 
-    DatabaseManager dbManager;
+    private DatabaseManager dbManager;
 
     @Before
     public void setup() {

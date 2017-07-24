@@ -14,13 +14,13 @@ import static org.mockito.Mockito.*;
 
 public class CommandDeleteTest {
 
-    DatabaseManager dbManager;
+    private DatabaseManager dbManager;
 
-    String sqlQueryDelete;
-    String sqlQuerySelect;
+    private String sqlQueryDelete;
+    private String sqlQuerySelect;
 
-    Command command;
-    DataSet data;
+    private Command command;
+    private DataSet data;
 
     @Before
     public void setup() throws MainProcessException {
@@ -52,7 +52,7 @@ public class CommandDeleteTest {
     }
 
     @Test
-    public void executeMainProcessWhenRowNotFaund() throws Exception {
+    public void executeMainProcessWhenRowNotFound() throws Exception {
 
         data.addString("Нечего удалять");
         DataSet actual = command.execute();

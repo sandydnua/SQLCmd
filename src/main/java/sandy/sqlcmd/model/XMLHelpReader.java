@@ -19,7 +19,7 @@ public class    XMLHelpReader implements HelpReader {
 
     public XMLHelpReader(String nameFileXml) throws ParserConfigurationException, IOException, SAXException {
 
-        DocumentBuilder documentBuilder = null;
+        DocumentBuilder documentBuilder;
         documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         document = documentBuilder.parse(nameFileXml);
     }
@@ -43,7 +43,7 @@ public class    XMLHelpReader implements HelpReader {
     }
 
     @Override
-    public String[] getListSupportedComnads() throws MainProcessException {
+    public String[] getListSupportedCommands() throws MainProcessException {
 
         List<String> text = new ArrayList<>();
         NodeList nodeList;
@@ -73,7 +73,7 @@ public class    XMLHelpReader implements HelpReader {
     @Override
     public String[] getCommandDescription(String commandName) {
 
-        List<String> text = new ArrayList<String>();
+        List<String> text = new ArrayList<>();
         NodeList nodeList;
 
         try {

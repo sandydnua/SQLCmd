@@ -2,7 +2,7 @@ package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
-import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
+import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
 
@@ -16,15 +16,15 @@ public class CommandFind extends Command {
     }
 
     @Override
-    protected DataSet executeMainProcess() throws MainProcessException, IncorretParametersQuery {
+    protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {
 
         SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
-        String sqlQuery = null;
+        String sqlQuery;
 
         sqlConstructor.addTables(params[1]);
         sqlQuery = sqlConstructor.getQueryFind();
 
-        if( false == dbManager.existTable(params[INDEX_OF_TABLE_NAME]) ){
+        if( !dbManager.existTable(params[INDEX_OF_TABLE_NAME]) ){
             throw new MainProcessException( "Нет такой таблицы" );
         }
 

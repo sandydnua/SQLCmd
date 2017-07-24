@@ -5,8 +5,8 @@ import java.util.Iterator;
 
 public class DataSet {
 
-    private ArrayList<ArrayList<String>> table;
-    private ArrayList<String> text;
+    private final ArrayList<ArrayList<String>> table;
+    private final ArrayList<String> text;
 
     public DataSet() {
         text = new ArrayList<>();
@@ -25,16 +25,16 @@ public class DataSet {
             return false;
         }
 
-        Iterator iteratotThis = this.iteratorText();
-        Iterator iteratotData = ((DataSet) data).iteratorText();
+        Iterator iteratorThis = this.iteratorText();
+        Iterator iteratorData = ((DataSet) data).iteratorText();
 
-        while (iteratotData.hasNext() && iteratotThis.hasNext() ) {
-            if( !iteratotData.next().equals(iteratotThis.next())){
+        while (iteratorData.hasNext() && iteratorThis.hasNext() ) {
+            if( !iteratorData.next().equals(iteratorThis.next())){
                 return false;
             }
         }
 
-        if( true == iteratotData.hasNext() || true == iteratotThis.hasNext()){
+        if( iteratorData.hasNext() || iteratorThis.hasNext()){
             return false;
         }
 
@@ -85,7 +85,6 @@ public class DataSet {
     public void addField(int indexRow, String field) {
         if (existingIndexRow(indexRow)) {
             table.get(indexRow).add(field);
-        } else {
         }
     }
 

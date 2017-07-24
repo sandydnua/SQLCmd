@@ -2,7 +2,7 @@ package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
-import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
+import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
 
@@ -16,7 +16,7 @@ public class CommandClear extends Command {
     }
 
     @Override
-    protected DataSet executeMainProcess() throws MainProcessException, IncorretParametersQuery {
+    protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {
 
 
         SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
@@ -26,9 +26,8 @@ public class CommandClear extends Command {
         dbManager.executeUpdate(sqlQuery);
 
         String strMessage = "Таблица "+params[INDEX_OF_TABLE_NAME]+" очищена";
-        DataSet data = new DataSet(strMessage);
 
-        return data;
+        return new DataSet(strMessage);
     }
 
     @Override

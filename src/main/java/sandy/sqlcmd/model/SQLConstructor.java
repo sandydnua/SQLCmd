@@ -1,6 +1,6 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
+import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 
 public interface SQLConstructor {
 
@@ -16,19 +16,19 @@ public interface SQLConstructor {
 
     String getQueryTables();
 
-    String getQueryFind() throws IncorretParametersQuery;
+    String getQueryFind() throws IncorrectParametersQuery;
 
-    String getQueryClear() throws IncorretParametersQuery;
+    String getQueryClear() throws IncorrectParametersQuery;
 
-    String getQuerySelect() throws IncorretParametersQuery;
+    String getQuerySelect() throws IncorrectParametersQuery;
 
-    String getQueryUpdate() throws IncorretParametersQuery;
+    String getQueryUpdate() throws IncorrectParametersQuery;
 
-    String getQueryDrop() throws IncorretParametersQuery;
+    String getQueryDrop() throws IncorrectParametersQuery;
 
-    String getQueryInsert() throws IncorretParametersQuery;
+    String getQueryInsert() throws IncorrectParametersQuery;
 
-    String getQueryDelete() throws IncorretParametersQuery;
+    String getQueryDelete() throws IncorrectParametersQuery;
 
     String getQueryCreateTable();
 

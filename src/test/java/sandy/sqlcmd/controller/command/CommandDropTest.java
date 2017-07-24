@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
 
 public class CommandDropTest {
 
-    DatabaseManager dbManager;
+    private DatabaseManager dbManager;
 
     @Before
     public void setup(){
@@ -30,7 +30,7 @@ public class CommandDropTest {
         command.setDbManager(dbManager);
 
         DataSet expected = new DataSet();
-        DataSet result = new DataSet();
+        DataSet result;
         expected.addString("Таблица " + params[1] + " удалена");
 
         when(dbManager.isConnect()).thenReturn(true);

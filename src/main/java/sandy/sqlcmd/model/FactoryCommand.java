@@ -8,7 +8,7 @@ public class FactoryCommand {
 
         if (null == params || params.length <= 0 || null == params[0]) {
 
-            return new UnknownCommnad( new String[]{"unkown"});
+            return new UnknownCommand( new String[]{"unknown"});
 
         }
 
@@ -20,7 +20,7 @@ public class FactoryCommand {
             case "CONNECT":
                 return new CommandConnect( params );
             case "DISCONNECT":
-                return new CommandDisonnect( params );
+                return new CommandDisconnect( params );
             case "TABLES":
                 return new CommandTables( params );
             case "FIND":
@@ -38,7 +38,7 @@ public class FactoryCommand {
             case "INSERT":
                 return new CommandInsert( params );
             default:
-                return new UnknownCommnad( params );
+                return new UnknownCommand( params );
         }
     }
 

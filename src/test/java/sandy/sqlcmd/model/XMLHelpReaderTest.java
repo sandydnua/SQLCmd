@@ -13,13 +13,11 @@ import static org.junit.Assert.*;
 
 public class XMLHelpReaderTest {
 
-    String lineSeparator;
-
-    String inputString;
+    private String inputString;
 
     @Before
     public void setup() {
-        lineSeparator = System.getProperty("line.separator");
+        String lineSeparator = System.getProperty("line.separator");
 
         inputString = "<root>" + lineSeparator +
                 "\t<description>" + lineSeparator +
@@ -35,7 +33,7 @@ public class XMLHelpReaderTest {
                 "\t\t</description>" + lineSeparator +
                 "\t</exit>" + lineSeparator +
                 "</main>" + lineSeparator +
-                "</root>" + lineSeparator ;
+                "</root>" + lineSeparator;
     }
 
     @Test
@@ -60,7 +58,7 @@ public class XMLHelpReaderTest {
                 "Для справки по конкретной команде введите help commandName.\n" +
                 "Если параметр состоит из нескольких слов, то такую строку надо заключить в кавычки."};
 
-            DocumentBuilder documentBuilder = null;
+            DocumentBuilder documentBuilder;
             documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             InputStream inputStream = new ByteArrayInputStream(inputString.getBytes(StandardCharsets.UTF_8));
 
@@ -71,16 +69,16 @@ public class XMLHelpReaderTest {
         }
 
     @Test
-    public void getListSupportedComnads() throws Exception {
+    public void getListSupportedCommands() throws Exception {
 
         String[] expected = {"exit - Завершение работы"};
 
-        DocumentBuilder documentBuilder = null;
+        DocumentBuilder documentBuilder;
         documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         InputStream inputStream = new ByteArrayInputStream(inputString.getBytes(StandardCharsets.UTF_8));
 
         HelpReader reader = new XMLHelpReader(documentBuilder.parse(inputStream));
-        String[] actual = reader.getListSupportedComnads();
+        String[] actual = reader.getListSupportedCommands();
 
         assertArrayEquals( expected, actual );
     }
@@ -91,7 +89,7 @@ public class XMLHelpReaderTest {
         String commandName = "exit";
         String[] expected = {"exit", "Команда завершает работу."};
 
-        DocumentBuilder documentBuilder = null;
+        DocumentBuilder documentBuilder;
         documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         InputStream inputStream = new ByteArrayInputStream(inputString.getBytes(StandardCharsets.UTF_8));
 

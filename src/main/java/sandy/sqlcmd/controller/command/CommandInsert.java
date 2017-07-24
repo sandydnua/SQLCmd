@@ -3,7 +3,7 @@ package sandy.sqlcmd.controller.command;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
-import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
+import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
 
@@ -17,14 +17,14 @@ public class CommandInsert extends Command {
         super(params);
     }
 
-    private String prepareSql() throws IncorretParametersQuery, MainProcessException {
+    private String prepareSql() throws IncorrectParametersQuery, MainProcessException {
 
         SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
-        List<String> columns = new ArrayList();
+        List<String> columns = new ArrayList<>();
         sqlConstructor.addTables(params[INDEX_OF_TABLE_NAME]);
 
         if ( !dbManager.existTable(params[INDEX_OF_TABLE_NAME]) ) {
-            throw  new IncorretParametersQuery( "Нет такой таблицы" );
+            throw  new IncorrectParametersQuery( "Нет такой таблицы" );
         }
 
         for( int i = 3 ; i < params.length; i+=2 ){
@@ -34,14 +34,14 @@ public class CommandInsert extends Command {
         }
 
         if( !dbManager.existColumns(params[INDEX_OF_TABLE_NAME], DatabaseManager.FULL_COVERAGES, columns.toArray(new String[]{}) ) ) {
-            throw new IncorretParametersQuery( "Неверный набор полей для вставки");
+            throw new IncorrectParametersQuery( "Неверный набор полей для вставки");
         }
 
         return sqlConstructor.getQueryInsert();
     }
 
     @Override
-    protected DataSet executeMainProcess() throws MainProcessException, IncorretParametersQuery {
+    protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {
         String sqlQuery = prepareSql();
 
         dbManager.executeUpdate(sqlQuery);

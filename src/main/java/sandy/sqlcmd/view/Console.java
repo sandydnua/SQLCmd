@@ -35,27 +35,27 @@ public class Console implements View {
         }
     }
     private void writeTable(DataSet data){
-        int quantiyRows = data.quantityRows();
-        if(quantiyRows == 0) return;
+        int quantityRows = data.quantityRows();
+        if(quantityRows == 0) return;
 
         int quantityFields = data.quantityFieldsInRow(0);
-        int[] maxWidthFields = getMaximumWidthsFields(data, quantiyRows, quantityFields);
+        int[] maxWidthFields = getMaximumWidthsFields(data, quantityRows, quantityFields);
 
         drawLine(maxWidthFields, null,0);
         drawLine(maxWidthFields, data,0);
         drawLine(maxWidthFields, null,0);
 
-        for(int i = 1; i < quantiyRows; i++){
+        for(int i = 1; i < quantityRows; i++){
             drawLine(maxWidthFields, data,i);
             drawLine(maxWidthFields, null,0);
         }
     }
 
-    private int[] getMaximumWidthsFields(DataSet data,int quantiyRows, int quantityFields) {
+    private int[] getMaximumWidthsFields(DataSet data,int quantityRows, int quantityFields) {
         int[] maxWidthFields = new int[quantityFields];
 
         for(int j = 0; j < quantityFields; j++){
-            for(int i = 0; i < quantiyRows; i++){
+            for(int i = 0; i < quantityRows; i++){
                 if(maxWidthFields[j] < data.getField(i,j).length()){
                     maxWidthFields[j] = data.getField(i,j).length();
                 }

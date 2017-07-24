@@ -25,7 +25,7 @@ public class JDBCDatabaseManagerTest {
     public void connectToSpecificDatabase() throws Exception {
 
         DatabaseManager dbManager = new JDBCDatabaseManager();
-        String[] params = {"postgres", "postgres", "7561"};
+        String[] params = {PrepareDB.DB_NAME, PrepareDB.ROOT_NAME, PrepareDB.PASS};
 
         dbManager.connect(params[0], params[1], params[2]);
 }
@@ -87,7 +87,7 @@ public class JDBCDatabaseManagerTest {
 }
 
     @Test
-    public void testExistAnyColumnUnknowTable () throws MainProcessException {
+    public void testExistAnyColumnUnknownTable() throws MainProcessException {
 
         dbTest.executeUpdate("CREATE TABLE test ( id varchar(255), title varchar(255))");
         Boolean actual = dbTest.existColumns( "bla-bla", DatabaseManager.EXISTENCE_THESE_FIELDS, "title-Bla-bla");
@@ -97,7 +97,7 @@ public class JDBCDatabaseManagerTest {
 
 
     @Test ( expected = MainProcessException.class )
-    public void connectWitjIncorrectParameters() throws Exception {
+    public void connectWithIncorrectParameters() throws Exception {
 
         DatabaseManager dbManager = new JDBCDatabaseManager();
         String[] params = {"rave", "rave", "rave"};

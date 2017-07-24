@@ -1,17 +1,16 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
+import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import java.util.*;
 
 public class SQLConstructorPostgre implements SQLConstructor {
 
-    private Map<String, String> templates;
-    private StringBuilder tablesForFrom;
-    private StringBuilder columnsForSelectInsertCreate;
+    private final Map<String, String> templates;
+    private final StringBuilder tablesForFrom;
+    private final StringBuilder columnsForSelectInsertCreate;
     private String coupleForSet;
     private String coupleForWhere;
-    private StringBuilder valuesForInsert;
-    private final String defaultColumnType = "varchar(255)";
+    private final StringBuilder valuesForInsert;
 
     public SQLConstructorPostgre() {
 
@@ -38,7 +37,8 @@ public class SQLConstructorPostgre implements SQLConstructor {
     @Override
     public String getQueryCreateTable() {
 
-        String columnsAndTypes = columnsForSelectInsertCreate.toString().replace( ","," "+defaultColumnType+",") + " "+defaultColumnType;
+        String defaultColumnType = "varchar(255)";
+        String columnsAndTypes = columnsForSelectInsertCreate.toString().replace( ","," "+ defaultColumnType +",") + " "+ defaultColumnType;
 
         String sqlQuery = templates.get("createTable");
         sqlQuery = sqlQuery.replace("<table>", tablesForFrom);
@@ -52,6 +52,11 @@ public class SQLConstructorPostgre implements SQLConstructor {
     public String getQueryExistTable() {
 
         return templates.get("existtable").replace("<table>", tablesForFrom.toString());
+    }
+
+    @Override
+    public void setForColumnNewValue(String column, String value) {
+        coupleForSet = String.format("%s = '%s'", column, value);
     }
 
     @Override
@@ -93,7 +98,7 @@ public class SQLConstructorPostgre implements SQLConstructor {
     }
 
     @Override
-    public String getQueryFind() throws IncorretParametersQuery {
+    public String getQueryFind() throws IncorrectParametersQuery {
 
         String columns = getColumns();
         String sqlQuery = templates.get("find").replace( "<columns>", columns);
@@ -101,7 +106,6 @@ public class SQLConstructorPostgre implements SQLConstructor {
 
         return sqlQuery;
     }
-
     private String getColumns() {
 
         if ( columnsForSelectInsertCreate.length() == 0) {
@@ -110,35 +114,31 @@ public class SQLConstructorPostgre implements SQLConstructor {
             return columnsForSelectInsertCreate.toString();
         }
     }
-    private String getTables() throws IncorretParametersQuery {
+    private String getTables() throws IncorrectParametersQuery {
 
         if ( tablesForFrom.length() == 0) {
-            throw new IncorretParametersQuery( "Не указаны таблицы для запроса" );
+            throw new IncorrectParametersQuery( "Не указаны таблицы для запроса" );
         }  else {
             return tablesForFrom.toString();
         }
     }
-    private String getValues() throws IncorretParametersQuery {
+
+    private String getValues() throws IncorrectParametersQuery {
 
         if ( valuesForInsert.length() == 0) {
-            throw new IncorretParametersQuery( "Не указаны значения для вставки" );
+            throw new IncorrectParametersQuery( "Не указаны значения для вставки" );
         }  else {
             return valuesForInsert.toString();
         }
     }
 
     @Override
-    public String getQueryClear() throws IncorretParametersQuery {
+    public String getQueryClear() throws IncorrectParametersQuery {
         return templates.get("clear").replace("<tables>", getTables() );
     }
 
     @Override
-    public void setForColumnNewValue(String column, String value) {
-        coupleForSet = String.format("%s = %s", column, value);
-    }
-
-    @Override
-    public String getQueryInsert() throws IncorretParametersQuery {
+    public String getQueryInsert() throws IncorrectParametersQuery {
 
         String sqlQuery = templates.get("insert").replace("<tables>", getTables());
         sqlQuery = sqlQuery.replace("<columns>", getColumns());
@@ -148,7 +148,7 @@ public class SQLConstructorPostgre implements SQLConstructor {
     }
 
     @Override
-    public String getQuerySelect() throws IncorretParametersQuery {
+    public String getQuerySelect() throws IncorrectParametersQuery {
 
         String sqlQuery = templates.get("select").replace("<where>", coupleForWhere);
         sqlQuery = sqlQuery.replace("<tables>", getTables());
@@ -158,7 +158,7 @@ public class SQLConstructorPostgre implements SQLConstructor {
     }
 
     @Override
-    public String getQueryUpdate() throws IncorretParametersQuery {
+    public String getQueryUpdate() throws IncorrectParametersQuery {
 
         String sqlQuery = templates.get("update").replace("<tables>", getTables());
         sqlQuery = sqlQuery.replace("<coupleForSet>", coupleForSet);
@@ -168,11 +168,9 @@ public class SQLConstructorPostgre implements SQLConstructor {
     }
 
     @Override
-    public String getQueryDrop() throws IncorretParametersQuery {
+    public String getQueryDrop() throws IncorrectParametersQuery {
 
-        String sqlQuery = templates.get("drop").replace("<tables>", getTables());
-
-        return sqlQuery;
+        return templates.get("drop").replace("<tables>", getTables());
     }
 
     @Override
@@ -185,7 +183,7 @@ public class SQLConstructorPostgre implements SQLConstructor {
         addParameter(valuesForInsert, values);
     }
     @Override
-    public String getQueryDelete() throws IncorretParametersQuery {
+    public String getQueryDelete() throws IncorrectParametersQuery {
 
         return templates.get("delete").replace("<tables>", getTables() ).replace("<where>", coupleForWhere);
     }

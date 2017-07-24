@@ -4,11 +4,11 @@ import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
-public class CommandDisonnect extends Command {
+public class CommandDisconnect extends Command {
 
     private static final int EXPECTED_QUANTITY_OF_PARAMETERS = 1;
 
-    public CommandDisonnect(String[] params) {
+    public CommandDisconnect(String[] params) {
         super(params);
     }
     @Override

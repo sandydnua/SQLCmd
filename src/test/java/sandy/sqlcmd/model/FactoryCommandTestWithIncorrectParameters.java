@@ -10,9 +10,8 @@ public class FactoryCommandTestWithIncorrectParameters {
     @Test
     public void testGetCommandWithIncorrectParameters(){
 
-        String[] params = null;
-        Command expCommand = new UnknownCommnad(params);
-        assertTrue( expCommand.getClass() == FactoryCommand.getCommand(params).getClass() );
+        Command expCommand = new UnknownCommand( null );
+        assertTrue( expCommand.getClass() == FactoryCommand.getCommand( null ).getClass() );
     }
 
 }

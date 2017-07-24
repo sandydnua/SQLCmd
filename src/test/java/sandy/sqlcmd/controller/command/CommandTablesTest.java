@@ -22,7 +22,7 @@ public class CommandTablesTest{
     }
 
     @Test
-    public void validateRequesInCommand() throws Exception {
+    public void validateRequestInCommand() throws Exception {
         String[] params = {"tables"};
         Command command = new CommandTables(params);
 

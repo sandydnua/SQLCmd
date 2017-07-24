@@ -10,20 +10,19 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CommandDisonnectTest {
+public class CommandDisconnectTest {
 
-    DatabaseManager dbManager;
-    String[] params;
-    Command command;
+    private DatabaseManager dbManager;
+    private Command command;
 
     @Before
     public void setup() {
 
-        params = new String[]{"disconnect"};
+        String[] params = new String[]{"disconnect"};
 
         dbManager = mock(DatabaseManager.class);
         when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());
-        command = new CommandDisonnect(params);
+        command = new CommandDisconnect(params);
         command.setDbManager(dbManager);
     }
 

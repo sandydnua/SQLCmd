@@ -13,7 +13,7 @@ import static org.mockito.Mockito.*;
 
 public class CommandClearTest {
 
-    DatabaseManager dbManager;
+    private DatabaseManager dbManager;
     @Before
     public void setup(){
         dbManager = mock(DatabaseManager.class);
@@ -29,7 +29,7 @@ public class CommandClearTest {
         command.setDbManager(dbManager);
 
         DataSet expected = new DataSet();
-        DataSet result = new DataSet();
+        DataSet result;
         expected.addString("Таблица " + params[1] + " очищена");
 
         when(dbManager.isConnect()).thenReturn(true);

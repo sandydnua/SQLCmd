@@ -5,7 +5,7 @@ import org.junit.Test;
 import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
-import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
+import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 import static org.mockito.Mockito.doThrow;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 public class CommandExitTest {
 
     @Test(expected = CompletionOfWorkException.class)
-    public void testExecuteExpectedException() throws CompletionOfWorkException, IncorretParametersQuery, MainProcessException, CantExecuteException {
+    public void testExecuteExpectedException() throws Exception {
 
         String[] params = {"exit"};
         Command command = new CommandExit(params);
@@ -23,7 +23,7 @@ public class CommandExitTest {
     }
 
     @Test(expected = CompletionOfWorkException.class)
-    public void testExitWithoutClosingConnection() throws CompletionOfWorkException, IncorretParametersQuery, MainProcessException, CantExecuteException {
+    public void testExitWithoutClosingConnection() throws Exception {
 
         String[] params = {"exit"};
 

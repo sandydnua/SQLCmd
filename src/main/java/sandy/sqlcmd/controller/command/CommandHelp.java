@@ -9,7 +9,6 @@ import sandy.sqlcmd.model.XMLHelpReader;
 public class CommandHelp extends Command {
     private static final String NAME_FILE_XML = "help.xml";
     private static final int INDEX_OF_COMMAND_NAME = 1;
-    private DataSet data;
 
     public CommandHelp(String[] params ){
         super(params);
@@ -28,12 +27,12 @@ public class CommandHelp extends Command {
 
         DataSet data = new DataSet();
 
-        if(params.length == 2) {
+        if( params.length  > 1 ) {
             data.addString(helpReader.getCommandDescription(params[INDEX_OF_COMMAND_NAME]));
         }else {
             data.addString(helpReader.getGeneralDescription());
-            data.addString("Реализованне команды:");
-            data.addString(helpReader.getListSupportedComnads());
+            data.addString("Реализованные команды:");
+            data.addString(helpReader.getListSupportedCommands());
         }
 
         return data;

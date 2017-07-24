@@ -3,7 +3,7 @@ package sandy.sqlcmd.controller;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class StdIn extends InputStream {
+class StdIn extends InputStream {
 
     private String string;
     private boolean eof = false;

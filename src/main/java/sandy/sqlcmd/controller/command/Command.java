@@ -4,15 +4,15 @@ import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
-import sandy.sqlcmd.model.Exceptions.IncorretParametersQuery;
+import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public abstract class Command {
 
-    protected String[] params = null;
-    protected DatabaseManager dbManager = null;
+    String[] params;
+    DatabaseManager dbManager;
 
-    public Command(String[] params){
+    protected Command(String[] params){
         setParams(params);
     }
 
@@ -20,10 +20,10 @@ public abstract class Command {
         this.params = params;
     }
 
-    protected abstract DataSet executeMainProcess() throws MainProcessException, IncorretParametersQuery, CompletionOfWorkException;
+    protected abstract DataSet executeMainProcess() throws Exception;
 
-    public DataSet execute() throws CantExecuteException, IncorretParametersQuery, MainProcessException, CompletionOfWorkException {
-        DataSet data = new DataSet();
+    public DataSet execute() throws Exception {
+        DataSet data;
         canExecute();
         data = executeMainProcess();
 
@@ -35,7 +35,7 @@ public abstract class Command {
 
     protected abstract void canExecute() throws CantExecuteException;
 
-    protected void checkConnectAndParameters(int quantity) throws CantExecuteException {
+    void checkConnectAndParameters(int quantity) throws CantExecuteException {
         String errorMessages = "";
 
         try{
@@ -49,7 +49,7 @@ public abstract class Command {
         if( !"".equals(errorMessages))  throw new CantExecuteException(errorMessages);
     }
 
-    protected void checkConnectAndMinQuantityParameters(int minQuantity) throws CantExecuteException {
+    void checkConnectAndMinQuantityParameters(int minQuantity) throws CantExecuteException {
 
         String errorMessages = "";
         try{
@@ -64,11 +64,11 @@ public abstract class Command {
 
     }
 
-    protected void checkConnect() throws CantExecuteException {
+    private void checkConnect() throws CantExecuteException {
         String errorMessages = "";
         if( null == dbManager){
             errorMessages += "Не передан DatabaseManager; |";
-        }else if( false == dbManager.isConnect()){
+        }else if( !dbManager.isConnect()){
             errorMessages += "Нет подключения к базе; |";
         }
         if( !"".equals(errorMessages))  throw new CantExecuteException(errorMessages);

@@ -3,8 +3,8 @@ package sandy.sqlcmd.model;
 import sandy.sqlcmd.controller.command.Command;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 
-public class UnknownCommnad extends Command {
-    public UnknownCommnad(String[] params){
+public class UnknownCommand extends Command {
+    public UnknownCommand(String[] params){
 
         super(params);
     }

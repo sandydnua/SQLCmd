@@ -8,25 +8,22 @@ import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructorPostgre;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 public class CommandUpdateTest {
 
-    DatabaseManager dbManager;
+    private DatabaseManager dbManager;
 
-    String sqlQueryUpdate;
-    String sqlQuerySelect;
+    private String sqlQueryUpdate;
+    private String sqlQuerySelect;
 
-    Command command;
-    DataSet data;
+    private Command command;
+    private DataSet data;
 
     @Before
     public void setup() throws MainProcessException {
 
-        sqlQueryUpdate = "UPDATE tableName SET columnName = columnValueNew WHERE column = 'value'";
+        sqlQueryUpdate = "UPDATE tableName SET columnName = 'columnValueNew' WHERE column = 'value'";
         sqlQuerySelect = "SELECT * FROM tableName WHERE column = 'value'";
         String[] params = {"update", "tableName", "column", "value", "columnName", "columnValueNew"};
 
@@ -49,7 +46,7 @@ public class CommandUpdateTest {
 
         when(dbManager.executeQuery(anyString())).thenReturn(data);
 
-        DataSet expected = new DataSet("Cтроки, которые будут обновлены");
+        DataSet expected = new DataSet("Эти строки будут обновлены");
         expected.addRow();
         expected.addRow();
         DataSet actual = command.execute();
@@ -63,7 +60,7 @@ public class CommandUpdateTest {
     }
 
     @Test
-    public void executeMainProcessWhenRowNotFaund() throws Exception {
+    public void executeMainProcessWhenRowNotFound() throws Exception {
 
         data = new DataSet();
         data.addRow();

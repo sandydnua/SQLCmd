@@ -12,7 +12,7 @@ import static org.mockito.Mockito.verify;
 
 public class CommandInsertTest {
 
-    DatabaseManager dbManager;
+    private DatabaseManager dbManager;
 
     @Before
     public void setup() {
@@ -31,7 +31,7 @@ public class CommandInsertTest {
         Command command = new CommandInsert(params);
         command.setDbManager(dbManager);
         when(dbManager.existTable(params[1])).thenReturn(true);
-        when(dbManager.existColumns(params[1], DatabaseManager.FULL_COVERAGES, new String[]{"id", "title"})).thenReturn(true);
+        when(dbManager.existColumns(params[1], DatabaseManager.FULL_COVERAGES, "id", "title")).thenReturn(true);
 
         command.execute();
         verify(dbManager, times(1)).executeUpdate(sqlQuery);
