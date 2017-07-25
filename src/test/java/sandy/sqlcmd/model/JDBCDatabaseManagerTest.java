@@ -43,6 +43,17 @@ public class JDBCDatabaseManagerTest {
 
         assertTrue( expected.equals(actual));
 }
+@Test ( expected = MainProcessException.class)
+    public void testCreateAndTablesBadParametr () throws MainProcessException {
+
+        DataSet expected = new DataSet();
+        expected.addRow();
+        expected.addField(0,"id");
+        expected.addField(0,"title");
+
+        dbTest.executeUpdate("CREATE TABLE test ( id , title varchar(255))");
+        dbTest.executeQuery("SELECT * FROM test");
+}
 
     @Test
     public void testExistTable () throws MainProcessException {
@@ -51,6 +62,13 @@ public class JDBCDatabaseManagerTest {
         Boolean actual = dbTest.existTable("test");
 
         assertTrue( actual);
+}
+    @Test
+    public void testExistTableVoidParametr () throws MainProcessException {
+
+        Boolean actual = dbTest.existTable("");
+
+        assertFalse( actual);
 }
 
     @Test

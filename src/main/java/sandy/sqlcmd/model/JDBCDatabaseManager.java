@@ -9,6 +9,8 @@ import java.util.Set;
 
 public class JDBCDatabaseManager implements DatabaseManager {
 
+    private static final int NUMBER_OF_FIRST_ROW_IN_TABLE = 0;
+
     private Connection connection;
 
     public JDBCDatabaseManager(){
@@ -42,7 +44,6 @@ public class JDBCDatabaseManager implements DatabaseManager {
         if( null != connection ) try {
             connection.close();
         } catch (SQLException e) {
-            connection = null;
             throw new MainProcessException("Ошибка при закрытии подключения");
         }
     }
@@ -83,7 +84,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
         data.addRow();
 
         for ( int i = 1; i <= columnCount; i++ ) {
-            data.addField (0,result.getMetaData().getColumnName(i) );
+            data.addField (NUMBER_OF_FIRST_ROW_IN_TABLE,result.getMetaData().getColumnName(i) );
         }
 
         while(result.next()){
@@ -123,6 +124,8 @@ public class JDBCDatabaseManager implements DatabaseManager {
     @Override
     public  boolean existColumns(String tableName, int mode, String... columns) {
 
+
+
         SQLConstructor sqlConstructor= this.getSQLConstructor();
         sqlConstructor.addTables(tableName);
         DataSet data;
@@ -134,29 +137,27 @@ public class JDBCDatabaseManager implements DatabaseManager {
             return false;
         }
 
-        if ( mode == FULL_COVERAGES && data.quantityFieldsInRow(0) != columns.length) {
+        if ( mode == FULL_COVERAGES && data.quantityFieldsInRow(NUMBER_OF_FIRST_ROW_IN_TABLE) != columns.length) {
             return false;
         }
         Set<String> setFromParameters = new HashSet<>(Arrays.asList(columns));
         Set<String> setFromTables = new HashSet<>();
 
-        for (int i = 0; i < data.quantityFieldsInRow(0); i++) {
-            setFromTables.add(data.getField(0, i));
+        for (int i = 0; i < data.quantityFieldsInRow(NUMBER_OF_FIRST_ROW_IN_TABLE); i++) {
+            setFromTables.add(data.getField(NUMBER_OF_FIRST_ROW_IN_TABLE, i));
         }
-
+        int diffSize = 0;
         if( mode == FULL_COVERAGES) {
 
             setFromTables.removeAll(setFromParameters);
-
-            return setFromTables.size() == 0;
+            diffSize = setFromTables.size();
         }
         if( mode == EXISTENCE_THESE_FIELDS ) {
 
             setFromParameters.removeAll(setFromTables);
-
-            return setFromParameters.size() == 0;
+                diffSize = setFromParameters.size();
         }
 
-        return true;
+        return diffSize == 0;
     }
 }

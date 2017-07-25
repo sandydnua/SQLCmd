@@ -3,11 +3,15 @@ package sandy.sqlcmd.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.PrepareDB;
+import sandy.sqlcmd.view.*;
+import sandy.sqlcmd.view.Console;
 
 import java.io.*;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class IntegrationMainTest {
 

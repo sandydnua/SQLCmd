@@ -30,8 +30,10 @@ class Controller {
         view.write("Для справки введите HELP");
         String inputString;
         while (continueWork) {
-            inputString = view.read();
+
             data = new DataSet();
+            inputString = view.read();
+
             try {
 
                 Command command = FactoryCommand.getCommand(prepareParams(inputString));
@@ -41,11 +43,12 @@ class Controller {
             } catch (Exception ex) {
                 handleException(ex);
             }
+
             view.write(data);
         }
     }
 
-    private void handleException(Exception ex) {
+    protected void handleException(Exception ex) {
 
         if (
                 ex instanceof IllegalArgumentException |
@@ -68,7 +71,9 @@ class Controller {
             data.addString("Ума не приложу как это вышло...");
             data.addString("Произошла непредвиденная ошибка");
             try {
-                dbManager.disconnect();
+                if(dbManager.isConnect()){
+                    dbManager.disconnect();
+                }
             } catch (MainProcessException e) {
                 data.addString("Не удалось закрыть текущее подключение");
             }

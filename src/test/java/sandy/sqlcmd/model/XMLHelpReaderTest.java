@@ -99,4 +99,20 @@ public class XMLHelpReaderTest {
         assertArrayEquals( expected, actual );
     }
 
+    @Test
+    public void getUnknownCommandDescription() throws Exception {
+
+        String commandName = "fignya";
+        String[] expected = {"Справки по такой команде нет"};
+
+        DocumentBuilder documentBuilder;
+        documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        InputStream inputStream = new ByteArrayInputStream(inputString.getBytes(StandardCharsets.UTF_8));
+
+        HelpReader reader = new XMLHelpReader(documentBuilder.parse(inputStream));
+        String[] actual = reader.getCommandDescription(commandName);
+
+        assertArrayEquals( expected, actual );
+    }
+
 }

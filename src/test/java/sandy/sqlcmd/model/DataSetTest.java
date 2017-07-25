@@ -2,6 +2,8 @@ package sandy.sqlcmd.model;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class DataSetTest {
 
@@ -29,6 +31,13 @@ public class DataSetTest {
         dataSecond.addField(0,"Второе поле первой строки");
 
         assertEquals(true, dataFirst.equals(dataSecond));
+    }
+
+    @Test
+    public void testEqualsWrongParameter() {
+        DataSet data = new DataSet();
+        assertFalse( data.equals( new Object()));
+
     }
 
     @Test
