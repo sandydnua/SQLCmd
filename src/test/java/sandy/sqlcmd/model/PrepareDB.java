@@ -1,5 +1,7 @@
 package sandy.sqlcmd.model;
 
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
+
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -53,7 +55,7 @@ public class PrepareDB extends JDBCDatabaseManager {
         }
     }
 
-    public static PrepareDB createAndConnect() throws Exception {
+    public static void create() throws Exception {
 
         PrepareDB dbManager = new PrepareDB();
         dbManager.connect(DB_NAME, ROOT_NAME, PASS);
@@ -64,18 +66,24 @@ public class PrepareDB extends JDBCDatabaseManager {
         dbManager.createUserTest();
 
         dbManager.disconnect();
+    }
+
+    public static PrepareDB connect() throws Exception {
+        PrepareDB dbManager = new PrepareDB();
         dbManager.connect(DB_TEST, USER_TEST, PASS);
         return dbManager;
     }
 
-    public static void closeAndDelete(PrepareDB dbManager) throws Exception {
+    public static void close(PrepareDB dbManager) throws Exception {
 
         dbManager.disconnect();
+    }
+
+    public static void delete(PrepareDB dbManager) throws Exception {
+
         dbManager.connect(DB_NAME, ROOT_NAME, PASS);
         dbManager.dropDatabase();
         dbManager.deleteUserTest();
         dbManager.disconnect();
     }
-
-
 }

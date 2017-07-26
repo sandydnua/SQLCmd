@@ -1,8 +1,6 @@
 package sandy.sqlcmd.controller;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.PrepareDB;
 import sandy.sqlcmd.view.*;
@@ -23,7 +21,26 @@ public class IntegrationMainTest {
 
     private StdIn in;
 
-    private PrepareDB dbTest;
+    private static PrepareDB dbTest;
+
+    @BeforeClass
+    public static void createTestDB() throws Exception {
+        try {
+            PrepareDB.create();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Тестовая база не создана");
+        }
+    }
+
+    @AfterClass
+    public static void deleteTestDB() {
+        try {
+            PrepareDB.delete(dbTest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Before
     public void setup() {
@@ -31,7 +48,7 @@ public class IntegrationMainTest {
         lineSeparator = System.getProperty("line.separator");
 
         try {
-            dbTest = PrepareDB.createAndConnect();
+            dbTest = PrepareDB.connect();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,6 +64,20 @@ public class IntegrationMainTest {
         System.setIn(in);
     }
 
+    @After
+    public void end(){
+
+        System.setErr(systemOut);
+        System.setOut(systemOut);
+
+        System.setIn(systemIn);
+
+        try {
+            PrepareDB.close(dbTest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void testMainExitCommand() throws Exception {
@@ -77,7 +108,6 @@ public class IntegrationMainTest {
 
         assertEquals( expected, actual);
     }
-
 
     @Test
     public void testMainConnectCreateInsertDeleteFind() throws Exception {
@@ -130,21 +160,6 @@ public class IntegrationMainTest {
             return result;
         } catch (UnsupportedEncodingException e) {
             return e.getMessage();
-        }
-    }
-
-    @After
-    public void end(){
-
-        System.setErr(systemOut);
-        System.setOut(systemOut);
-
-        System.setIn(systemIn);
-
-        try {
-            PrepareDB.closeAndDelete(dbTest);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
