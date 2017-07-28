@@ -18,7 +18,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public void connect(String database, String userName, String password) throws MainProcessException {
+    public void connect(String address, String database, String userName, String password) throws MainProcessException {
 
         try {
             Class.forName("org.postgresql.Driver");
@@ -31,7 +31,8 @@ public class JDBCDatabaseManager implements DatabaseManager {
         }
 
         try {
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + database+ "?loggerLevel=OFF", userName, password);
+            connection = DriverManager.getConnection( String.format("jdbc:postgresql://%s/%s?loggerLevel=OFF", address, database ),
+                                                      userName, password);
         }catch (SQLException e) {
             connection = null;
             throw new MainProcessException("Ошибка подключения к базе.");

@@ -9,7 +9,7 @@ public interface DatabaseManager{
 
     SQLConstructor getSQLConstructor();
 
-    void connect(String database, String userName, String password) throws MainProcessException;
+    void connect( String address, String database, String userName, String password) throws MainProcessException;
     void disconnect() throws MainProcessException;
 
     DataSet executeQuery(String sqlQuery) throws MainProcessException;

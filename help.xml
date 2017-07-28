@@ -9,10 +9,12 @@
 	</description>
 <main>
 
-	<connect title = "'connect database userName password' - Подключение к базе">
+	<connect title = "'connect address:posrt database userName password' - Подключение к базе">
 		<description>
 		Команда для подключения к соответствующей БД
-		Формат команды: connect database username password
+		Формат команды: connect address:port database username password
+		address  - адрес сервера БД
+		port     - порт
 		database - имя БД
 		username - имя пользователя БД
 		password - пароль пользователя БД
@@ -44,7 +46,7 @@
 		Тип поля реализован только varchar(255), устанавливается поумолчанию
 		Формат: create tableName column1 [column2 [... columnN]]
 		tableName - имя новой таблицы
-		column1 - имя первого столбца записи - обязателен хотябы один столбец
+		column1 - имя первого столбца за111писи - обязателен хотябы один столбец
 		columnN - имя n-го столбца записи
 		</description>
 	</create>

@@ -25,9 +25,10 @@ public class JDBCDatabaseManagerTest {
     public void connectToSpecificDatabase() throws Exception {
 
         DatabaseManager dbManager = new JDBCDatabaseManager();
-        String[] params = {PrepareDB.DB_NAME, PrepareDB.ROOT_NAME, PrepareDB.PASS};
 
-        dbManager.connect(params[0], params[1], params[2]);
+        dbManager.connect( PrepareDB.ADDRESS_AND_POSR, PrepareDB.DB_NAME,
+                           PrepareDB.ROOT_NAME, PrepareDB.PASS
+                         );
     }
 
     @AfterClass
@@ -120,8 +121,8 @@ public class JDBCDatabaseManagerTest {
     public void connectWithIncorrectParameters() throws Exception {
 
     DatabaseManager dbManager = new JDBCDatabaseManager();
-    String[] params = {"rave", "rave", "rave"};
+    String[] params = {"rave", "rave", "rave", "rave"};
 
-    dbManager.connect(params[0], params[1], params[2]);
+    dbManager.connect(params[0], params[1], params[2], params[3]);
     }
 }

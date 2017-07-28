@@ -23,14 +23,18 @@ public class CommandConnectTest {
     @Test
     public void executeMainProcessToLocalDB() throws Exception {
 
-        String[] params = {"connect", "dbName", "userName", "password"};
+        String[] params = {"connect", "localhost:5432","dbName", "userName", "password"};
         Command command = new CommandConnect(params);
         command.setDbManager(dbManager);
         DataSet expected = new DataSet("Подключился к базе");
         DataSet result = command.execute();
 
         assertTrue( expected.equals(result) );
-        verify(dbManager, times(1)).connect("dbName", "userName", "password");
+        verify(dbManager, times(1)).connect("localhost:5432",
+                                                                   "dbName",
+                                                                   "userName",
+                                                                   "password"
+                                                                   );
     }
 
 }

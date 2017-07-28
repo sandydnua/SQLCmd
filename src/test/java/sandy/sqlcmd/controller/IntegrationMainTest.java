@@ -95,7 +95,8 @@ public class IntegrationMainTest {
     @Test
     public void testMainConnectCommand() throws Exception {
 
-        in.add(String.format("connect %s %s %s", PrepareDB.DB_TEST, PrepareDB.USER_TEST, PrepareDB.PASS));
+        in.add(String.format("connect %s %s %s %s", PrepareDB.ADDRESS_AND_POSR, PrepareDB.DB_TEST,
+                             PrepareDB.USER_TEST, PrepareDB.PASS ) );
         in.add("disconnect");
         in.add("exit");
 
@@ -112,7 +113,8 @@ public class IntegrationMainTest {
     @Test
     public void testMainConnectCreateInsertDeleteFind() throws Exception {
 
-        in.add(String.format("connect %s %s %s", PrepareDB.DB_TEST, PrepareDB.USER_TEST, PrepareDB.PASS));
+        in.add(String.format("connect %s %s %s %s", PrepareDB.ADDRESS_AND_POSR, PrepareDB.DB_TEST,
+                             PrepareDB.USER_TEST, PrepareDB.PASS));
         in.add("create new_table title");
         in.add("insert new_table title \"First String\"");
         in.add("insert new_table title \"Second String\"");
