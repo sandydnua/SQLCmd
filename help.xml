@@ -9,7 +9,7 @@
 	</description>
 <main>
 
-	<connect title = "'connect address:posrt database userName password' - Подключение к базе">
+	<connect title = "'connect address:port database userName password' - Подключение к базе">
 		<description>
 		Команда для подключения к соответствующей БД
 		Формат команды: connect address:port database username password

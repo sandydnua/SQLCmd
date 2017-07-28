@@ -1,14 +1,12 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.model.Exceptions.MainProcessException;
-
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class PrepareDB extends JDBCDatabaseManager {
 
 
-    public static final String ADDRESS_AND_POSR = "localhost:5432";
+    public static final String ADDRESS_AND_PORT = "localhost:5432";
     public static final String DB_NAME = "postgres";
     public static final String DB_TEST = "testdb";
     public static final String ROOT_NAME = "admin";
@@ -59,7 +57,7 @@ public class PrepareDB extends JDBCDatabaseManager {
     public static void create() throws Exception {
 
         PrepareDB dbManager = new PrepareDB();
-        dbManager.connect(ADDRESS_AND_POSR, DB_NAME, ROOT_NAME, PASS);
+        dbManager.connect(ADDRESS_AND_PORT, DB_NAME, ROOT_NAME, PASS);
         dbManager.dropDatabase();
         dbManager.createDatabase();
 
@@ -71,7 +69,7 @@ public class PrepareDB extends JDBCDatabaseManager {
 
     public static PrepareDB connect() throws Exception {
         PrepareDB dbManager = new PrepareDB();
-        dbManager.connect(ADDRESS_AND_POSR, DB_TEST, USER_TEST, PASS);
+        dbManager.connect(ADDRESS_AND_PORT, DB_TEST, USER_TEST, PASS);
         return dbManager;
     }
 
@@ -82,7 +80,7 @@ public class PrepareDB extends JDBCDatabaseManager {
 
     public static void delete(PrepareDB dbManager) throws Exception {
 
-        dbManager.connect(ADDRESS_AND_POSR, DB_NAME, ROOT_NAME, PASS);
+        dbManager.connect(ADDRESS_AND_PORT, DB_NAME, ROOT_NAME, PASS);
         dbManager.dropDatabase();
         dbManager.deleteUserTest();
         dbManager.disconnect();

@@ -29,7 +29,6 @@ public class JDBCDatabaseManager implements DatabaseManager {
         if( isConnect()) {
             disconnect();
         }
-
         try {
             connection = DriverManager.getConnection( String.format("jdbc:postgresql://%s/%s?loggerLevel=OFF", address, database ),
                                                       userName, password);
@@ -124,8 +123,6 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public  boolean existColumns(String tableName, int mode, String... columns) {
-
-
 
         SQLConstructor sqlConstructor= this.getSQLConstructor();
         sqlConstructor.addTables(tableName);

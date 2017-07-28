@@ -3,9 +3,7 @@ package sandy.sqlcmd.controller.command;
 
 import org.junit.Test;
 import sandy.sqlcmd.model.DatabaseManager;
-import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
-import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 import static org.mockito.Mockito.doThrow;

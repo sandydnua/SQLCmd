@@ -16,8 +16,6 @@ public class CommandConnectTest {
     public void setup() {
         dbManager = mock(DatabaseManager.class);
         when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());
-
-
     }
 
     @Test
@@ -36,5 +34,4 @@ public class CommandConnectTest {
                                                                    "password"
                                                                    );
     }
-
 }

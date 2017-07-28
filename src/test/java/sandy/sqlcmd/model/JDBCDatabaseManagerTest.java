@@ -26,7 +26,7 @@ public class JDBCDatabaseManagerTest {
 
         DatabaseManager dbManager = new JDBCDatabaseManager();
 
-        dbManager.connect( PrepareDB.ADDRESS_AND_POSR, PrepareDB.DB_NAME,
+        dbManager.connect( PrepareDB.ADDRESS_AND_PORT, PrepareDB.DB_NAME,
                            PrepareDB.ROOT_NAME, PrepareDB.PASS
                          );
     }

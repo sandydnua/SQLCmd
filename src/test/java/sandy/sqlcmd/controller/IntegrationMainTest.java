@@ -1,15 +1,11 @@
 package sandy.sqlcmd.controller;
 
 import org.junit.*;
-import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.PrepareDB;
-import sandy.sqlcmd.view.*;
-import sandy.sqlcmd.view.Console;
 
 import java.io.*;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 public class IntegrationMainTest {
 
@@ -95,7 +91,7 @@ public class IntegrationMainTest {
     @Test
     public void testMainConnectCommand() throws Exception {
 
-        in.add(String.format("connect %s %s %s %s", PrepareDB.ADDRESS_AND_POSR, PrepareDB.DB_TEST,
+        in.add(String.format("connect %s %s %s %s", PrepareDB.ADDRESS_AND_PORT, PrepareDB.DB_TEST,
                              PrepareDB.USER_TEST, PrepareDB.PASS ) );
         in.add("disconnect");
         in.add("exit");
@@ -113,7 +109,7 @@ public class IntegrationMainTest {
     @Test
     public void testMainConnectCreateInsertDeleteFind() throws Exception {
 
-        in.add(String.format("connect %s %s %s %s", PrepareDB.ADDRESS_AND_POSR, PrepareDB.DB_TEST,
+        in.add(String.format("connect %s %s %s %s", PrepareDB.ADDRESS_AND_PORT, PrepareDB.DB_TEST,
                              PrepareDB.USER_TEST, PrepareDB.PASS));
         in.add("create new_table title");
         in.add("insert new_table title \"First String\"");

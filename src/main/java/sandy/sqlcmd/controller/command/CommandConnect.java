@@ -6,11 +6,11 @@ import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandConnect extends Command {
 
-    private static final int INDEX_ADDRESS_AND_PPORT = 1;
+    private static final int INDEX_ADDRESS_AND_PORT = 1;
     private static final int INDEX_DATABASE_NAME = 2;
     private static final int INDEX_USERNAME = 3;
     private static final int INDEX_PASSWORD = 4;
-    private static int EXPECTED_QUANTITY_OF_PARAMETERS = 5;
+    private static final int EXPECTED_QUANTITY_OF_PARAMETERS = 5;
 
     public CommandConnect(String[] params){
         super(params);
@@ -19,7 +19,7 @@ public class CommandConnect extends Command {
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
 
-        String address = params[INDEX_ADDRESS_AND_PPORT];
+        String address = params[INDEX_ADDRESS_AND_PORT];
         String database = params[INDEX_DATABASE_NAME];
         String userName = params[INDEX_USERNAME];
         String password = params[INDEX_PASSWORD];

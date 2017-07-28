@@ -3,9 +3,6 @@ package sandy.sqlcmd.controller.command;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
-import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
-import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
-import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public abstract class Command {
 
