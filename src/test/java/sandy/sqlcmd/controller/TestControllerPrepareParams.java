@@ -41,7 +41,8 @@ public class TestControllerPrepareParams {
     @Test
     public void prepareParams() throws Exception {
 
-        assertArrayEquals( paramsExpected, Controller.prepareParams(strParams));
+        String[] actual = Preparer.split( strParams );
+        assertArrayEquals( paramsExpected, actual );
     }
 
 }

@@ -16,6 +16,7 @@ public class ConsoleTest {
     private ByteArrayOutputStream out;
     private PrintStream systemOut;
     private View view;
+    private static final boolean colorPrint = false;
 
     @Before
     public void setup() {
@@ -24,7 +25,7 @@ public class ConsoleTest {
 
         out = new ByteArrayOutputStream();
         systemOut = System.out;
-        view = new Console();
+        view = new Console(colorPrint);
 
         System.setOut(new PrintStream(out));
         System.setErr(new PrintStream(out));

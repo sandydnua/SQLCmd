@@ -6,6 +6,16 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Console implements View {
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_PURPLE = "\u001B[35m";
+
+    private boolean colorPrint = false;
+
+    public Console ( boolean colorPrint) {
+        this.colorPrint = colorPrint;
+    }
+
     @Override
     public String read() {
         try {
@@ -41,13 +51,13 @@ public class Console implements View {
         int quantityFields = data.quantityFieldsInRow(0);
         int[] maxWidthFields = getMaximumWidthsFields(data, quantityRows, quantityFields);
 
-        drawLine(maxWidthFields, null,0);
+        drawBorderLine(maxWidthFields);
         drawLine(maxWidthFields, data,0);
-        drawLine(maxWidthFields, null,0);
+        drawBorderLine(maxWidthFields);
 
         for(int i = 1; i < quantityRows; i++){
             drawLine(maxWidthFields, data,i);
-            drawLine(maxWidthFields, null,0);
+            drawBorderLine(maxWidthFields);
         }
     }
 
@@ -64,23 +74,46 @@ public class Console implements View {
         return maxWidthFields;
     }
 
-    private void drawLine(int[] maxWidthFields, DataSet data, int row) {
-        System.out.print("+");
-        for(int index = 0; index < maxWidthFields.length; index++) {
-            if (null == data){
-                printCharSet(maxWidthFields[index]+2,'-');
-            }else{
-                String field = data.getField(row,index);
-                System.out.printf(" %s",field);
-                printCharSet(maxWidthFields[index] - field.length()+1,' ');
-            }
-            System.out.print("+");
+    private void drawBorderLine(int[] maxWidthFields) {
+        printPartOfBorder("+");
+        for (int index = 0; index < maxWidthFields.length; index++) {
+            printCharSet(maxWidthFields[index] + 2, "-");
+            printPartOfBorder("+");
         }
         System.out.println("");
     }
-    private void printCharSet(int quantity, char ch){
+
+    private void drawLine(int[] maxWidthFields, DataSet data, int row) {
+        printPartOfBorder("+");
+        for(int index = 0; index < maxWidthFields.length; index++) {
+            String field = data.getField(row,index);
+            printValField(field);
+            printCharSet(maxWidthFields[index] - field.length()+1, " ");
+            printPartOfBorder("+");
+        }
+        System.out.println();
+    }
+
+    private void printCharSet(int quantity, String part){
         for (int i = 0; i < quantity; i++) {
-            System.out.print(ch);
+            printPartOfBorder(part);
         }
     }
+
+    private void printPartOfBorder (String part) {
+        if ( colorPrint ) {
+            System.out.print(ANSI_PURPLE + part + ANSI_RESET);
+        } else {
+            System.out.print(part);
+        }
+    }
+
+    private void printValField (String field) {
+        if ( colorPrint ) {
+            System.out.printf( ANSI_BLUE + " %s" + ANSI_RESET, field);
+        } else {
+            System.out.printf(" %s", field);
+        }
+    }
+
 }

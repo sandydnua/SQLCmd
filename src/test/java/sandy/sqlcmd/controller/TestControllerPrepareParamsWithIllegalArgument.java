@@ -34,8 +34,7 @@ public class TestControllerPrepareParamsWithIllegalArgument {
 
     @Test ( expected = IllegalArgumentException.class )
     public void prepareParams() throws Exception {
-
-        Controller.prepareParams(strParams);
+        Preparer.split( strParams );
     }
 
 }

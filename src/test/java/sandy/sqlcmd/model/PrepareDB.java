@@ -5,7 +5,6 @@ import java.sql.Statement;
 
 public class PrepareDB extends JDBCDatabaseManager {
 
-
     public static final String ADDRESS_AND_PORT = "localhost:5432";
     public static final String DB_NAME = "postgres";
     public static final String DB_TEST = "testdb";
@@ -37,7 +36,7 @@ public class PrepareDB extends JDBCDatabaseManager {
 
     private void createUserTest() throws Exception {
         try (Statement statement = getStmt()) {
-            statement.executeUpdate("CREATE ROLE userTest LOGIN\n" +
+            statement.executeUpdate("CREATE ROLE " + USER_TEST + " LOGIN\n" +
                     "  PASSWORD '" + PASS + "'\n" +
                     "  SUPERUSER INHERIT CREATEDB CREATEROLE REPLICATION;\n");
         } catch (SQLException e) {
@@ -48,7 +47,7 @@ public class PrepareDB extends JDBCDatabaseManager {
     private void deleteUserTest() throws Exception {
 
         try (Statement statement = getStmt()) {
-            statement.executeUpdate("DROP ROLE IF EXISTS usertest");
+            statement.executeUpdate("DROP ROLE IF EXISTS " + USER_TEST);
         } catch (SQLException e) {
             throw new Exception("Ошибка удаления пользователя " + e.getMessage());
         }

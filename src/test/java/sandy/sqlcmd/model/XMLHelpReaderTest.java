@@ -71,14 +71,16 @@ public class XMLHelpReaderTest {
     @Test
     public void getListSupportedCommands() throws Exception {
 
-        String[] expected = {"exit - Завершение работы"};
+        String[][] expected = {
+                                {"exit", "Завершение работы"}
+                              };
 
         DocumentBuilder documentBuilder;
         documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         InputStream inputStream = new ByteArrayInputStream(inputString.getBytes(StandardCharsets.UTF_8));
 
         HelpReader reader = new XMLHelpReader(documentBuilder.parse(inputStream));
-        String[] actual = reader.getListSupportedCommands();
+        String[][] actual = reader.getListAndShortDescriptionSupportedCommands();
 
         assertArrayEquals( expected, actual );
     }

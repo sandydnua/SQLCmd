@@ -144,7 +144,7 @@ public class IntegrationMainTest {
                 "+ Second String +" + lineSeparator +
                 "+---------------+" + lineSeparator +
                 "Завершение работы." + lineSeparator;
-        Main.main(new String[0]);
+        Main.main(new String[]{""});
         String actual = getText();
 
         assertEquals( expected, actual);

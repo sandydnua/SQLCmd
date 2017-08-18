@@ -16,6 +16,8 @@ public class CommandHelp extends Command {
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
+        int INDEX_OF_NAME = 0;
+        int INDEX_OF_DESCRIPTION = 1;
 
         HelpReader helpReader;
 
@@ -32,7 +34,12 @@ public class CommandHelp extends Command {
         }else {
             data.addString(helpReader.getGeneralDescription());
             data.addString("Реализованные команды:");
-            data.addString(helpReader.getListSupportedCommands());
+            String[][] table = helpReader.getListAndShortDescriptionSupportedCommands();
+            for (int i = 0; i < table.length; i++) {
+                data.addRow();
+                data.addField(i, table[i][INDEX_OF_NAME]);
+                data.addField(i, table[i][INDEX_OF_DESCRIPTION]);
+            }
         }
 
         return data;

@@ -43,10 +43,11 @@ public class    XMLHelpReader implements HelpReader {
     }
 
     @Override
-    public String[] getListSupportedCommands() throws MainProcessException {
+    public String[][] getListAndShortDescriptionSupportedCommands() throws MainProcessException {
 
-        List<String> text = new ArrayList<>();
+        List<String[]> text = new ArrayList<>();
         NodeList nodeList;
+
 
         try{
             nodeList = document.getElementsByTagName("main").item(0).getChildNodes();
@@ -62,10 +63,10 @@ public class    XMLHelpReader implements HelpReader {
                 if(quantityAttributes > 0){
                     title = nodeList.item(i).getAttributes().item(0).getNodeValue();
                 }
-                text.add(nodeList.item(i).getNodeName()+ " - " + title);
+                text.add( new String[]{nodeList.item(i).getNodeName(), title});
             }
         }
-        String[] result = new String[text.size()];
+        String[][] result = new String[text.size()][];
 
         return  text.toArray(result);
     }
