@@ -42,7 +42,7 @@ class Controller {
         }
     }
 
-    protected boolean handleException(Exception ex) {
+    private boolean handleException(Exception ex) {
 
         if (  ex instanceof IllegalArgumentException |
               ex instanceof MainProcessException |

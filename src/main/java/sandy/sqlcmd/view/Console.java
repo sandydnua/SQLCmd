@@ -10,12 +10,6 @@ public class Console implements View {
     private static final String ANSI_BLUE = "\u001B[34m";
     private static final String ANSI_PURPLE = "\u001B[35m";
 
-    private boolean colorPrint = false;
-
-    public Console ( boolean colorPrint) {
-        this.colorPrint = colorPrint;
-    }
-
     @Override
     public String read() {
         try {
@@ -75,45 +69,35 @@ public class Console implements View {
     }
 
     private void drawBorderLine(int[] maxWidthFields) {
-        printPartOfBorder("+");
-        for (int index = 0; index < maxWidthFields.length; index++) {
-            printCharSet(maxWidthFields[index] + 2, "-");
-            printPartOfBorder("+");
+        StringBuilder line = new StringBuilder("+");
+        for (int maxWidthCurrentField : maxWidthFields) {
+            line.append(getStringCharSet(maxWidthCurrentField + 2, "-"));
+            line.append("+");
         }
-        System.out.println("");
+        System.out.println(ANSI_PURPLE + line.toString() + ANSI_RESET);
     }
 
     private void drawLine(int[] maxWidthFields, DataSet data, int row) {
-        printPartOfBorder("+");
+        StringBuilder line = new StringBuilder(ANSI_PURPLE);
+        line.append("+");
         for(int index = 0; index < maxWidthFields.length; index++) {
             String field = data.getField(row,index);
-            printValField(field);
-            printCharSet(maxWidthFields[index] - field.length()+1, " ");
-            printPartOfBorder("+");
+            line.append(ANSI_BLUE);
+            line.append(" ");
+            line.append(field);
+            line.append(ANSI_PURPLE);
+            line.append(getStringCharSet(maxWidthFields[index] - field.length()+1, " "));
+            line.append("+");
         }
-        System.out.println();
+        line.append(ANSI_RESET);
+        System.out.println(line.toString());
     }
 
-    private void printCharSet(int quantity, String part){
+    private String getStringCharSet(int quantity, String part){
+        StringBuilder stringCharSet = new StringBuilder();
         for (int i = 0; i < quantity; i++) {
-            printPartOfBorder(part);
+            stringCharSet.append(part);
         }
+        return stringCharSet.toString();
     }
-
-    private void printPartOfBorder (String part) {
-        if ( colorPrint ) {
-            System.out.print(ANSI_PURPLE + part + ANSI_RESET);
-        } else {
-            System.out.print(part);
-        }
-    }
-
-    private void printValField (String field) {
-        if ( colorPrint ) {
-            System.out.printf( ANSI_BLUE + " %s" + ANSI_RESET, field);
-        } else {
-            System.out.printf(" %s", field);
-        }
-    }
-
 }

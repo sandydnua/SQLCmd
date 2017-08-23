@@ -48,7 +48,6 @@ public class    XMLHelpReader implements HelpReader {
         List<String[]> text = new ArrayList<>();
         NodeList nodeList;
 
-
         try{
             nodeList = document.getElementsByTagName("main").item(0).getChildNodes();
         }catch (Exception e){
@@ -95,5 +94,4 @@ public class    XMLHelpReader implements HelpReader {
 
         return  text.toArray(result);
     }
-
 }

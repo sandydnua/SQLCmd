@@ -25,7 +25,7 @@ public class ConsoleTest {
 
         out = new ByteArrayOutputStream();
         systemOut = System.out;
-        view = new Console(colorPrint);
+        view = new Console();
 
         System.setOut(new PrintStream(out));
         System.setErr(new PrintStream(out));
@@ -68,11 +68,11 @@ public class ConsoleTest {
         data.addField(i, "(1,0)");
         data.addField(i, "(1,1)");
 
-        String expected = "+-------+-------+" + lineSeparator +
-                          "+ (0,0) + (0,1) +" + lineSeparator +
-                          "+-------+-------+" + lineSeparator +
-                          "+ (1,0) + (1,1) +" + lineSeparator +
-                          "+-------+-------+" + lineSeparator;
+        String expected = "\u001B[35m+-------+-------+\u001B[0m" + lineSeparator +
+                          "\u001B[35m+\u001B[34m (0,0)\u001B[35m +\u001B[34m (0,1)\u001B[35m +\u001B[0m" + lineSeparator +
+                          "\u001B[35m+-------+-------+\u001B[0m" + lineSeparator +
+                          "\u001B[35m+\u001B[34m (1,0)\u001B[35m +\u001B[34m (1,1)\u001B[35m +\u001B[0m" + lineSeparator +
+                          "\u001B[35m+-------+-------+\u001B[0m" + lineSeparator;
 
         view.write(data);
 
@@ -96,11 +96,11 @@ public class ConsoleTest {
 
         String expected = "Title" + lineSeparator +
                           "Second String" + lineSeparator +
-                          "+-------+-------+" + lineSeparator +
-                          "+ (0,0) + (0,1) +" + lineSeparator +
-                          "+-------+-------+" + lineSeparator +
-                          "+ (1,0) + (1,1) +" + lineSeparator +
-                          "+-------+-------+" + lineSeparator;
+                          "\u001B[35m+-------+-------+\u001B[0m" + lineSeparator +
+                          "\u001B[35m+\u001B[34m (0,0)\u001B[35m +\u001B[34m (0,1)\u001B[35m +\u001B[0m" + lineSeparator +
+                          "\u001B[35m+-------+-------+\u001B[0m" + lineSeparator +
+                          "\u001B[35m+\u001B[34m (1,0)\u001B[35m +\u001B[34m (1,1)\u001B[35m +\u001B[0m" + lineSeparator +
+                          "\u001B[35m+-------+-------+\u001B[0m" + lineSeparator;
 
         view.write(data);
 

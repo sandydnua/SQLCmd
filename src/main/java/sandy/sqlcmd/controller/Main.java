@@ -8,12 +8,7 @@ import sandy.sqlcmd.controller.Controller;
 class Main {
 
     public static void main(String[] args){
-        View view;
-        if (args.length ==0 ) { // костыль нужен для тестов. если TRUE, то будет разноцветный вывод
-            view = new Console(true);
-        } else {
-            view = new Console(false);
-        }
+        View view = new Console();
         Controller controller = new Controller(view);
         controller.run();
     }

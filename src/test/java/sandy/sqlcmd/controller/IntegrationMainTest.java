@@ -125,26 +125,26 @@ public class IntegrationMainTest {
                 "Таблица создана" + lineSeparator +
                 "Операция прошла успешно" + lineSeparator +
                 "Операция прошла успешно" + lineSeparator +
-                "+---------------+" + lineSeparator +
-                "+ title         +" + lineSeparator +
-                "+---------------+" + lineSeparator +
-                "+ First String  +" + lineSeparator +
-                "+---------------+" + lineSeparator +
-                "+ Second String +" + lineSeparator +
-                "+---------------+" + lineSeparator +
+                "\u001B[35m+---------------+\u001B[0m" + lineSeparator +
+                "\u001B[35m+\u001B[34m title\u001B[35m         +\u001B[0m" + lineSeparator +
+                "\u001B[35m+---------------+\u001B[0m" + lineSeparator +
+                "\u001B[35m+\u001B[34m First String\u001B[35m  +\u001B[0m" + lineSeparator +
+                "\u001B[35m+---------------+\u001B[0m" + lineSeparator +
+                "\u001B[35m+\u001B[34m Second String\u001B[35m +\u001B[0m" + lineSeparator +
+                "\u001B[35m+---------------+\u001B[0m" + lineSeparator +
                 "Удалены следующие строки" + lineSeparator +
-                "+--------------+" + lineSeparator +
-                "+ title        +" + lineSeparator +
-                "+--------------+" + lineSeparator +
-                "+ First String +" + lineSeparator +
-                "+--------------+" + lineSeparator +
-                "+---------------+" + lineSeparator +
-                "+ title         +" + lineSeparator +
-                "+---------------+" + lineSeparator +
-                "+ Second String +" + lineSeparator +
-                "+---------------+" + lineSeparator +
+                "\u001B[35m+--------------+\u001B[0m" + lineSeparator +
+                "\u001B[35m+\u001B[34m title\u001B[35m        +\u001B[0m" + lineSeparator +
+                "\u001B[35m+--------------+\u001B[0m" + lineSeparator +
+                "\u001B[35m+\u001B[34m First String\u001B[35m +\u001B[0m" + lineSeparator +
+                "\u001B[35m+--------------+\u001B[0m" + lineSeparator +
+                "\u001B[35m+---------------+\u001B[0m" + lineSeparator +
+                "\u001B[35m+\u001B[34m title\u001B[35m         +\u001B[0m" + lineSeparator +
+                "\u001B[35m+---------------+\u001B[0m" + lineSeparator +
+                "\u001B[35m+\u001B[34m Second String\u001B[35m +\u001B[0m" + lineSeparator +
+                "\u001B[35m+---------------+\u001B[0m" + lineSeparator +
                 "Завершение работы." + lineSeparator;
-        Main.main(new String[]{""});
+        Main.main(new String[0]);
         String actual = getText();
 
         assertEquals( expected, actual);

@@ -5,12 +5,12 @@ import java.util.List;
 
 class Preparer {
 
-    static StringBuilder itemCommnad;
-    static List<String> resultList;
-    static int lengthOfInputString;
-    static String inputString;
+    private static StringBuilder itemCommnad;
+    private static List<String> resultList;
+    private static int lengthOfInputString;
+    private static String inputString;
 
-    static public String[] split(String inputStr) throws IllegalAccessException {
+    static public String[] split(String inputStr) {
 
         inputString = inputStr.trim();
         lengthOfInputString = inputString.length();
@@ -31,7 +31,7 @@ class Preparer {
             return;
         } else if ( inputString.charAt( pos ) == '"') {
             commandInQoutes( pos + 1 );
-        } else if ( Character.isDigit( inputString.charAt( pos ) ) || Character.isLetter( inputString.charAt( pos ) ) ) {
+        } else if (Character.isDigit(inputString.charAt(pos)) || Character.isLetter(inputString.charAt(pos))) {
             itemCommnad.append( inputString.charAt( pos ) );
             commandWithoutQuotes( pos + 1 );
         } else if (inputString.charAt( pos ) == ' ') {

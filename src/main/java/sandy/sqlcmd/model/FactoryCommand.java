@@ -11,7 +11,6 @@ public class FactoryCommand {
             return new UnknownCommand( new String[]{"unknown"});
 
         }
-
         switch ( params[0].toUpperCase() ) {
             case "HELP":
                 return new CommandHelp( params );
@@ -41,5 +40,4 @@ public class FactoryCommand {
                 return new UnknownCommand( params );
         }
     }
-
 }

@@ -34,6 +34,7 @@ public class SQLConstructorPostgre implements SQLConstructor {
         templates.put("insert", "INSERT INTO <tables> ( <columns> ) VALUES ( <values> )");
         templates.put("createTable", "CREATE TABLE <table> ( <columnsAndTypes> )");
     }
+
     @Override
     public String getQueryCreateTable() {
 
@@ -46,7 +47,6 @@ public class SQLConstructorPostgre implements SQLConstructor {
 
         return  sqlQuery;
     }
-
 
     @Override
     public String getQueryExistTable() {
