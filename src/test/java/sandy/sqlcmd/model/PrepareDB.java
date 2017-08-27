@@ -1,16 +1,38 @@
 package sandy.sqlcmd.model;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class PrepareDB extends JDBCDatabaseManager {
 
-    public static final String ADDRESS_AND_PORT = "localhost:5432";
-    public static final String DB_NAME = "postgres";
+    public static String ADDRESS_AND_PORT;
+    public static String DB_NAME;
+    public static String PASS;
+    public static String ROOT_NAME;
+
+    static {
+        try {
+            FileInputStream fileProperties = new FileInputStream("src/test/resources/config.properties");
+            Properties properties = new Properties();
+            properties.load(fileProperties);
+
+            ADDRESS_AND_PORT = properties.getProperty("address.and.port");
+            DB_NAME = properties.getProperty("db.name");
+            PASS = properties.getProperty("pass");
+            ROOT_NAME = properties.getProperty("root.name");
+        } catch (java.io.IOException e) {
+            System.out.println("Ошибка при получении properties");
+            e.printStackTrace();
+        }
+    }
+
     public static final String DB_TEST = "testdb";
-    public static final String ROOT_NAME = "admin";
     public static final String USER_TEST = "usertest";
-    public static final String PASS = "7561";
 
     private PrepareDB() {
         super();
