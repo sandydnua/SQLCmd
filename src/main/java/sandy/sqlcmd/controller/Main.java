@@ -10,9 +10,9 @@ import sandy.sqlcmd.controller.Controller;
 class Main {
 
     public static void main(String[] args){
-        ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"application-context.xml"});
+        View view = new Console();
 
-        Controller controller = context.getBean("controllerCmd", Controller.class);
+        Controller controller = new Controller(view);
         controller.run();
     }
 }

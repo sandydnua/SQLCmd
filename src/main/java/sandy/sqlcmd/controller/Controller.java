@@ -22,6 +22,7 @@ class Controller {
 
     public Controller(View view) {
         this.view = view;
+        dbManager = new JDBCDatabaseManager();
     }
 
     public void run() {
