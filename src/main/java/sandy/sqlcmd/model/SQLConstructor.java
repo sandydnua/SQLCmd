@@ -6,6 +6,8 @@ public interface SQLConstructor {
 
     void setColumnAndValueForWhere(String column, String values);
 
+    void addColumnAndValueForWhere(String column, String value);
+
     void addTables(String... tables);
 
     void addColumnForSelectInsertCreate(String... columns);

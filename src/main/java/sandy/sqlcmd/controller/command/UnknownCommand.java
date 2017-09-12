@@ -1,6 +1,7 @@
-package sandy.sqlcmd.model;
+package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.controller.command.Command;
+import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 
 public class UnknownCommand extends Command {

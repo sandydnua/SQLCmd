@@ -5,7 +5,6 @@ import sandy.sqlcmd.model.Exceptions.MainProcessException;
 public interface HelpReader {
 
     String[] getGeneralDescription() throws MainProcessException;
-//    String[] getListSupportedCommands() throws MainProcessException;
 
     String[][] getListAndShortDescriptionSupportedCommands() throws MainProcessException;
 

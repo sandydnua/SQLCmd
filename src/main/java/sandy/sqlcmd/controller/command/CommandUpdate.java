@@ -67,6 +67,7 @@ public class CommandUpdate extends Command {
     protected void canExecute() throws CantExecuteException {
 
         checkConnectAndMinQuantityParameters(MIN_QUANTITY_PARAMETERS);
+
     }
 
 

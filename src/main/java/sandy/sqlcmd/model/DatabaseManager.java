@@ -2,6 +2,9 @@ package sandy.sqlcmd.model;
 
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public interface DatabaseManager{
 
     int EXISTENCE_THESE_FIELDS = 1;

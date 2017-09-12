@@ -1,5 +1,6 @@
 package sandy.sqlcmd.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import sandy.sqlcmd.controller.command.Command;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.DatabaseManager;
@@ -13,14 +14,14 @@ import sandy.sqlcmd.view.View;
 
 class Controller {
 
+
     private final View view;
-    private final DatabaseManager dbManager;
+    private DatabaseManager dbManager;
     private boolean continueWork = true;
     private DataSet data;
 
     public Controller(View view) {
         this.view = view;
-        dbManager = new JDBCDatabaseManager();
     }
 
     public void run() {
@@ -32,7 +33,7 @@ class Controller {
             data = new DataSet();
             inputString = view.read();
             try {
-                Command command = FactoryCommand.getCommand(/*prepareParams(inputString)*/Preparer.split(inputString));
+                Command command = FactoryCommand.getCommand(Preparer.split(inputString));
                 command.setDbManager(dbManager);
                 data = command.execute();
             } catch (Exception ex) {
@@ -73,6 +74,10 @@ class Controller {
             data.addString(ex.getMessage());
         }
         return  false;
+    }
+
+    public void setDbManager(DatabaseManager dbManager) {
+        this.dbManager = dbManager;
     }
 }
 

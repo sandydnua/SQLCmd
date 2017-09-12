@@ -144,6 +144,17 @@ public class SQLConstructorPostgreTest {
 
         assertEquals( expected, actual);
     }
+    @Test
+    public void  testGetQueryDeleteManyParameters() throws IncorrectParametersQuery {
+
+        String expected = "DELETE FROM tableName WHERE column = 'value str' AND id = '1'";
+        sqlConstructor.addTables("tableName");
+        sqlConstructor.setColumnAndValueForWhere("column", "value str");
+        sqlConstructor.addColumnAndValueForWhere("id", "1");
+        String actual = sqlConstructor.getQueryDelete();
+
+        assertEquals( expected, actual);
+    }
 
     @Test
     public void testGetSQLExistTable(){

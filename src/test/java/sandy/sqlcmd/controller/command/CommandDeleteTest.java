@@ -50,6 +50,23 @@ public class CommandDeleteTest {
         verify(dbManager, times(1)).executeUpdate(sqlQueryDelete);
         verify(dbManager, times(1)).executeQuery(sqlQuerySelect);
     }
+    @Test
+    public void executeMainProcessManyParameters() throws Exception {
+
+        sqlQueryDelete = "DELETE FROM tableName WHERE columnName = 'columnValue' AND id = 'num'";
+        sqlQuerySelect = "SELECT * FROM tableName WHERE columnName = 'columnValue' AND id = 'num'";
+        String[] params = {"delete", "tableName", "columnName", "columnValue", "id", "num"};
+
+        command = new CommandDelete(params);
+        command.setDbManager(dbManager);
+        data.addRow();
+        data.addRow();
+        data.addString("Удалены следующие строки");
+        DataSet actual = command.execute();
+        assertTrue(data.equals(actual));
+        verify(dbManager, times(1)).executeUpdate(sqlQueryDelete);
+        verify(dbManager, times(1)).executeQuery(sqlQuerySelect);
+    }
 
     @Test
     public void executeMainProcessWhenRowNotFound() throws Exception {

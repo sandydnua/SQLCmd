@@ -66,6 +66,12 @@ public class SQLConstructorPostgre implements SQLConstructor {
     }
 
     @Override
+    public void addColumnAndValueForWhere(String column, String value){
+
+        coupleForWhere = String.format("%s AND %s = '%s'", coupleForWhere, column, value);
+    }
+
+    @Override
     public void addTables(String... tables) {
         addParameter( tablesForFrom, tables);
     }

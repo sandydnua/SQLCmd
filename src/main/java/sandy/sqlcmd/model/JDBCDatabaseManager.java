@@ -71,8 +71,6 @@ public class JDBCDatabaseManager implements DatabaseManager {
         }
     }
 
-
-
     Statement getStmt() throws SQLException {
         return connection.createStatement();
     }
@@ -97,8 +95,16 @@ public class JDBCDatabaseManager implements DatabaseManager {
         return data;
     }
     @Override
-    public boolean isConnect(){
-        return null != connection;
+    public boolean isConnect() {
+        if ( null == connection) {
+            return false;
+        } else {
+            try {
+                return !connection.isClosed();
+            } catch (SQLException e) {
+                return false;
+            }
+        }
     }
 
     @Override
