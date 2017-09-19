@@ -1,0 +1,55 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="sandy.sqlcmd"/>
+
+    <bean id="dbManager" class="sandy.sqlcmd.controller.web.JDBCDatabaseManager"/>
+
+    <bean id="face" class="sandy.sqlcmd.controller.web.FaceImpl"/>
+
+    <bean id="commandClear" class="sandy.sqlcmd.controller.command.CommandClear" scope="prototype"/>
+    <bean id="commandConnect" class="sandy.sqlcmd.controller.command.CommandConnect" scope="prototype"/>
+    <bean id="commandCreate" class="sandy.sqlcmd.controller.command.CommandCreate" scope="prototype"/>
+    <bean id="commandDelete" class="sandy.sqlcmd.controller.command.CommandDelete" scope="prototype"/>
+    <bean id="commandDisconnect" class="sandy.sqlcmd.controller.command.CommandDisconnect" scope="prototype"/>
+    <bean id="commandDrop" class="sandy.sqlcmd.controller.command.CommandDrop" scope="prototype"/>
+    <bean id="commandExit" class="sandy.sqlcmd.controller.command.CommandExit" scope="prototype"/>
+    <bean id="commandFind" class="sandy.sqlcmd.controller.command.CommandFind" scope="prototype"/>
+    <bean id="commandHelp" class="sandy.sqlcmd.controller.command.CommandHelp" scope="prototype"/>
+    <bean id="commandInsert" class="sandy.sqlcmd.controller.command.CommandInsert" scope="prototype"/>
+    <bean id="commandTables" class="sandy.sqlcmd.controller.command.CommandTables" scope="prototype"/>
+    <bean id="commandUpdate" class="sandy.sqlcmd.controller.command.CommandUpdate" scope="prototype"/>
+    <bean id="commandUnknown" class="sandy.sqlcmd.controller.command.UnknownCommand" scope="prototype"/>
+
+
+    <bean id="commandFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+        <property name="serviceLocatorInterface" value="sandy.sqlcmd.controller.web.CommandFactory" />
+        <property name="serviceMappings">
+            <props>
+            <prop key="connect">commandConnect</prop>
+            <prop key="clear">commandClear</prop>
+            <prop key="create">commandCreate</prop>
+            <prop key="delete">commandDelete</prop>
+            <prop key="find">commandFind</prop>
+            <prop key="disconnect">commandDisconnect</prop>
+            <prop key="drop">commandDrop</prop>
+            <prop key="help">commandHelp</prop>
+            <prop key="insert">commandInsert</prop>
+            <prop key="tables">commandTables</prop>
+            <prop key="update">commandUpdate</prop>
+            <prop key="unknown">commandUnknown</prop>
+        </props>
+        </property>
+    </bean>
+
+
+</beans>
+
+
