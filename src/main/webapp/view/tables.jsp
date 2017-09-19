@@ -6,7 +6,8 @@
     <title>Tables</title>
 </head>
 <body>
-<a href="mainpage">На главную</a><br>
+<%--TODO ccылку на главную страницу надо сделать универсальной и не привязывать к sqlcmd--%>
+<a href="/sqlcmd">На главную</a><br>
 <a href="createtable">Создать таблицу</a><br>
 <p>
 <table border="0">
@@ -24,7 +25,10 @@
                 row.append(String.format("<a href=\"find?table=%s\">%s</a>", table[i][0],table[i][0]));
                 row.append("</td>");
                 row.append("<td>");
-                row.append(String.format("<a href=\"drop?table=%s\">Удалить</a>", table[i][0]));
+                row.append(String.format("<form action=\"drop\" method=\"post\">" +
+                                             "<input type=\"text\" name=\"table\" value=\"%s\" hidden/>" +
+                                             "<input type=\"submit\" name=\"table\" value=\"Удалить\"/> " +
+                                         "</form>", table[i][0]));
                 row.append("</td>");
                 row.append("</tr>");
             %>
@@ -35,6 +39,6 @@
     %>
 </table>
 
-<a href="mainpage">На главную</a>
+<a href="/sqlcmd">На главную</a>
 </body>
 </html>

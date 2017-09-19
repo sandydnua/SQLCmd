@@ -3,7 +3,7 @@ package sandy.sqlcmd.controller.command;
 import org.junit.Before;
 import org.junit.Test;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.DatabaseManager;
+import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.SQLConstructorPostgre;
 
 import static org.junit.Assert.*;

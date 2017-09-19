@@ -1,5 +1,6 @@
 package sandy.sqlcmd.controller.command;
 
+import org.springframework.stereotype.Component;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
@@ -11,6 +12,9 @@ public class CommandTables extends Command {
 
     public CommandTables(String[] params) {
         super(params);
+    }
+
+    public CommandTables() {
     }
 
     @Override

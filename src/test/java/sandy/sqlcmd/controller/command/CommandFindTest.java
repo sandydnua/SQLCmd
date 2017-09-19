@@ -2,8 +2,10 @@ package sandy.sqlcmd.controller.command;
 
 import org.junit.Before;
 import org.junit.Test;
+import sandy.sqlcmd.controller.web.Command;
+import sandy.sqlcmd.controller.web.CommandFind;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.DatabaseManager;
+import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.SQLConstructorPostgre;
 
 
@@ -29,7 +31,7 @@ public class CommandFindTest {
         String[] params = {"find","tableName"};
         String sqlQuery = "SELECT * FROM tableName";
 
-        Command command = new sandy.sqlcmd.controller.command.CommandFind(params);
+        Command command = new CommandFind(params);
         command.setDbManager(dbManager);
 
         DataSet data = new DataSet();

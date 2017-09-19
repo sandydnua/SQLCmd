@@ -1,6 +1,8 @@
 package sandy.sqlcmd.controller.command;
 
 import org.junit.Test;
+import sandy.sqlcmd.controller.web.Command;
+import sandy.sqlcmd.controller.web.CommandHelp;
 import sandy.sqlcmd.model.DataSet;
 
 import static org.junit.Assert.*;

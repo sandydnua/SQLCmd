@@ -1,7 +1,7 @@
 package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.DatabaseManager;
+import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 
 public abstract class Command {
@@ -12,8 +12,10 @@ public abstract class Command {
     protected Command(String[] params){
         setParams(params);
     }
+    protected Command(){
+    }
 
-    private void setParams(String[] params){
+    public void setParams(String[] params){
         this.params = params;
     }
 

@@ -1,19 +1,28 @@
-package sandy.sqlcmd.model;
+package sandy.sqlcmd.controller.web;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+import sandy.sqlcmd.controller.web.DatabaseManager;
+import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
+import sandy.sqlcmd.model.SQLConstructor;
+import sandy.sqlcmd.model.SQLConstructorPostgre;
 
 import java.sql.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+@Component
+@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class JDBCDatabaseManager implements DatabaseManager {
 
     private static final int NUMBER_OF_FIRST_ROW_IN_TABLE = 0;
 
     private Connection connection;
 
-    public JDBCDatabaseManager(){
+    public JDBCDatabaseManager() {
         connection = null;
     }
 
@@ -71,7 +80,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
         }
     }
 
-    Statement getStmt() throws SQLException {
+    protected Statement getStmt() throws SQLException {
         return connection.createStatement();
     }
 

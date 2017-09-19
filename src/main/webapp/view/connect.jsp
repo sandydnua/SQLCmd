@@ -26,11 +26,11 @@
             </tr>
             <tr>
                 <td>Логин</td>
-                <td><input type="text" name="login"/></td>
+                <td><input type="text" name="login" value="postgres"/></td>
             </tr>
             <tr>
                 <td>Пароль</td>
-                <td><input type="password" name="pass"/></td>
+                <td><input type="password" name="pass" value="7561"/></td>
             </tr>
             <tr>
                 <td></td>

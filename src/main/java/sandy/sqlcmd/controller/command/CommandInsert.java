@@ -1,7 +1,8 @@
 package sandy.sqlcmd.controller.command;
 
+import org.springframework.stereotype.Component;
+import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
@@ -15,6 +16,9 @@ public class CommandInsert extends Command {
     private static final int MIN_QUANTITY_PARAMETERS = 4;
     public CommandInsert(String[] params) {
         super(params);
+    }
+
+    public CommandInsert() {
     }
 
     private String prepareSql() throws IncorrectParametersQuery, MainProcessException {

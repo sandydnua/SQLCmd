@@ -1,15 +1,14 @@
 package sandy.sqlcmd.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import sandy.sqlcmd.controller.command.Command;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.DatabaseManager;
+import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
-import sandy.sqlcmd.model.FactoryCommand;
-import sandy.sqlcmd.model.JDBCDatabaseManager;
+import sandy.sqlcmd.model.AllCommands;
+import sandy.sqlcmd.controller.web.JDBCDatabaseManager;
 import sandy.sqlcmd.view.View;
 
 class Controller {
@@ -34,7 +33,7 @@ class Controller {
             data = new DataSet();
             inputString = view.read();
             try {
-                Command command = FactoryCommand.getCommand(Preparer.split(inputString));
+                Command command = AllCommands.getCommand(Preparer.split(inputString));
                 command.setDbManager(dbManager);
                 data = command.execute();
             } catch (Exception ex) {

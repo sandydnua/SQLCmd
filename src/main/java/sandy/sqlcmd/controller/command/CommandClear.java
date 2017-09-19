@@ -1,5 +1,6 @@
 package sandy.sqlcmd.controller.command;
 
+import org.springframework.stereotype.Component;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
@@ -14,6 +15,9 @@ public class CommandClear extends Command {
     public CommandClear(String[] params) {
         super(params);
     }
+    public CommandClear() {
+    }
+
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {

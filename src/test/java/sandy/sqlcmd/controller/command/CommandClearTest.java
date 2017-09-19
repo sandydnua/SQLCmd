@@ -2,10 +2,10 @@ package sandy.sqlcmd.controller.command;
 
 import org.junit.Before;
 import org.junit.Test;
-import sandy.sqlcmd.controller.command.Command;
-import sandy.sqlcmd.controller.command.CommandClear;
+import sandy.sqlcmd.controller.web.Command;
+import sandy.sqlcmd.controller.web.CommandClear;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.DatabaseManager;
+import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.SQLConstructorPostgre;
 
 import static junit.framework.TestCase.assertTrue;

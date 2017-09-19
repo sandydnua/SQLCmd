@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 public class Services {
 
     public static String[][] getTable(DataSet data) {
+
         int quantityRows = data.quantityRows();
         int quantityColuns = data.quantityFieldsInRow(0);
 
@@ -20,7 +21,14 @@ public class Services {
     }
 
     public static String[] BuilCommandString(String action, HttpServletRequest req) {
-        if (action.equals("tables") || action.equals("disconnect")) {
+        if (action.equals("connect")) {
+            return new String[]{action,
+                                req.getParameter("addres") + ":" + req.getParameter("port"),
+                                req.getParameter("dbName"),
+                                req.getParameter("login"),
+                                req.getParameter("pass")
+                                };
+        } if (action.equals("tables") || action.equals("disconnect")) {
             return new String[]{action};
         } else if(action.equals("find") || action.equals("drop")) {
             req.setAttribute("tablename",req.getParameter("table"));
@@ -38,12 +46,19 @@ public class Services {
             }
             return result;
         } else if(action.equals("create")) {
+
             String[] fields = req.getParameterValues("fields");
             String table = req.getParameter("table");
-            String[] result = new String[fields.length + 2];
+
+            String[] result;
+            if (null == fields) {
+                result = new String[2];
+            } else {
+                result = new String[fields.length + 2];
+            }
             result[0] = action;
             result[1] = table;
-            for (int i = 0; i < fields.length; i++) {
+            if (null != fields) for (int i = 0; i < fields.length; i++) {
                 result[i + 2] = fields[i];
             }
             return result;

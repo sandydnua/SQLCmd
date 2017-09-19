@@ -1,5 +1,6 @@
 package sandy.sqlcmd.controller.command;
 
+import org.springframework.stereotype.Component;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
@@ -7,6 +8,9 @@ import sandy.sqlcmd.model.Exceptions.MainProcessException;
 public class CommandDisconnect extends Command {
 
     private static final int EXPECTED_QUANTITY_OF_PARAMETERS = 1;
+
+    public CommandDisconnect() {
+    }
 
     public CommandDisconnect(String[] params) {
         super(params);

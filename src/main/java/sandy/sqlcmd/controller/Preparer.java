@@ -1,8 +1,10 @@
 package sandy.sqlcmd.controller;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
 class Preparer {
 
     private static StringBuilder itemCommnad;

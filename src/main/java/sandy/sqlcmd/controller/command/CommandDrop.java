@@ -1,5 +1,6 @@
 package sandy.sqlcmd.controller.command;
 
+import org.springframework.stereotype.Component;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
@@ -10,6 +11,9 @@ public class CommandDrop extends Command {
 
     private static final int INDEX_OF_TABLE_NAME = 1;
     private static final int EXPECTED_QUANTITY_OF_PARAMETERS = 2;
+
+    public CommandDrop() {
+    }
 
     public CommandDrop(String[] params) {
         super(params);

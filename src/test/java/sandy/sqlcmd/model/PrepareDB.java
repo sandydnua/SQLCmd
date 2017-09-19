@@ -1,9 +1,8 @@
 package sandy.sqlcmd.model;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
+import sandy.sqlcmd.controller.web.JDBCDatabaseManager;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;

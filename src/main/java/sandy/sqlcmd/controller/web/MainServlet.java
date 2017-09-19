@@ -1,14 +1,12 @@
 package sandy.sqlcmd.controller.web;
 
-import sandy.sqlcmd.controller.command.*;
+import sandy.sqlcmd.controller.command.Command;
+import sandy.sqlcmd.controller.command.CommandConnect;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.DatabaseManager;
-import sandy.sqlcmd.model.FactoryCommand;
-import sandy.sqlcmd.model.JDBCDatabaseManager;
+import sandy.sqlcmd.model.AllCommands;
 import sandy.sqlcmd.services.Services;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "MainServlet", urlPatterns = {"/"})
+//@WebServlet(name = "MainServlet", urlPatterns = {"/"})
 public class MainServlet extends HttpServlet {
 
     Map<String, String> supportedCommands;
@@ -24,9 +22,6 @@ public class MainServlet extends HttpServlet {
 
     @Override
     public void init() {
-
-
-
 
         supportedCommands = new HashMap<>();
         supportedCommands.put("tables","tables.jsp");
@@ -49,11 +44,11 @@ public class MainServlet extends HttpServlet {
 
 
         if(action.equals("/") || action.equals("mainpage")) {
-            req.getRequestDispatcher("mainpage.jsp").forward(req, resp);
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
             return;
         }  else if (supportedCommands.containsKey(action)) {
             String[] params = Services.BuilCommandString(action, req);
-            Command command = FactoryCommand.getCommand(params);
+            Command command = AllCommands.getCommand(params);
             command.setDbManager(dbManager);
             try {
                 DataSet data = command.execute();
@@ -110,7 +105,7 @@ public class MainServlet extends HttpServlet {
                 req.getSession().setAttribute("dbManager", dbManager);
                 req.getSession(true).setAttribute("database", dbName);
 
-                req.getRequestDispatcher("mainpage.jsp").forward(req, resp);
+                req.getRequestDispatcher("index.jsp").forward(req, resp);
                 return;
             } catch (Exception e) {
                 //TODO тут надо и закрывать подключение, если оно было

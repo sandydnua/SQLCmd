@@ -11,11 +11,14 @@
         if(database == null) {
             database = "Нет активного подключения";
         }
+
     %>
     <%=database%><br>
     <p>
     <a href="connect">Connect</a><br>
-    <a href="disconnect">Disconnect</a><br>
+    <form action="disconnect" method="post">
+        <input type="submit" value="Disconnect"/>
+    </form>
     <a href="tables">Tables</a><br>
     <a href="help">Help</a>
 </body>

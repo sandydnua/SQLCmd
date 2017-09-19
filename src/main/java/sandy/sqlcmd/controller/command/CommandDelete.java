@@ -1,5 +1,6 @@
 package sandy.sqlcmd.controller.command;
 
+import org.springframework.stereotype.Component;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
@@ -15,6 +16,8 @@ public class CommandDelete extends Command {
 
     public CommandDelete(String[] params) {
         super(params);
+    }
+    public CommandDelete() {
     }
 
     @Override

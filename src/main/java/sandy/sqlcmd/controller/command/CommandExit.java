@@ -1,5 +1,6 @@
 package sandy.sqlcmd.controller.command;
 
+import org.springframework.stereotype.Component;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
@@ -11,6 +12,9 @@ public class CommandExit extends Command {
 
         super(params);
     }
+    public CommandExit(){
+    }
+
 
     @Override
     protected DataSet executeMainProcess() throws CompletionOfWorkException {

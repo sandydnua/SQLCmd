@@ -1,8 +1,8 @@
 package sandy.sqlcmd.model;
 
 import org.junit.Test;
-import sandy.sqlcmd.controller.command.Command;
-import sandy.sqlcmd.controller.command.UnknownCommand;
+import sandy.sqlcmd.controller.web.Command;
+import sandy.sqlcmd.controller.web.UnknownCommand;
 
 import static org.junit.Assert.*;
 
@@ -12,7 +12,7 @@ public class FactoryCommandTestWithIncorrectParameters {
     public void testGetCommandWithIncorrectParameters(){
 
         Command expCommand = new UnknownCommand( null );
-        assertTrue( expCommand.getClass() == FactoryCommand.getCommand( null ).getClass() );
+        assertTrue( expCommand.getClass() == AllCommands.getCommand( null ).getClass() );
     }
 
 }

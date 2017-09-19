@@ -1,6 +1,8 @@
 package sandy.sqlcmd.model;
 
 import org.junit.*;
+import sandy.sqlcmd.controller.web.DatabaseManager;
+import sandy.sqlcmd.controller.web.JDBCDatabaseManager;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 import static org.junit.Assert.*;

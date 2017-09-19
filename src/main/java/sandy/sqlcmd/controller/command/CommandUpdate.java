@@ -1,7 +1,8 @@
 package sandy.sqlcmd.controller.command;
 
+import org.springframework.stereotype.Component;
+import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
@@ -18,6 +19,9 @@ public class CommandUpdate extends Command {
 
     public CommandUpdate(String[] params) {
         super(params);
+    }
+
+    public CommandUpdate() {
     }
 
     @Override

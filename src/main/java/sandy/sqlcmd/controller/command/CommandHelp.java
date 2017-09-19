@@ -1,5 +1,6 @@
 package sandy.sqlcmd.controller.command;
 
+import org.springframework.stereotype.Component;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
@@ -10,6 +11,9 @@ public class CommandHelp extends Command {
     private static String NAME_FILE_XML = "helpweb.xml";
 //    private static String NAME_FILE_XML = "help.xml";
     private static final int INDEX_OF_COMMAND_NAME = 1;
+
+    public CommandHelp() {
+    }
 
     public CommandHelp(String[] params ){
         super(params);
