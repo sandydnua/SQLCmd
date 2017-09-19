@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import sandy.sqlcmd.controller.web.*;
+import sandy.sqlcmd.controller.command.*;
 
 import java.util.Arrays;
 import java.util.Collection;

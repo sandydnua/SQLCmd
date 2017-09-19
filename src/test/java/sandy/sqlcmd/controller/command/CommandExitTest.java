@@ -2,8 +2,6 @@ package sandy.sqlcmd.controller.command;
 
 
 import org.junit.Test;
-import sandy.sqlcmd.controller.web.Command;
-import sandy.sqlcmd.controller.web.CommandExit;
 import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;

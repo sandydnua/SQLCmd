@@ -10,8 +10,6 @@
     <context:annotation-config/>
     <context:component-scan base-package="sandy.sqlcmd"/>
 
-    <bean id="dbManager" class="sandy.sqlcmd.controller.web.JDBCDatabaseManager"/>
-
 
 </beans>
 

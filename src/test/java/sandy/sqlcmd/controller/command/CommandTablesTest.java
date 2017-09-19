@@ -2,8 +2,6 @@ package sandy.sqlcmd.controller.command;
 
 import org.junit.Before;
 import org.junit.Test;
-import sandy.sqlcmd.controller.web.Command;
-import sandy.sqlcmd.controller.web.CommandTables;
 import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.SQLConstructorPostgre;
 

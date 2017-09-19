@@ -8,8 +8,7 @@ import sandy.sqlcmd.model.HelpReader;
 import sandy.sqlcmd.model.XMLHelpReader;
 
 public class CommandHelp extends Command {
-    private static String NAME_FILE_XML = "helpweb.xml";
-//    private static String NAME_FILE_XML = "help.xml";
+    private static String NAME_FILE_XML = "help.xml";
     private static final int INDEX_OF_COMMAND_NAME = 1;
 
     public CommandHelp() {
