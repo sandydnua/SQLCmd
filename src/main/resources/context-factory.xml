@@ -50,6 +50,17 @@
     </bean>
 
 
+
+    <bean id="datasource" class="sandy.sqlcmd.controller.web.ImprovedBasicDataSource" destroy-method="close" scope="prototype">
+        <constructor-arg index="0" value="${driverClassName}"/>
+        <constructor-arg index="1" value="${url}"/>
+        <constructor-arg index="2" value="${username}"/>
+        <constructor-arg index="3" value="${password}"/>
+      <!-- это свойство делает так, что выбрасывается исключение, если через секунду не появится своебодное подклчение
+      а у меня оно не появляется после нескольких запросов. -->
+        <property name="maxWait" value="3000"/>
+    </bean>
+
 </beans>
 
 

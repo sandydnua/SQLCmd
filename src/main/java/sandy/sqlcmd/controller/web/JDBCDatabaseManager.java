@@ -13,11 +13,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
+//@Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class JDBCDatabaseManager implements DatabaseManager {
 
-    private static final int NUMBER_OF_FIRST_ROW_IN_TABLE = 0;
 
     private Connection connection;
 
@@ -125,14 +124,12 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
         if ( null == tableName || tableName.length() == 0) {
             return false;
+        } else {
+            SQLConstructor sqlConstructor = this.getSQLConstructor();
+            sqlConstructor.addTables(tableName);
+            DataSet data = this.executeQuery(sqlConstructor.getQueryExistTable());
+            return data.quantityRows() > 1;
         }
-
-        SQLConstructor sqlConstructor = this.getSQLConstructor();
-        sqlConstructor.addTables(tableName);
-        sqlConstructor.getQueryExistTable();
-        DataSet data = this.executeQuery(sqlConstructor.getQueryExistTable());
-
-        return data.quantityRows() > 1;
     }
 
     @Override
@@ -141,9 +138,8 @@ public class JDBCDatabaseManager implements DatabaseManager {
         SQLConstructor sqlConstructor= this.getSQLConstructor();
         sqlConstructor.addTables(tableName);
         DataSet data;
-        String sqlQuery;
         try {
-            sqlQuery = sqlConstructor.getQuerySelect();
+            String sqlQuery = sqlConstructor.getQuerySelect();
             data = this.executeQuery(sqlQuery);
         } catch ( Exception ex) {
             return false;

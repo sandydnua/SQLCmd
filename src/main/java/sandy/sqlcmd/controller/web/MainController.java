@@ -8,10 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sandy.sqlcmd.controller.command.Command;
 import sandy.sqlcmd.model.DataSet;
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.services.Services;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -22,6 +25,23 @@ public class MainController {
     @GetMapping("/help")
     public String help() {
         return "help";
+    }
+
+
+    // TODO потом убрать это
+    @GetMapping("/test")
+    public String test(Model model) {
+        List<String> list = new ArrayList();
+        for (int i = 1; i < 30; i++) {
+            try {
+                DataSet dataSet = dbManager.executeQuery("SELECT * FROM tab");
+                list.add(Integer.toString(i) + " Yes. " + dataSet.quantityRows());
+            } catch (MainProcessException e) {
+                list.add(Integer.toString(i) + " No. " + e.getMessage());
+            }
+        }
+        model.addAttribute("list", list.toArray(new String[0]) );
+        return "test";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -56,7 +76,7 @@ public class MainController {
         try {
             executeCommand("disconnect", request);
         } catch (Exception e) {
-            model.addAttribute("Error", e.getMessage());
+            model.addAttribute("Error", "Disconnect" + e.getMessage() + " " + e.getClass().getName());
             return "error";
         }
 
@@ -76,7 +96,7 @@ public class MainController {
         try {
             executeCommand("create", request);
         } catch (Exception e) {
-            model.addAttribute("Error", e.getMessage());
+            model.addAttribute("Error", "createTable" + e.getMessage() + " " + e.getClass().getName());
             return "error";
         }
         return "redirect:tables";
@@ -89,7 +109,7 @@ public class MainController {
             data = executeCommand("tables", request);
             request.setAttribute("table", Services.getTable(data));
         } catch (Exception e) {
-            model.addAttribute("Error", e.getMessage());
+            model.addAttribute("Error", "Tables" + e.getMessage() + " " + e.getClass().getName() );
             return "error";
         }
         return "tables";
@@ -99,7 +119,7 @@ public class MainController {
         try {
             executeCommand("drop", request);
         } catch (Exception e) {
-            model.addAttribute("Error", e.getMessage());
+            model.addAttribute("Error",  "Drop" + e.getMessage() + " " + e.getClass().getName());
             return "error";
         }
         return "redirect:tables";
@@ -112,7 +132,7 @@ public class MainController {
             data = executeCommand("find", request);
             request.setAttribute("table", Services.getTable(data));
         } catch (Exception e) {
-            model.addAttribute("Error", e.getMessage());
+            model.addAttribute("Error", "Find" + e.getMessage() + " " + e.getClass().getName());
             return "error";
         }
         return "find";
@@ -123,7 +143,7 @@ public class MainController {
         try {
             executeCommand("insert", request);
         } catch (Exception e) {
-            model.addAttribute("Error", e.getMessage());
+            model.addAttribute("Error", "Insert" + e.getMessage() + " " + e.getClass().getName());
             return "error";
         }
         model.addAttribute("table", request.getParameter("table"));
@@ -132,10 +152,24 @@ public class MainController {
 
     @PostMapping("delete")
     public String delete(HttpServletRequest request, Model model) {
+
         try {
             executeCommand("delete", request);
         } catch (Exception e) {
-            model.addAttribute("Error", e.getMessage());
+            model.addAttribute("Error", "Delete" + e.getMessage() + " " + e.getClass().getName());
+            return "error";
+        }
+        model.addAttribute("table", request.getParameter("table"));
+        return "redirect:find";
+    }
+
+    @PostMapping("update")
+    public String update(HttpServletRequest request, Model model) {
+
+        try {
+            executeCommand("update", request);
+        } catch (Exception e) {
+            model.addAttribute("Error", "Update" + e.getMessage() + " " + e.getClass().getName());
             return "error";
         }
         model.addAttribute("table", request.getParameter("table"));
@@ -155,5 +189,6 @@ public class MainController {
 
         return command.execute();
     }
+
 
 }

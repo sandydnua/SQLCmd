@@ -7,6 +7,8 @@ import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
 
+import java.util.Arrays;
+
 public class CommandUpdate extends Command {
 
     private static final int INDEX_OF_TABLE_NAME = 1;
@@ -37,9 +39,17 @@ public class CommandUpdate extends Command {
                                                params[INDEX_OF_NEW_VALUE]
                                            );
 
+        System.out.println(Arrays.deepToString(params));
+        for (int i = MIN_QUANTITY_PARAMETERS; i < params.length; i = i + 4 ) {
+            sqlConstructor.addColumnAndValueForWhere(params[i],params[i+1]);
+            sqlConstructor.addForColumnNewValue(params[i+2],params[i+3]);
+        }
+
         String sqlSelect = sqlConstructor.getQuerySelect();
         String sqlUpdate = sqlConstructor.getQueryUpdate();
 
+
+        // TODO эту проверку перенести в метод проверки перед выполнением
         if ( !dbManager.existTable(params[INDEX_OF_TABLE_NAME]) ) {
 
             return new DataSet( "Таблица с таким именем отсутствует." );
@@ -47,6 +57,9 @@ public class CommandUpdate extends Command {
 
         DataSet data;
         String[] columns = new String[]{ params[INDEX_OF_COLUMN_FOR_WHERE], params[INDEX_OF_COLUMN_OF_UPDATED_VALUE] };
+
+        // TODO эту проверку перенести в метод проверки перед выполнением
+        // и надо ее усовершенствовать и проверять все имена столбцов, а не только два
 
         if( dbManager.existColumns(params[INDEX_OF_TABLE_NAME], DatabaseManager.EXISTENCE_THESE_FIELDS, columns)) {
 
@@ -70,6 +83,17 @@ public class CommandUpdate extends Command {
     protected void canExecute() throws CantExecuteException {
 
         checkConnectAndMinQuantityParameters(MIN_QUANTITY_PARAMETERS);
+
+        // TODO
+        /**
+         * Было - проверка только на мин. количество. т.е. можно было проверять только одну пару и вставлять только одну пару за раз
+         * дальше проверяю кратность друм - потому что добавляют обновление нескольких полей за раз
+         * надо дописать тесты
+         * */
+
+        if ( (params.length - 2) % 4 != 0) {
+            throw new CantExecuteException("Неверное число параметров для команды Updata. Вероятно, пропущен один параметр.");
+        }
 
     }
 

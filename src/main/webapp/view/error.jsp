@@ -5,6 +5,6 @@
     <title>Error</title>
 </head>
 <body>
-    ${Error}
+    Error - ${Error}
 </body>
 </html>

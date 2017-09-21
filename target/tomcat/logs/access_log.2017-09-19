@@ -138,3 +138,5 @@
 0:0:0:0:0:0:0:1 - - [19/Sep/2017:22:00:38 +0300] "GET /sqlcmd/ HTTP/1.1" 200 418 http-bio-8080-exec-8 3
 0:0:0:0:0:0:0:1 - - [19/Sep/2017:22:00:40 +0300] "POST /sqlcmd/disconnect HTTP/1.1" 302 - http-bio-8080-exec-9 57
 0:0:0:0:0:0:0:1 - - [19/Sep/2017:22:00:40 +0300] "GET /sqlcmd/ HTTP/1.1" 200 458 http-bio-8080-exec-10 2
+0:0:0:0:0:0:0:1 - - [19/Sep/2017:22:03:07 +0300] "GET /sqlcmd/connect HTTP/1.1" 200 1060 http-bio-8080-exec-1 918
+0:0:0:0:0:0:0:1 - - [19/Sep/2017:22:03:09 +0300] "POST /sqlcmd/connect HTTP/1.1" 200 1201 http-bio-8080-exec-2 121

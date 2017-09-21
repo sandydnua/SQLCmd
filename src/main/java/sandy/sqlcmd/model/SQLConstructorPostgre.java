@@ -35,6 +35,14 @@ public class SQLConstructorPostgre implements SQLConstructor {
         templates.put("createTable", "CREATE TABLE <table> ( <columnsAndTypes> )");
     }
 
+
+    // TODO
+    /**
+     * Сейчас, кажется, при установки нескольких пар в WHERE или SET надо сначала вызвать соответствующий set метод, потом add
+     * Надо избавиться от сеттеров, и оставить только add методы
+     * */
+
+
     @Override
     public String getQueryCreateTable() {
 
@@ -57,6 +65,10 @@ public class SQLConstructorPostgre implements SQLConstructor {
     @Override
     public void setForColumnNewValue(String column, String value) {
         coupleForSet = String.format("%s = '%s'", column, value);
+    }
+    @Override
+    public void addForColumnNewValue(String column, String value) {
+        coupleForSet = String.format("%s , %s = '%s'", coupleForSet, column, value);
     }
 
     @Override

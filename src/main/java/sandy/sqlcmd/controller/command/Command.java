@@ -64,6 +64,7 @@ public abstract class Command {
     }
 
     private void checkConnect() throws CantExecuteException {
+
         String errorMessages = "";
         if( null == dbManager){
             errorMessages += "Не передан DatabaseManager; |";

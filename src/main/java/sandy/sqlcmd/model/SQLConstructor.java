@@ -16,6 +16,8 @@ public interface SQLConstructor {
 
     void setForColumnNewValue(String param, String param1);
 
+    void addForColumnNewValue(String column, String value);
+
     String getQueryTables();
 
     String getQueryFind() throws IncorrectParametersQuery;

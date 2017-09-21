@@ -33,7 +33,25 @@ public class Services {
         } else if(action.equals("find") || action.equals("drop")) {
             req.setAttribute("tablename",req.getParameter("table"));
             return new String[]{action, req.getParameter("table")};
-        } if(action.equals("insert") || action.equals("delete")) {
+        } if(action.equals("update")) {
+            String[] fields = req.getParameterValues("fields");
+            String[] values = req.getParameterValues("values");
+            String[] valuesNew = req.getParameterValues("valuesNew");
+            String table = req.getParameter("table");
+
+            String[] result = new String[fields.length*4+2];
+            result[0] = action;
+            result[1] = table;
+
+            for (int i = 0; i < fields.length; i++) {
+                result[2+i*4] = fields[i];
+                result[3+i*4] = values[i];
+
+                result[4+i*4] = fields[i];
+                result[5+i*4] = valuesNew[i];
+            }
+            return result;
+        } else if(action.equals("insert") || action.equals("delete")) {
             String[] fields = req.getParameterValues("fields");
             String[] values = req.getParameterValues("values");
             String table = req.getParameter("table");

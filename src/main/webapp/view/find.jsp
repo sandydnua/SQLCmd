@@ -9,7 +9,7 @@
 <p>
 Таблица ${tablename}
 <p>
-<table border="1">
+<table border="0">
     <%
         String[][] table = (String[][])request.getAttribute("table");
         StringBuilder row = new StringBuilder("<tr>");
@@ -19,22 +19,34 @@
             row.append(table[0][i]);
             row.append("</th>");
         }
+        row.append("<th></th>");
         row.append("<th></th></tr>");
 
         if (table != null) for (int i = 1; i < table.length; i++) {
-            row.append("<tr>");
+            row.append(String.format("<tr><form id=\"delete%d\" action=\"delete\" method=\"post\">", i));
+            row.append(String.format("<form id=\"update%d\" action=\"update\" method=\"post\">", i));
+
             for (int j = 0; j < table[i].length; j++) {
                 row.append("<td>");
-                row.append(table[i][j]);
-                row.append(String.format("<input form=\"formdelete%d\" type=\"text\" name=\"fields\" value=\"%s\" hidden/>", i, table[0][j]));
-                row.append(String.format("<input form=\"formdelete%d\" type=\"text\" name=\"values\" value=\"%s\" hidden/>", i, table[i][j]));
+                row.append(String.format("<input form=\"update%d\" type=\"text\" name=\"valuesNew\" value=\"%s\"/>", i, table[i][j]));
+                row.append(String.format("<input form=\"update%d\" type=\"text\" name=\"values\" value=\"%s\" hidden/>", i, table[i][j]));
+                row.append(String.format("<input form=\"update%d\" type=\"text\" name=\"fields\" value=\"%s\" hidden/>", i, table[0][j]));
+
+                row.append(String.format("<input form=\"delete%d\" type=\"text\" name=\"fields\" value=\"%s\" hidden/>", i, table[0][j]));
+                row.append(String.format("<input form=\"delete%d\" type=\"text\" name=\"values\" value=\"%s\" hidden/>", i, table[i][j]));
                 row.append("</td>");
             }
-            row.append(String.format("<td><form id=\"formdelete%d\" action=\"delete\" method=\"post\">", i));
-            row.append(String.format("<input  type=\"text\" name=\"table\" value=\"%s\" hidden/>", request.getAttribute("tablename")));
-            row.append("<input  type=\"submit\" value=\"Delete\"/></td>");
+            row.append("<td>");
+            row.append(String.format("<input  id=\"delete%d\" type=\"text\" name=\"table\" value=\"%s\" hidden/>", i, request.getAttribute("tablename")));
+            row.append("<input   type=\"submit\" value=\"Delete\"/></td>");
             row.append("</form></td>");
-            row.append("</tr>");
+//            row.append("</tr>");
+
+            row.append("<td>");
+            row.append(String.format("<input   type=\"text\" name=\"table\" value=\"%s\" hidden/>", request.getAttribute("tablename")));
+            row.append("<input  type=\"submit\" value=\"Update\"/></td>");
+            row.append("</form></td></tr>");
+
 
         }
         row.append("<tr><form action=\"insert\" method=\"post\">");
@@ -45,7 +57,8 @@
             row.append("</td>");
         }
         row.append(String.format("<input type=\"text\" name=\"table\" value=\"%s\" hidden/>", request.getAttribute("tablename")));
-        row.append("<td><input type=\"submit\" value=\"Insert\"/></td></tr>");
+        row.append("<td><input type=\"submit\" value=\"Insert\"/></td>");
+        row.append("<td></td>");
         row.append("</form></tr>");
             %>
     <%=row.toString()%>
