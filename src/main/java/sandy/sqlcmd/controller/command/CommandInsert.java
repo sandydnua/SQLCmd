@@ -46,7 +46,7 @@ public class CommandInsert extends Command {
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {
         String sqlQuery = prepareSql();
-
+        System.out.println(sqlQuery);
         dbManager.executeUpdate(sqlQuery);
         return new DataSet("Операция прошла успешно");
     }

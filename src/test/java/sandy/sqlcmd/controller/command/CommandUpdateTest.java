@@ -54,7 +54,8 @@ public class CommandUpdateTest {
         assertTrue(expected.equals(actual));
 
         verify(dbManager, times(1)).existTable("tableName");
-        verify(dbManager, times(1)).existColumns("tableName",DatabaseManager.EXISTENCE_THESE_FIELDS, "column", "columnName");
+        verify(dbManager, times(1)).existColumns("tableName",DatabaseManager.EXISTENCE_THESE_FIELDS, "column");
+        verify(dbManager, times(1)).existColumns("tableName",DatabaseManager.EXISTENCE_THESE_FIELDS,  "columnName");
         verify(dbManager, times(1)).executeQuery(sqlQuerySelect);
         verify(dbManager, times(1)).executeUpdate(sqlQueryUpdate);
     }
@@ -73,5 +74,6 @@ public class CommandUpdateTest {
         verify(dbManager, times(1)).executeQuery(sqlQuerySelect);
         verify(dbManager, times(0)).executeUpdate(sqlQueryUpdate);
     }
+
 
 }

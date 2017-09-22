@@ -3,7 +3,11 @@ package sandy.sqlcmd.model;
 import org.junit.*;
 import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.controller.web.JDBCDatabaseManager;
+import sandy.sqlcmd.controller.web.JDBCDatabaseManagerSpring;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -17,7 +21,7 @@ public class JDBCDatabaseManagerTest {
         try {
             PrepareDB.create();
             dbTest = PrepareDB.connect();
-            dbTest.executeUpdate("CREATE TABLE test ( id varchar(255), title varchar(255))");
+            dbTest.executeUpdate("CREATE TABLE test ( id varchar(255), title varchar(255), firstname varchar(255))");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -26,7 +30,11 @@ public class JDBCDatabaseManagerTest {
     @Test
     public void connectToSpecificDatabase() throws Exception {
 
-        DatabaseManager dbManager = new JDBCDatabaseManager();
+        // TODO тесты должны проходить на всех реализациях DatabaseManager
+        // подумать, как это автоматизировать
+
+        DatabaseManager dbManager = new JDBCDatabaseManagerSpring();
+//        DatabaseManager dbManager = new JDBCDatabaseManager();
 
         dbManager.connect( PrepareDB.ADDRESS_AND_PORT, PrepareDB.DB_NAME,
                            PrepareDB.ROOT_NAME, PrepareDB.PASS
@@ -49,6 +57,7 @@ public class JDBCDatabaseManagerTest {
         expected.addRow();
         expected.addField(0,"id");
         expected.addField(0,"title");
+        expected.addField(0,"firstname");
 
         DataSet actual = dbTest.executeQuery("SELECT * FROM test");
 
@@ -81,7 +90,8 @@ public class JDBCDatabaseManagerTest {
     @Test
     public void testExistColumnsFull () throws MainProcessException {
 
-        Boolean actual = dbTest.existColumns( "test", DatabaseManager.FULL_COVERAGES, "id","title");
+        String[] columns = new String[]{"id","title", "firstname"};
+        Boolean actual = dbTest.existColumns( "test", DatabaseManager.FULL_COVERAGES, columns);
 
         assertTrue( actual);
     }

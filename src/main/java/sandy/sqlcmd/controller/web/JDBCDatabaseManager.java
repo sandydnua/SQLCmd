@@ -163,7 +163,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
         if( mode == EXISTENCE_THESE_FIELDS ) {
 
             setFromParameters.removeAll(setFromTables);
-                diffSize = setFromParameters.size();
+            diffSize = setFromParameters.size();
         }
 
         return diffSize == 0;

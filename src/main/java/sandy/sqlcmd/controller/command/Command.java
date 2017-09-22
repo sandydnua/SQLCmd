@@ -3,6 +3,7 @@ package sandy.sqlcmd.controller.command;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteException;
+import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public abstract class Command {
 
@@ -32,7 +33,7 @@ public abstract class Command {
         this.dbManager = dbManager;
     }
 
-    protected abstract void canExecute() throws CantExecuteException;
+    protected abstract void canExecute() throws CantExecuteException, MainProcessException;
 
     void checkConnectAndParameters(int quantity) throws CantExecuteException {
         String errorMessages = "";
@@ -56,6 +57,7 @@ public abstract class Command {
         }catch (CantExecuteException ex){
             errorMessages = ex.getMessage();
         }
+        // TODO тут можно сделать элегантнее
         if(params.length < minQuantity){
             errorMessages += "Неверное число парметров; |";
         }

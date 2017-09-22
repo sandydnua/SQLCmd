@@ -9,6 +9,31 @@
 
     <context:annotation-config/>
     <context:component-scan base-package="sandy.sqlcmd"/>
+<!--
+  Если брать проперти из файла, то и другой бин тоже бедет из файла, а я хочу, чтобы он брал из
+  параметров метода getBean/ в идеале єтот бин раскоментировать а следющий убрать. но тогда bean id="datasource" работает неверно
+
+    <bean id="dataSourceServiceHelp" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
+    </bean>
+    <context:property-placeholder location="help.jdbc.properties"/>
+-->
+
+    <bean id="templateHelpDao" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSourceServiceHelp"/>
+    </bean>
+
+    <bean id="dataSourceServiceHelp" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://localhost:5432/service?loggerLevel=OF"/>
+        <property name="username" value="postgres"/>
+        <property name="password" value="7561"/>
+    </bean>
+
+    <!--//////////////////-->
 
     <bean id="commandFactorySpring" class="sandy.sqlcmd.controller.web.CommandsFactorySpring">
         <property name="commandFactoryBean" ref="commandFactory"/>
@@ -49,18 +74,15 @@
         </property>
     </bean>
 
-
-
     <bean id="datasource" class="sandy.sqlcmd.controller.web.ImprovedBasicDataSource" destroy-method="close" scope="prototype">
         <constructor-arg index="0" value="${driverClassName}"/>
         <constructor-arg index="1" value="${url}"/>
         <constructor-arg index="2" value="${username}"/>
         <constructor-arg index="3" value="${password}"/>
-      <!-- это свойство делает так, что выбрасывается исключение, если через секунду не появится своебодное подклчение
-      а у меня оно не появляется после нескольких запросов. -->
+        <!-- это свойство делает так, что выбрасывается исключение, если через секунду не появится своебодное подклчение
+        а у меня оно не появляется после нескольких запросов. -->
         <property name="maxWait" value="3000"/>
     </bean>
-
 </beans>
 
 

@@ -1,8 +1,7 @@
 package sandy.sqlcmd.controller.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,26 +21,42 @@ public class MainController {
     @Autowired
     private DatabaseManager dbManager;
 
-    @GetMapping("/help")
-    public String help() {
-        return "help";
+    @Autowired
+    private HelpDao helpDao;
+
+    @Autowired
+    @Qualifier(value = "commandFactorySpring")
+    BuilderCommands builderCommands;
+
+    @GetMapping("helpDao")
+    public String helpDao(Model model) {
+       model.addAttribute("help", helpDao.getHelpList());
+       return "helpDao";
     }
 
+    @PostMapping("insertHelp")
+    public String insertHelp(Model model, HttpServletRequest request) {
+       String command =  request.getParameter("command");
+       String description =  request.getParameter("description");
+       helpDao.insert(command, description);
 
-    // TODO потом убрать это
-    @GetMapping("/test")
-    public String test(Model model) {
-        List<String> list = new ArrayList();
-        for (int i = 1; i < 30; i++) {
-            try {
-                DataSet dataSet = dbManager.executeQuery("SELECT * FROM tab");
-                list.add(Integer.toString(i) + " Yes. " + dataSet.quantityRows());
-            } catch (MainProcessException e) {
-                list.add(Integer.toString(i) + " No. " + e.getMessage());
-            }
-        }
-        model.addAttribute("list", list.toArray(new String[0]) );
-        return "test";
+       return helpDao(model);
+    }
+    @PostMapping("deleteHelp")
+    public String deleteHelp(Model model, HttpServletRequest request) {
+       String id = request.getParameter("id");
+       helpDao.delete(Integer.parseInt(id));
+
+       return helpDao(model);
+    }
+    @PostMapping("updateHelp")
+    public String updateHelp(Model model, HttpServletRequest request) {
+       int id = Integer.parseInt(request.getParameter("id"));
+       String command = request.getParameter("command");
+       String description = request.getParameter("description");
+       helpDao.update(id, command, description);
+
+       return helpDao(model);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -49,12 +64,12 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/connect")
+    @GetMapping("connect")
     public String connect() {
         return "connect";
     }
 
-    @PostMapping("/connect")
+    @PostMapping("connect")
     public String connect(HttpServletRequest request, HttpSession session,
                           @RequestParam(value = "dbName", required = true) String dbName){
 
@@ -70,7 +85,7 @@ public class MainController {
 
     }
 
-    @PostMapping("/disconnect")
+    @PostMapping("disconnect")
     public String disconnect(HttpServletRequest request, HttpSession session, Model model) {
 
         try {
@@ -176,15 +191,10 @@ public class MainController {
         return "redirect:find";
     }
 
-
-
     private DataSet executeCommand(String action, HttpServletRequest request) throws Exception {
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("context-factory.xml");
-        BuilderComands builderComands = (BuilderComands) context.getBean("commandFactorySpring");
-
         String[] params = Services.BuilCommandString(action, request);
-        Command command = builderComands.getCommand(params);
+        Command command = builderCommands.getCommand(params);
         command.setDbManager(dbManager);
 
         return command.execute();

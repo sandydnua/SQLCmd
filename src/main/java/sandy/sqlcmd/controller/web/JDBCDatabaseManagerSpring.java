@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -34,14 +35,13 @@ public class JDBCDatabaseManagerSpring implements DatabaseManager {
     }
 
     @Override
-    public void connect(String address, String database, String userName, String password) throws MainProcessException {
+    public void connect(String address, String database, String userName, String password)  {
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("context-factory.xml");
+        ApplicationContext context = new FileSystemXmlApplicationContext("src/main/webapp/application-context.xml");
 
         // TODO перенести driverClassName в xml
         String driverClassName = "org.postgresql.Driver";
         String url = String.format("jdbc:postgresql://%s/%s?loggerLevel=OFF", address, database);
-
         dataSource = (DataSource) context.getBean("datasource", driverClassName, url, userName, password);
 
         // TODO убрать єто в xml
@@ -50,11 +50,11 @@ public class JDBCDatabaseManagerSpring implements DatabaseManager {
     }
 
     @Override
-    public void disconnect() throws MainProcessException {
+    public void disconnect() {
         dataSource = null;
     }
     @Override
-    public DataSet executeQuery(String sqlQuery) throws MainProcessException {
+    public DataSet executeQuery(String sqlQuery) {
 
         SqlRowSet result = template.queryForRowSet(sqlQuery);
         return RowSetToDataSet(result);
@@ -100,7 +100,7 @@ public class JDBCDatabaseManagerSpring implements DatabaseManager {
     }
 
     @Override
-    public boolean existTable(String tableName) throws MainProcessException {
+    public boolean existTable(String tableName) {
 
         if ( null == tableName || tableName.length() == 0) {
             return false;

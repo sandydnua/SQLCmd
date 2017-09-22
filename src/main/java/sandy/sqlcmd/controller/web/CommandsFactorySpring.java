@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import sandy.sqlcmd.controller.command.Command;
 
 @Component
-public class CommandsFactorySpring implements BuilderComands {
+public class CommandsFactorySpring implements BuilderCommands {
 
     private CommandFactory commandFactoryBean;
 

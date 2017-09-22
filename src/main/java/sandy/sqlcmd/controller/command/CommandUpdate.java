@@ -7,7 +7,9 @@ import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CommandUpdate extends Command {
 
@@ -39,7 +41,6 @@ public class CommandUpdate extends Command {
                                                params[INDEX_OF_NEW_VALUE]
                                            );
 
-        System.out.println(Arrays.deepToString(params));
         for (int i = MIN_QUANTITY_PARAMETERS; i < params.length; i = i + 4 ) {
             sqlConstructor.addColumnAndValueForWhere(params[i],params[i+1]);
             sqlConstructor.addForColumnNewValue(params[i+2],params[i+3]);
@@ -48,54 +49,39 @@ public class CommandUpdate extends Command {
         String sqlSelect = sqlConstructor.getQuerySelect();
         String sqlUpdate = sqlConstructor.getQueryUpdate();
 
+        DataSet data = dbManager.executeQuery(sqlSelect);
 
-        // TODO эту проверку перенести в метод проверки перед выполнением
-        if ( !dbManager.existTable(params[INDEX_OF_TABLE_NAME]) ) {
+        if (data.quantityRows() > 1) {
 
-            return new DataSet( "Таблица с таким именем отсутствует." );
-        }
-
-        DataSet data;
-        String[] columns = new String[]{ params[INDEX_OF_COLUMN_FOR_WHERE], params[INDEX_OF_COLUMN_OF_UPDATED_VALUE] };
-
-        // TODO эту проверку перенести в метод проверки перед выполнением
-        // и надо ее усовершенствовать и проверять все имена столбцов, а не только два
-
-        if( dbManager.existColumns(params[INDEX_OF_TABLE_NAME], DatabaseManager.EXISTENCE_THESE_FIELDS, columns)) {
-
-            data = dbManager.executeQuery(sqlSelect);
-
-            if (data.quantityRows() > 1) {
-
-                dbManager.executeUpdate(sqlUpdate);
-                data.addString("Эти строки будут обновлены");
-            } else {
-                data = new DataSet("С такими параметрами строки не найдены.");
-            }
+            dbManager.executeUpdate(sqlUpdate);
+            data.addString("Эти строки будут обновлены");
         } else {
-            data = new DataSet( "Поля с таким именем отсутствует." );
+            data = new DataSet("С такими параметрами строки не найдены.");
         }
 
         return data;
     }
 
     @Override
-    protected void canExecute() throws CantExecuteException {
+    protected void canExecute() throws CantExecuteException, MainProcessException {
 
         checkConnectAndMinQuantityParameters(MIN_QUANTITY_PARAMETERS);
 
-        // TODO
-        /**
-         * Было - проверка только на мин. количество. т.е. можно было проверять только одну пару и вставлять только одну пару за раз
-         * дальше проверяю кратность друм - потому что добавляют обновление нескольких полей за раз
-         * надо дописать тесты
-         * */
-
         if ( (params.length - 2) % 4 != 0) {
-            throw new CantExecuteException("Неверное число параметров для команды Updata. Вероятно, пропущен один параметр.");
+            throw new CantExecuteException("Неверное число параметров для команды Update. Вероятно, пропущен один параметр.");
         }
 
-    }
+        if ( !dbManager.existTable(params[INDEX_OF_TABLE_NAME]) ) {
+            throw new CantExecuteException( "Таблица с таким именем отсутствует." );
+        }
 
+        List<String> columns = new ArrayList<>();
+        for (int i = 2; i < params.length; i = i + 2) {
+            columns.add(params[i]);
+            if( dbManager.existColumns(params[INDEX_OF_TABLE_NAME], DatabaseManager.EXISTENCE_THESE_FIELDS, params[i])) {
+                throw new CantExecuteException( String.format("Столбец %s не существует", params[i] ));
+            }
+        }
+    }
 
 }
