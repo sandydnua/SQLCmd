@@ -1,8 +1,7 @@
 package sandy.sqlcmd.controller.command;
 
-import org.springframework.stereotype.Component;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
 
 public class UnknownCommand extends Command {
     public UnknownCommand(String[] params){
@@ -22,6 +21,6 @@ public class UnknownCommand extends Command {
     }
 
     @Override
-    protected void canExecute() throws CantExecuteException {
+    protected void canExecute() throws CantExecuteNoConnectionException {
     }
 }

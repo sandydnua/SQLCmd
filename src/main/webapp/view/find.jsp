@@ -1,3 +1,4 @@
+<%--
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -40,7 +41,6 @@
             row.append(String.format("<input  id=\"delete%d\" type=\"text\" name=\"table\" value=\"%s\" hidden/>", i, request.getAttribute("tablename")));
             row.append("<input   type=\"submit\" value=\"Delete\"/></td>");
             row.append("</form></td>");
-//            row.append("</tr>");
 
             row.append("<td>");
             row.append(String.format("<input   type=\"text\" name=\"table\" value=\"%s\" hidden/>", request.getAttribute("tablename")));
@@ -60,10 +60,12 @@
         row.append("<td><input type=\"submit\" value=\"Insert\"/></td>");
         row.append("<td></td>");
         row.append("</form></tr>");
-            %>
-    <%=row.toString()%>
+        out.println(row.toString());
+
+    %>
 </table>
 
 </body>
 </html>
 
+--%>

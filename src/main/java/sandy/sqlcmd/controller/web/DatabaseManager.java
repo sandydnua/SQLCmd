@@ -4,9 +4,6 @@ import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 // TODO надо этот интерфейс переместить в другой каталог, но тогда не работает Autowired
 public interface DatabaseManager{
 

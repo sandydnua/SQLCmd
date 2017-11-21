@@ -1,15 +1,6 @@
-<%@ page import="java.util.Map" %>
-
+<%--
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Tables</title>
-</head>
-<body>
-<%--TODO ccылку на главную страницу надо сделать универсальной и не привязывать к sqlcmd--%>
-<a href="/sqlcmd">На главную</a><br>
-<a href="createtable">Создать таблицу</a><br>
-<p>
+<div id="tables">
 <table border="0">
     <tr>
         <th>Название</th>
@@ -31,14 +22,9 @@
                                          "</form>", table[i][0]));
                 row.append("</td>");
                 row.append("</tr>");
-            %>
-            <%=row.toString()%>
-            <%
+                out.println(row.toString());
             }
         }
     %>
 </table>
-
-<a href="/sqlcmd">На главную</a>
-</body>
-</html>
+</div>--%>

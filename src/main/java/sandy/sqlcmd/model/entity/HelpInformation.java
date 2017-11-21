@@ -1,9 +1,21 @@
-package sandy.sqlcmd.controller.web;
+package sandy.sqlcmd.model.entity;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "help" , schema = "public")
 public final class HelpInformation {
-    private String command;
-    private String description;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @JoinColumn(name = "command_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private  Commands command;
+
+    @Column(name = "description")
+    private String description;
 
 
     public int getId() {
@@ -14,7 +26,7 @@ public final class HelpInformation {
         this.id = id;
     }
 
-    public HelpInformation(String command, String description) {
+    public HelpInformation(Commands command, String description) {
         this.command = command;
         this.description = description;
     }
@@ -22,13 +34,15 @@ public final class HelpInformation {
     public HelpInformation() {
     }
 
-    public String getCommand() {
+
+    public Commands getCommand() {
         return command;
     }
 
-    public void setCommand(String command) {
+    public void setCommand(Commands command) {
         this.command = command;
     }
+
 
     public String getDescription() {
         return description;

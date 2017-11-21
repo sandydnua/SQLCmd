@@ -30,8 +30,8 @@ public class Services {
                                 };
         } if (action.equals("tables") || action.equals("disconnect")) {
             return new String[]{action};
-        } else if(action.equals("find") || action.equals("drop")) {
-            req.setAttribute("tablename",req.getParameter("table"));
+        } else if(action.equals("find") || action.equals("drop") || action.equals("clear")) {
+            req.setAttribute("tablename",req.getParameter("table")); // TODO зачем эта строка????
             return new String[]{action, req.getParameter("table")};
         } if(action.equals("update")) {
             String[] fields = req.getParameterValues("fields");

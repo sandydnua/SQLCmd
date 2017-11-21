@@ -1,8 +1,6 @@
 package sandy.sqlcmd.controller.web;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.stereotype.Component;
-
 
 public class ImprovedBasicDataSource extends BasicDataSource {
 

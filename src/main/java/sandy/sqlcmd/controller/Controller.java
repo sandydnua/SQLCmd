@@ -3,7 +3,7 @@ package sandy.sqlcmd.controller;
 import sandy.sqlcmd.controller.command.Command;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.controller.web.DatabaseManager;
-import sandy.sqlcmd.model.Exceptions.CantExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
@@ -53,7 +53,7 @@ class Controller {
             return true;
         }
 
-        if ( ex instanceof CantExecuteException ) {
+        if ( ex instanceof CantExecuteNoConnectionException) {
              String[] strings = ex.getMessage().split("\\|");
              data.addString(strings);
              return true;

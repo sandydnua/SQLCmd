@@ -5,10 +5,6 @@ import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.controller.web.JDBCDatabaseManager;
 import sandy.sqlcmd.controller.web.JDBCDatabaseManagerSpring;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class JDBCDatabaseManagerTest {

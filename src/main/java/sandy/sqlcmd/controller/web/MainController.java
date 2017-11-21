@@ -6,14 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sandy.sqlcmd.controller.command.Command;
-import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.MainProcessException;
+import sandy.sqlcmd.model.*;
 import sandy.sqlcmd.services.Services;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class MainController {
@@ -22,46 +19,33 @@ public class MainController {
     private DatabaseManager dbManager;
 
     @Autowired
-    private HelpDao helpDao;
-
-    @Autowired
     @Qualifier(value = "commandFactorySpring")
     BuilderCommands builderCommands;
 
-    @GetMapping("helpDao")
-    public String helpDao(Model model) {
-       model.addAttribute("help", helpDao.getHelpList());
-       return "helpDao";
+    @GetMapping("edithelp")
+    public String editHelp() {
+        return "edithelp";
     }
 
-    @PostMapping("insertHelp")
-    public String insertHelp(Model model, HttpServletRequest request) {
-       String command =  request.getParameter("command");
-       String description =  request.getParameter("description");
-       helpDao.insert(command, description);
-
-       return helpDao(model);
-    }
-    @PostMapping("deleteHelp")
-    public String deleteHelp(Model model, HttpServletRequest request) {
-       String id = request.getParameter("id");
-       helpDao.delete(Integer.parseInt(id));
-
-       return helpDao(model);
-    }
-    @PostMapping("updateHelp")
-    public String updateHelp(Model model, HttpServletRequest request) {
-       int id = Integer.parseInt(request.getParameter("id"));
-       String command = request.getParameter("command");
-       String description = request.getParameter("description");
-       helpDao.update(id, command, description);
-
-       return helpDao(model);
-    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String min() {
-        return "index";
+    public String main(HttpSession session) {
+        if( isConnect(session)) {
+            return "index";
+        } else {
+            return "connect";
+        }
+    }
+
+    @RequestMapping(value = "mainajax", method = RequestMethod.GET)
+    public String mainAjax(HttpSession session) {
+        if ( isConnect(session)) {
+            return "mainajax";
+        } else {
+            session.setAttribute("referer", "mainajax");
+//            session.setAttribute("currentPage", "menuajax");
+            return "connect";
+        }
     }
 
     @GetMapping("connect")
@@ -71,18 +55,23 @@ public class MainController {
 
     @PostMapping("connect")
     public String connect(HttpServletRequest request, HttpSession session,
-                          @RequestParam(value = "dbName", required = true) String dbName){
+                          @RequestParam(value = "dbName") String dbName){
 
         try {
             executeCommand("connect", request);
-            session.setAttribute("database", dbName);
-            return "index";
+//            session.setAttribute("database", dbName);
+            session.setAttribute("dbManager", dbManager);
+            if(session.getAttribute("referer") != null) {
+                return "redirect:" + session.getAttribute("referer");
+            } else {
+                return "redirect:/";
+            }
         } catch (Exception e) {
-            session.removeAttribute("database");
+//            session.removeAttribute("database");
+            session.removeAttribute("dbManager");
             request.setAttribute("ErrorConnect", "Не удалось подключиться. " + e.getMessage() + ". " + e.getClass());
             return "connect";
         }
-
     }
 
     @PostMapping("disconnect")
@@ -94,17 +83,24 @@ public class MainController {
             model.addAttribute("Error", "Disconnect" + e.getMessage() + " " + e.getClass().getName());
             return "error";
         }
-
-        session.removeAttribute("database");
+//        session.removeAttribute("database");
+        session.removeAttribute("dbManager");
+//        session.removeAttribute("currentPage");
         return "redirect:/";
     }
 
-    @GetMapping("createtable")
-    public String creaTetableForm(HttpServletRequest request, Model model) {
-        String[] fields = request.getParameterValues("fields");
-        model.addAttribute("fields",fields);
-        return "createtable";
-    }
+ /*   @GetMapping("createtable")
+    public String creaTetableForm(HttpServletRequest request, Model model, HttpSession session) {
+        if ( isConnect(session)) {
+            String[] fields = request.getParameterValues("fields");
+            model.addAttribute("fields",fields);
+            return "createtable";
+        } else {
+            session.setAttribute("referer", "createtable");
+            return "redirect:connect";
+        }
+    }*/
+/*
 
     @PostMapping("create")
     public String createTable(HttpServletRequest request, Model model) {
@@ -116,19 +112,24 @@ public class MainController {
         }
         return "redirect:tables";
     }
-
+*/
+/*
     @GetMapping("tables")
-    public String tables(HttpServletRequest request, Model model) {
+    public String tables(HttpServletRequest request, Model model, HttpSession session) {
         DataSet data;
         try {
             data = executeCommand("tables", request);
             request.setAttribute("table", Services.getTable(data));
-        } catch (Exception e) {
+        } catch (CantExecuteNoConnectionException e) {
+            session.setAttribute("referer", "tables");
+            return "redirect:connect";
+        }
+        catch (Exception e) {
             model.addAttribute("Error", "Tables" + e.getMessage() + " " + e.getClass().getName() );
             return "error";
         }
         return "tables";
-    }
+    }*/
     @PostMapping("drop")
     public String drop(HttpServletRequest request, Model model) {
         try {
@@ -140,7 +141,7 @@ public class MainController {
         return "redirect:tables";
     }
 
-    @GetMapping("find")
+   /* @GetMapping("find")
     public String find(HttpServletRequest request, Model model) {
         DataSet data;
         try {
@@ -151,8 +152,8 @@ public class MainController {
             return "error";
         }
         return "find";
-    }
-
+    }*/
+/*
     @PostMapping("insert")
     public String insert(HttpServletRequest request, Model model) {
         try {
@@ -163,7 +164,7 @@ public class MainController {
         }
         model.addAttribute("table", request.getParameter("table"));
         return "redirect:find";
-    }
+    }*/
 
     @PostMapping("delete")
     public String delete(HttpServletRequest request, Model model) {
@@ -200,5 +201,13 @@ public class MainController {
         return command.execute();
     }
 
+    private boolean isConnect(HttpSession session) {
+        DatabaseManager dbm = (DatabaseManager) session.getAttribute("dbManager");
+        return dbm != null && dbm.isConnect();
+    }
 
+    @GetMapping("test")
+    public String test() {
+        return "test";
+    }
 }

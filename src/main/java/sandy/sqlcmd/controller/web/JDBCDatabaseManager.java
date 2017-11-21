@@ -2,7 +2,6 @@ package sandy.sqlcmd.controller.web;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
@@ -13,7 +12,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-//@Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class JDBCDatabaseManager implements DatabaseManager {
 

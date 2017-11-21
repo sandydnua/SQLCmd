@@ -3,7 +3,6 @@ package sandy.sqlcmd.controller.web;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -25,8 +24,8 @@ import java.util.Set;
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class JDBCDatabaseManagerSpring implements DatabaseManager {
 
-    DataSource dataSource;
-    JdbcTemplate template;
+    private DataSource dataSource;
+    private JdbcTemplate template;
 
     @Override
     public SQLConstructor getSQLConstructor() {

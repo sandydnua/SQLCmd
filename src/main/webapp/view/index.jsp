@@ -11,9 +11,9 @@
         if(database == null) {
             database = "Нет активного подключения";
         }
-
+        out.println(database);
     %>
-    <%=database%><br>
+    <br>
     <p>
     <a href="connect">Connect</a><br>
     <form action="disconnect" method="post">

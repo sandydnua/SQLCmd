@@ -1,8 +1,7 @@
 package sandy.sqlcmd.controller.command;
 
-import org.springframework.stereotype.Component;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
 
@@ -26,7 +25,7 @@ public class CommandTables extends Command {
     }
 
     @Override
-    protected void canExecute() throws CantExecuteException {
+    protected void canExecute() throws CantExecuteNoConnectionException {
 
         checkConnectAndParameters(EXPECTED_QUANTITY_OF_PARAMETERS);
     }

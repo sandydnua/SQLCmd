@@ -1,8 +1,7 @@
 package sandy.sqlcmd.controller.command;
 
-import org.springframework.stereotype.Component;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
@@ -52,12 +51,12 @@ public class CommandDelete extends Command {
     }
 
     @Override
-    protected void canExecute() throws CantExecuteException {
+    protected void canExecute() throws CantExecuteNoConnectionException {
 
         checkConnectAndMinQuantityParameters(MIN_QUANTITY_PARMETERS);
 
         if(params.length > MIN_QUANTITY_PARMETERS && params.length%2 != 0) {
-            throw new CantExecuteException("Неверное число параметров.");
+            throw new CantExecuteNoConnectionException("Неверное число параметров.");
         }
     }
 }

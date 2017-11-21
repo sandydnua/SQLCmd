@@ -2,7 +2,7 @@ package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
@@ -46,25 +46,24 @@ public class CommandInsert extends Command {
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {
         String sqlQuery = prepareSql();
-        System.out.println(sqlQuery);
         dbManager.executeUpdate(sqlQuery);
         return new DataSet("Операция прошла успешно");
     }
 
     @Override
-    protected void canExecute() throws CantExecuteException {
+    protected void canExecute() throws CantExecuteNoConnectionException {
 
         String errorMessage = "";
         try{
             checkConnectAndMinQuantityParameters(MIN_QUANTITY_PARAMETERS);
-        }catch (CantExecuteException ex){
+        }catch (CantExecuteNoConnectionException ex){
             errorMessage +=ex.getMessage();
         }
         if( (params.length % 2) !=0 ){
             errorMessage += "Неверное количество параметров, чего-то не хватает; ";
         }
         if( !"".equals(errorMessage) ){
-            throw new CantExecuteException(errorMessage);
+            throw new CantExecuteNoConnectionException(errorMessage);
         }
     }
 }

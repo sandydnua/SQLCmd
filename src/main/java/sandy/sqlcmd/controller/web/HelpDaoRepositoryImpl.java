@@ -1,3 +1,4 @@
+/*
 package sandy.sqlcmd.controller.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class HelpDaoImpl implements HelpDao {
+public class HelpDaoRepositoryImpl */
+/*implements HelpDaoRepository*//*
+ {
 
     @Autowired
     private JdbcTemplate templateHelpDao;
@@ -26,7 +29,7 @@ public class HelpDaoImpl implements HelpDao {
             public HelpInformation mapRow(ResultSet resultSet, int i) throws SQLException {
                 HelpInformation helpRow = new HelpInformation();
                 helpRow.setId(resultSet.getInt("id"));
-                helpRow.setCommand(resultSet.getString("command"));
+                helpRow.setCommandName(resultSet.getString("command"));
                 helpRow.setDescription(resultSet.getString("description"));
                 return helpRow;
             }
@@ -44,3 +47,5 @@ public class HelpDaoImpl implements HelpDao {
 
     }
 }
+
+*/
