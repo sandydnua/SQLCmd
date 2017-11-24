@@ -2,21 +2,21 @@
 <html>
 <head>
     <title>Edit Help</title>
+    <style type="text/css">
+        @import url("resources/css/edithelp.css");
+    </style>
     <script src="resources/js/jquery.js"></script>
-    <script src="resources/js/languages-lib.js"></script>
-    <script src="resources/js/commands-lib.js"></script>
+    <script src="resources/js/edithelp-lib.js"></script>
     <script src="resources/js/jquery.tmpl.js"></script>
-
     <script id="currentLanguagesTmpl" type="text/x-jquery-tmpl">
-        <p>
-            <label>
-                <input onclick=selectTranstationForEdit('{%= $data.id %}') type="radio" name="radio">{%= $data.language %}
-            </label>
-        </p>
+        <label>
+             <input onclick=selectTranstationForEdit('{%= $data.id %}') type="radio" name="radio"/>
+            {%= $data.language %}
+        </label>
+        <br>
     </script>
-
     <script id="languagesTmpl" type="text/x-jquery-tmpl">
-         <table border="1">
+         <table border="1" id="languagesTable">
             <tr>
                 <th>Id</th>
                 <th>Язык</th>
@@ -26,21 +26,17 @@
             {%each $data%}
                 <tr>
                     {%each $value%}
-                        <td>
-                            {%= $value %}
-                        </td>
+                        <td>{%= $value %}</td>
                     {%/each%}
-                    <td>
-                        <button  onclick='deleteLanguage("{%= $value.id %}")'>Удалить</button>
-                    </td>
+                    <td><button  onclick='deleteLanguage("{%= $value.id %}")'>Удалить</button></td>
                 </tr>
             {%/each%}
             <tr>
-                    <td><form id='insertLanguage' action='insertLanguage' method='post'></td>
-                    <td><input  type='text' name='language'/></td>
-                    <td><input  type='text' name='shortName'/></td>
-                    <td><button  onclick='insertLanguage()'>Добавить</button></form></td>
-                </tr>
+                <td><form id='insertLanguage' action='insertLanguage' method='post'></td>
+                <td><input  type='text' name='language'/></td>
+                <td><input  type='text' name='shortName'/></td>
+                <td><button  onclick='insertLanguage()'>Добавить</button></form></td>
+            </tr>
         </table>
     </script>
  <script id="commandsTmpl" type="text/x-jquery-tmpl">
@@ -54,24 +50,36 @@
             {%each $data%}
                 <tr>
                     {%each $value%}
-                        <td>
-                            {%= $value %}
-                        </td>
+                        <td>{%= $value %}</td>
                     {%/each%}
-                    <td>
-                        <button  onclick='deleteCommand("{%= $value.id %}")'>Удалить</button>
-                    </td>
+                    <td><button  onclick='deleteCommand("{%= $value.id %}")'>Удалить</button></td>
                 </tr>
             {%/each%}
             <tr>
-                    <td><form id='insertLanguage' action='insertCommand' method='post'></td>
-                    <td><input  type='text' name='command'/></td>
-                    <td><input  type='text' name='format'/></td>
-                    <td><button  onclick='insertCommand()'>Добавить</button></form></td>
-                </tr>
+                <td><form id='insertLanguage' action='insertCommand' method='post'></td>
+                <td><input  type='text' name='command'/></td>
+                <td><input  type='text' name='format'/></td>
+                <td><button  onclick='insertCommand()'>Добавить</button></form></td>
+            </tr>
         </table>
     </script>
-
+    <script id="getHelpTranslationsTmpl" type="text/x-jquery-tmpl">
+         <table border="1">
+            <tr>
+                <th>Команда</th>
+                <th>Формат</th>
+                <th colspan='2'>Описание</th>
+            </tr>
+            {%each $data%}
+                <tr>
+                    <td>{%= $value.command.commandName %}</td>
+                    <td>{%= $value.command.format %}</td>
+                    <td><input type='text' name='translation-{%= $value.id%}' value='{%= $value.description%}'/></td>
+                    <td><button onclick='saveTranslation({%= $value.id%})'>Save</button></td>
+                </tr>
+            {%/each%}
+        </table>
+    </script>
     <script type="text/javascript">
         $(window).on('load', function(){
             languages();
@@ -102,6 +110,10 @@
         </tr>
     </table>
     <br>
-    <a href="mainajax">Главное меню</a>
+    <a href="logout">Выйти из режима редактирования</a>
+    <br>
+    <a href="help">Смотреть справку</a>
+    <br>
+    <a href="index">Главное меню</a>
 </body>
 </html>

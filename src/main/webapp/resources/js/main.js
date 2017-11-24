@@ -67,7 +67,7 @@ function updateRow(index) {
 function showRowsFromTable(tableName) {
     $.get("find", {table: tableName}, function (data) {
         table = $('#find');
-        var row = '<table border="1">';
+        var row = '<table id="find">';
         for(var i = 0; i < data.length; i++) {
                 if( i == 0 ) {
                     row += '<tr>';
@@ -89,15 +89,15 @@ function showRowsFromTable(tableName) {
                     row += '<td>';
                     row += '<input  form="delete'+ i +'" type="text" name="table" value="'+ tableName +'" hidden/>';
                     row += '<input  form="delete'+ i +'" type="submit" value="Delete"/>';
-                    row += '<form id="delete'+ i +'" action="javascript:void(null);" method="post" onsubmit="deleteRow(\'' + i + '\')">';
-                    row += '</form></td>';
+                    row += '</td>';
 
                     row += '<td>';
                     row += '<input  form="update'+ i +'" type="text" name="table" value="' + tableName + '" hidden/>';
                     row += '<input  form="update'+ i +'" type="submit" value="Update"/>';
-                    row += '<form id="update'+ i +'" action="update" method="post" onsubmit="updateRow(\'' + i + '\')">';
-                    row += '</form></td>';
+                    row += '</td>';
                 }
+            row += '<form id="update'+ i +'" action="javascript:void(null);" method="post" onsubmit="updateRow(' + i + ')"></form>';
+            row += '<form id="delete'+ i +'" action="javascript:void(null);" method="post" onsubmit="deleteRow(' + i + ')"></form>';
             row += '</tr>';
         }
 
@@ -146,9 +146,7 @@ function insertRow(tableName) {
 
 function createTable() {
     var tableName = $("input[name='tableName']").val();
-    var index = 0;
-    var dataPOST;
-    dataPOST = 'table=' + tableName + '&';
+    var dataPOST = 'table=' + tableName + '&';
     $("input[name='fields']").each(function(){
         dataPOST += 'fields=' + $(this).val() + '&';
     });

@@ -1,0 +1,21 @@
+td {
+    border-collapse: collapse;
+}
+td, th {
+    vertical-align: top;
+    border: 0px;
+    padding: 0px;
+}
+th {
+    text-align: center;
+    padding-left: 10px;
+    background-color: rgba(212, 226, 226, 0.23);
+    color: rgba(62, 62, 62, 0.78);
+}
+label:hover {
+    background-color: rgba(235, 28, 29, 0.13);
+}
+
+label {
+    padding: 2px;
+}

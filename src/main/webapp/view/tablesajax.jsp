@@ -7,7 +7,6 @@
             type:'POST',
             data:{table:tableName}
         }).done(show('tables'));
-
     }
 </script>
 <div id="tables">
@@ -30,5 +29,4 @@
             </td>
         </tr>
         </table>
-
 </script>
