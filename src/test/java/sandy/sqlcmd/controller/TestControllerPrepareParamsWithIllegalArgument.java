@@ -3,6 +3,7 @@ package sandy.sqlcmd.controller;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import sandy.sqlcmd.services.Preparer;
 
 import java.util.Arrays;
 import java.util.List;

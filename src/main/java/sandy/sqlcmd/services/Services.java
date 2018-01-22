@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Services {
 
-    public static String[][] getTable(DataSet data) {
+    public static String[][] toTable(DataSet data) {
 
         int quantityRows = data.quantityRows();
         int quantityColuns = data.quantityFieldsInRow(0);

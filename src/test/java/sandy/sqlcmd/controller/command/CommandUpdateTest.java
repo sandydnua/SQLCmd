@@ -34,7 +34,7 @@ public class CommandUpdateTest {
         when(dbManager.isConnect()).thenReturn(true);
         when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());
         when(dbManager.existTable(anyString())).thenReturn(true);
-        when(dbManager.existColumns(anyString(),anyInt(), anyString(),anyString())).thenReturn(true);
+        when(dbManager.existColumns(anyString(),anyInt(), anyString())).thenReturn(true);
     }
 
     @Test

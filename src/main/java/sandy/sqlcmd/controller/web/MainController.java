@@ -75,13 +75,12 @@ public class MainController {
     }
 
     @GetMapping("help")
-    public String help(HttpSession session) {
+    public String help() {
           return "help";
     }
 
     @PostMapping("connect")
-    public String connect(HttpServletRequest request, HttpSession session,
-                          @RequestParam(value = "dbName") String dbName){
+    public String connect(HttpServletRequest request, HttpSession session){
         try {
             executeCommand("connect", request);
             session.setAttribute("dbManager", dbManager);

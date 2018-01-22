@@ -1,14 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript">
     function addField() {
-        $('#fieldsList').append("<input type='text' name='fields'/>&nbsp");
+        $('#fieldsList').append("<input type='text' name='fields'/><br>");
     }
     function clearFieldsList() {
         $('#fieldsList').empty();
         addField();
     }
+    function deleteRow() {
+        $(this).empty();
+    }
 
 </script>
+
 <div id="createtable">
 
     <p>Имя новой таблицы: <input type="text" name="tableName"/></p>

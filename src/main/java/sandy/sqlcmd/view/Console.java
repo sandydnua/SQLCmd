@@ -1,4 +1,5 @@
 package sandy.sqlcmd.view;
+import org.springframework.stereotype.Component;
 import sandy.sqlcmd.model.DataSet;
 
 import java.util.Iterator;

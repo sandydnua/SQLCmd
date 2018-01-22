@@ -1,5 +1,6 @@
 package sandy.sqlcmd.controller.web;
 
+import lombok.Setter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -19,7 +20,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class JDBCDatabaseManagerSpring implements DatabaseManager {
@@ -29,7 +29,6 @@ public class JDBCDatabaseManagerSpring implements DatabaseManager {
 
     @Override
     public SQLConstructor getSQLConstructor() {
-        // TODO  переделать на Spring
         return new SQLConstructorPostgre();
     }
 
@@ -38,12 +37,10 @@ public class JDBCDatabaseManagerSpring implements DatabaseManager {
 
         ApplicationContext context = new FileSystemXmlApplicationContext("src/main/webapp/application-context.xml");
 
-        // TODO перенести driverClassName в xml
         String driverClassName = "org.postgresql.Driver";
         String url = String.format("jdbc:postgresql://%s/%s?loggerLevel=OFF", address, database);
         dataSource = (DataSource) context.getBean("datasource", driverClassName, url, userName, password);
 
-        // TODO убрать єто в xml
         template = new JdbcTemplate(dataSource);
 
     }
@@ -107,8 +104,7 @@ public class JDBCDatabaseManagerSpring implements DatabaseManager {
 
         SQLConstructor sqlConstructor = this.getSQLConstructor();
         sqlConstructor.addTables(tableName);
-        // TODO тут делалось через this. может переделать через template.***** ???
-        DataSet data = this.executeQuery(sqlConstructor.getQueryExistTable());
+        DataSet data = executeQuery(sqlConstructor.getQueryExistTable());
         return data.quantityRows() > 1;
     }
 

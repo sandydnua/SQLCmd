@@ -140,7 +140,7 @@ public class RestService {
         command.setDbManager((DatabaseManager) session.getAttribute("dbManager"));
 
         try {
-            return Services.getTable(command.execute());
+            return Services.toTable(command.execute());
         } catch (Exception e) {
             System.out.println("ERROR!!! " + e.getMessage() + e.getClass());
             return null;

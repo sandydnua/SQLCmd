@@ -1,6 +1,7 @@
 package sandy.sqlcmd.model;
 
 import sandy.sqlcmd.controller.command.*;
+import sandy.sqlcmd.controller.web.BuilderCommands;
 
 public class AllCommands {
 
@@ -40,4 +41,5 @@ public class AllCommands {
                 return new UnknownCommand( params );
         }
     }
+
 }

@@ -33,10 +33,9 @@
 <body>
 <p> Main Page</p>
 
-    <div id="mainDiv">
+    <div id="mainDiv" >
         <div id="menu">
-            <p><button  onclick="show('tables')">Таблицы</button></p>
-
+            <p><button  onclick="showTables()">Таблицы</button></p>
         </div>
         <%@ include file="tablesajax.jsp"%>
         <%@ include file="createtableajax.jsp"%>

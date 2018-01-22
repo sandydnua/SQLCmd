@@ -1,19 +1,18 @@
 package sandy.sqlcmd.controller;
 
 import sandy.sqlcmd.controller.command.Command;
+import sandy.sqlcmd.model.AllCommands;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.controller.web.DatabaseManager;
-import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.CompletionOfWorkException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
-import sandy.sqlcmd.model.AllCommands;
 import sandy.sqlcmd.controller.web.JDBCDatabaseManager;
+import sandy.sqlcmd.services.Preparer;
 import sandy.sqlcmd.view.View;
 
 class Controller {
-
-
     private final View view;
     private DatabaseManager dbManager;
     private boolean continueWork = true;
@@ -53,7 +52,7 @@ class Controller {
             return true;
         }
 
-        if ( ex instanceof CantExecuteNoConnectionException) {
+        if ( ex instanceof CantExecuteOrNoConnectionException) {
              String[] strings = ex.getMessage().split("\\|");
              data.addString(strings);
              return true;

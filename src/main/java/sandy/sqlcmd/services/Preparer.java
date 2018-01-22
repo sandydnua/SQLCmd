@@ -1,11 +1,8 @@
-package sandy.sqlcmd.controller;
-
-import org.springframework.stereotype.Component;
+package sandy.sqlcmd.services;
 
 import java.util.ArrayList;
 import java.util.List;
-@Component
-class Preparer {
+public class Preparer {
 
     private static StringBuilder itemCommnad;
     private static List<String> resultList;
