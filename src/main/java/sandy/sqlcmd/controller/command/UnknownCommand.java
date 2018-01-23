@@ -1,7 +1,7 @@
 package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 
 public class UnknownCommand extends Command {
     public UnknownCommand(String[] params){
@@ -21,6 +21,6 @@ public class UnknownCommand extends Command {
     }
 
     @Override
-    protected void canExecute() throws CantExecuteNoConnectionException {
+    protected void canExecute() throws CantExecuteOrNoConnectionException {
     }
 }

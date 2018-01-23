@@ -1,7 +1,7 @@
 package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
@@ -40,7 +40,7 @@ public class CommandFind extends Command {
     }
 
     @Override
-    protected void canExecute() throws CantExecuteNoConnectionException {
+    protected void canExecute() throws CantExecuteOrNoConnectionException {
 
         checkConnectAndParameters(EXPECTED_QUANTITY_OF_PARAMETERS);
     }

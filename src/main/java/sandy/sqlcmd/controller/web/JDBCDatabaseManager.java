@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class JDBCDatabaseManager implements DatabaseManager {
 
 

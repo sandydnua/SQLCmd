@@ -1,5 +1,6 @@
 package sandy.sqlcmd.controller;
 
+import org.apache.log4j.varia.NullAppender;
 import org.junit.*;
 import sandy.sqlcmd.model.PrepareDB;
 
@@ -21,6 +22,7 @@ public class IntegrationMainTest {
 
     @BeforeClass
     public static void createTestDB() throws Exception {
+        org.apache.log4j.BasicConfigurator.configure(new NullAppender());
         try {
             PrepareDB.create();
         } catch (Exception e) {

@@ -1,7 +1,7 @@
 package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandDisconnect extends Command {
@@ -22,7 +22,7 @@ public class CommandDisconnect extends Command {
     }
 
     @Override
-    protected void canExecute() throws CantExecuteNoConnectionException {
+    protected void canExecute() throws CantExecuteOrNoConnectionException {
 
         checkConnectAndParameters(EXPECTED_QUANTITY_OF_PARAMETERS);
     }

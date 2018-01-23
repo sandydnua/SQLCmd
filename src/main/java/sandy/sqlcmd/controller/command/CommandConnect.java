@@ -1,7 +1,7 @@
 package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandConnect extends Command {
@@ -31,7 +31,7 @@ public class CommandConnect extends Command {
     }
 
     @Override
-    protected void canExecute() throws CantExecuteNoConnectionException {
+    protected void canExecute() throws CantExecuteOrNoConnectionException {
 
         String errorMessages = "";
         if( null == dbManager){
@@ -40,6 +40,6 @@ public class CommandConnect extends Command {
         if(params.length != EXPECTED_QUANTITY_OF_PARAMETERS){
             errorMessages += "Неверное число парметров; ";
         }
-        if( !"".equals(errorMessages))  throw new CantExecuteNoConnectionException(errorMessages);
+        if( !"".equals(errorMessages))  throw new CantExecuteOrNoConnectionException(errorMessages);
     }
 }

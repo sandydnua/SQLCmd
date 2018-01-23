@@ -3,7 +3,7 @@ package sandy.sqlcmd.controller.command;
 import org.junit.Before;
 import org.junit.Test;
 import sandy.sqlcmd.controller.web.DatabaseManager;
-import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.SQLConstructorPostgre;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -36,7 +36,7 @@ public class CommandInsertTest {
         command.execute();
         verify(dbManager, times(1)).executeUpdate(sqlQuery);
     }
-    @Test ( expected = CantExecuteNoConnectionException.class)
+    @Test ( expected = CantExecuteOrNoConnectionException.class)
     public void testIncorrectQuantityParameters() throws Exception {
 
         String[] params = {"insert", "tableName", "id", "1", "title"};
@@ -45,7 +45,7 @@ public class CommandInsertTest {
 
         command.execute();
     }
-    @Test ( expected = CantExecuteNoConnectionException.class)
+    @Test ( expected = CantExecuteOrNoConnectionException.class)
     public void testIncorrectFewParameters() throws Exception {
 
         String[] params = {"insert", "tableName", "id"};

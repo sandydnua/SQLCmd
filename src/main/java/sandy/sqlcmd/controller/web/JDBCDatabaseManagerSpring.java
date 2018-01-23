@@ -1,6 +1,5 @@
 package sandy.sqlcmd.controller.web;
 
-import lombok.Setter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;

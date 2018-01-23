@@ -1,7 +1,7 @@
 package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.HelpReader;
 import sandy.sqlcmd.model.XMLHelpReader;
@@ -54,7 +54,7 @@ public class CommandHelp extends Command {
     }
 
     @Override
-    protected void canExecute() throws CantExecuteNoConnectionException {
+    protected void canExecute() throws CantExecuteOrNoConnectionException {
     }
 
 

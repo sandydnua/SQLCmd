@@ -1,10 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript">
-    var deleteTable = function(tableName) {
-        $.post('dropTable',{table:tableName}).done(function(){
-             showTables();
-        });
-    }
+
 </script>
 <div id="tables">
     <div id="tablesList">

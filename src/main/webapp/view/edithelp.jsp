@@ -4,13 +4,21 @@
     <title>Edit Help</title>
     <style type="text/css">
         @import url("resources/css/edithelp.css");
+
     </style>
+
+
     <script src="resources/js/jquery.js"></script>
     <script src="resources/js/edithelp-lib.js"></script>
     <script src="resources/js/jquery.tmpl.js"></script>
+    <script type="text/javascript">
+        $(window).on('load', function(){
+            initHelpEdit();
+        });
+    </script>
     <script id="currentLanguagesTmpl" type="text/x-jquery-tmpl">
         <label>
-             <input onclick=selectTranstationForEdit('{%= $data.id %}') type="radio" name="radio"/>
+             <input onclick=selectTranstationForEdit('{%= $data.id %}') value="{%= $data.id %}" id="currentLanguage" type="radio" name="radio"/>
             {%= $data.language %}
         </label>
         <br>
@@ -80,40 +88,39 @@
             {%/each%}
         </table>
     </script>
-    <script type="text/javascript">
-        $(window).on('load', function(){
-            languages();
-            commands();
-        });
-    </script>
+
 </head>
 <body>
-<table border="0">
-        <tr>
-            <td style="vertical-align: top">
-                <p>Языки</p>
-                <div id='languages'></div></td>
-            <td style="vertical-align: top">
-                <p>Команды</p>
-                <div id='commands'></div></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <br><p>Выбери язык</p>
-                <div id="current-languages"></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div id="translations-for-edit"></div>
-            </td>
-        </tr>
-    </table>
-    <br>
-    <a href="logout">Выйти из режима редактирования</a>
-    <br>
-    <a href="help">Смотреть справку</a>
-    <br>
-    <a href="index">Главное меню</a>
+    <div id="centerMainDivEditHelp">
+        <div>
+        <table border="0">
+                <tr>
+                    <td style="vertical-align: top">
+                        <p>Языки</p>
+                        <div id='languages'></div></td>
+                    <td style="vertical-align: top">
+                        <p>Команды</p>
+                        <div id='commands'></div></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <br><p>Выбери язык</p>
+                        <div id="current-languages"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="translations-for-edit"></div>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <a href="logout">Выйти из режима редактирования</a>
+            <br>
+            <a href="help">Смотреть справку</a>
+            <br>
+            <a href="index">Главное меню</a>
+        </div>
+    </div>
 </body>
 </html>

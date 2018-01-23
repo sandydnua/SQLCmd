@@ -39,6 +39,8 @@
         </div>
         <%@ include file="tablesajax.jsp"%>
         <%@ include file="createtableajax.jsp"%>
+        <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
         <div id="find"></div>
     </div>
     <p>

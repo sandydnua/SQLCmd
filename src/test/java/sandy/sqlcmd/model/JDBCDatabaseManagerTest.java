@@ -29,8 +29,7 @@ public class JDBCDatabaseManagerTest {
         // TODO тесты должны проходить на всех реализациях DatabaseManager
         // подумать, как это автоматизировать
 
-        DatabaseManager dbManager = new JDBCDatabaseManagerSpring();
-//        DatabaseManager dbManager = new JDBCDatabaseManager();
+        DatabaseManager dbManager = new JDBCDatabaseManager();
 
         dbManager.connect( PrepareDB.ADDRESS_AND_PORT, PrepareDB.DB_NAME,
                            PrepareDB.ROOT_NAME, PrepareDB.PASS

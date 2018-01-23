@@ -2,13 +2,10 @@ package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CommandUpdate extends Command {
 
@@ -62,21 +59,21 @@ public class CommandUpdate extends Command {
     }
 
     @Override
-    protected void canExecute() throws CantExecuteNoConnectionException, MainProcessException {
+    protected void canExecute() throws CantExecuteOrNoConnectionException, MainProcessException {
 
         checkConnectAndMinQuantityParameters(MIN_QUANTITY_PARAMETERS);
 
         if ( (params.length - 2) % 4 != 0) {
-            throw new CantExecuteNoConnectionException("Неверное число параметров для команды Update. Вероятно, пропущен один параметр.");
+            throw new CantExecuteOrNoConnectionException("Неверное число параметров для команды Update. Вероятно, пропущен один параметр.");
         }
 
         if ( !dbManager.existTable(params[INDEX_OF_TABLE_NAME]) ) {
-            throw new CantExecuteNoConnectionException( "Таблица с таким именем отсутствует." );
+            throw new CantExecuteOrNoConnectionException( "Таблица с таким именем отсутствует." );
         }
 
         for (int i = 2; i < params.length; i = i + 2) {
             if( !dbManager.existColumns(params[INDEX_OF_TABLE_NAME], DatabaseManager.EXISTENCE_THESE_FIELDS, params[i])) {
-                throw new CantExecuteNoConnectionException( String.format("Столбец %s не существует", params[i] ));
+                throw new CantExecuteOrNoConnectionException( String.format("Столбец %s не существует", params[i] ));
             }
         }
     }

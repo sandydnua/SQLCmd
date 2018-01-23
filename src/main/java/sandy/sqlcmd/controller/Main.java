@@ -1,15 +1,19 @@
 package sandy.sqlcmd.controller;
 
+import org.apache.log4j.varia.NullAppender;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
-import sandy.sqlcmd.view.View;
-import sandy.sqlcmd.view.Console;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 class Main {
 
+    static {
+        org.apache.log4j.BasicConfigurator.configure(new NullAppender());
+    }
     public static void main(String[] args){
-        View view = new Console();
-        Controller controller = new Controller(view);
-        controller.run();
+
+        ApplicationContext ap = new AnnotationConfigApplicationContext(AppConsoleContext.class);
+        ControllerCmd controllerCmd = (ControllerCmd) ap.getBean("controllerConsole");
+
+        controllerCmd.run();
     }
 }

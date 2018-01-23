@@ -1,7 +1,7 @@
 package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
 
@@ -32,7 +32,7 @@ public class CommandCreate extends Command {
     }
 
     @Override
-    protected void canExecute() throws CantExecuteNoConnectionException {
+    protected void canExecute() throws CantExecuteOrNoConnectionException {
 
         checkConnectAndMinQuantityParameters(MIN_QUANTITY_PARAMETERS);
     }

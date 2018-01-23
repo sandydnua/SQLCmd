@@ -87,4 +87,19 @@ function createTable() {
     $.post('createTable',dataPOST).done( function () {
         showTables();
     });
+};
+function addField() {
+    $('#fieldsList').append("<input type='text' name='fields'/><br>");
 }
+function clearFieldsList() {
+    $('#fieldsList').empty();
+    addField();
+}
+/*function deleteRow() {
+    $(this).empty();
+};*/
+function deleteTable(tableName) {
+    $.post('dropTable',{table:tableName}).done(function(){
+        showTables();
+    });
+};

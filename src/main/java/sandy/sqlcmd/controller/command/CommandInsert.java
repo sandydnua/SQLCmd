@@ -2,7 +2,7 @@ package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.controller.web.DatabaseManager;
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
@@ -51,19 +51,19 @@ public class CommandInsert extends Command {
     }
 
     @Override
-    protected void canExecute() throws CantExecuteNoConnectionException {
+    protected void canExecute() throws CantExecuteOrNoConnectionException {
 
         String errorMessage = "";
         try{
             checkConnectAndMinQuantityParameters(MIN_QUANTITY_PARAMETERS);
-        }catch (CantExecuteNoConnectionException ex){
+        }catch (CantExecuteOrNoConnectionException ex){
             errorMessage +=ex.getMessage();
         }
         if( (params.length % 2) !=0 ){
             errorMessage += "Неверное количество параметров, чего-то не хватает; ";
         }
         if( !"".equals(errorMessage) ){
-            throw new CantExecuteNoConnectionException(errorMessage);
+            throw new CantExecuteOrNoConnectionException(errorMessage);
         }
     }
 }

@@ -2,7 +2,7 @@ package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.controller.web.DatabaseManager;
-import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public abstract class Command {
@@ -33,39 +33,39 @@ public abstract class Command {
         this.dbManager = dbManager;
     }
 
-    protected abstract void canExecute() throws CantExecuteNoConnectionException, MainProcessException;
+    protected abstract void canExecute() throws CantExecuteOrNoConnectionException, MainProcessException;
 
-    void checkConnectAndParameters(int quantity) throws CantExecuteNoConnectionException {
+    void checkConnectAndParameters(int quantity) throws CantExecuteOrNoConnectionException {
         String errorMessages = "";
 
         try{
             checkConnect();
-        }catch (CantExecuteNoConnectionException ex){
+        }catch (CantExecuteOrNoConnectionException ex){
             errorMessages = ex.getMessage();
         }
         if(params.length != quantity){
             errorMessages += "Неверное число парметров; | ";
         }
-        if( !"".equals(errorMessages))  throw new CantExecuteNoConnectionException(errorMessages);
+        if( !"".equals(errorMessages))  throw new CantExecuteOrNoConnectionException(errorMessages);
     }
 
-    void checkConnectAndMinQuantityParameters(int minQuantity) throws CantExecuteNoConnectionException {
+    void checkConnectAndMinQuantityParameters(int minQuantity) throws CantExecuteOrNoConnectionException {
 
         String errorMessages = "";
         try{
             checkConnect();
-        }catch (CantExecuteNoConnectionException ex){
+        }catch (CantExecuteOrNoConnectionException ex){
             errorMessages = ex.getMessage();
         }
         // TODO тут можно сделать элегантнее
         if(params.length < minQuantity){
             errorMessages += "Неверное число парметров; |";
         }
-        if( !"".equals(errorMessages))  throw new CantExecuteNoConnectionException(errorMessages);
+        if( !"".equals(errorMessages))  throw new CantExecuteOrNoConnectionException(errorMessages);
 
     }
 
-    private void checkConnect() throws CantExecuteNoConnectionException {
+    private void checkConnect() throws CantExecuteOrNoConnectionException {
 
         String errorMessages = "";
         if( null == dbManager){
@@ -73,6 +73,6 @@ public abstract class Command {
         }else if( !dbManager.isConnect()){
             errorMessages += "Нет подключения к базе; |";
         }
-        if( !"".equals(errorMessages))  throw new CantExecuteNoConnectionException(errorMessages);
+        if( !"".equals(errorMessages))  throw new CantExecuteOrNoConnectionException(errorMessages);
     }
 }

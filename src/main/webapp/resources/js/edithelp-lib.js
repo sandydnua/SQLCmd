@@ -1,13 +1,23 @@
-
+function initHelpEdit() {
+    languages();
+    commands();
+}
 function languages() {
     $.getJSON("languages").done(function (data) {
+        var currentLanguage = $('input[name=radio]:checked').val();
         $("#languages").empty();
         $("#current-languages").empty();
 
         $('#currentLanguagesTmpl').tmpl(data).appendTo('#current-languages');
         var lang = new Array();
         lang[0] = data;
-
+        if (currentLanguage === undefined ) {
+            var currLangRadio = $('input:first[name="radio"]').prop('checked', true);
+            currentLanguage = currLangRadio.val();
+        } else {
+            $('input[value="' + currentLanguage + '"]').prop('checked', true);
+        }
+        selectTranstationForEdit(currentLanguage);
         $('#languagesTmpl').tmpl(lang).appendTo('#languages');
     });
 };
@@ -15,13 +25,15 @@ function languages() {
 function insertLanguage() {
     var shortName = $("input[name='shortName']").val();
     var language = $("input[name='language']").val();
-    setTimeout(languages, 30);
-    $.post("insertLanguage", {language: language, shortName: shortName});
+    $.post("insertLanguage", {language: language, shortName: shortName}).done(function () {
+        initHelpEdit();
+    });
 };
 
 var deleteLanguage = function (id) {
-    setTimeout(languages, 50);
-    $.post("deleteLanguage", {id:id});
+    $.post("deleteLanguage", {id:id}).done(function () {
+        initHelpEdit();
+    });
 };
 
 var selectTranstationForEdit = function ( idLanguage ) {
@@ -51,12 +63,14 @@ function insertCommand() {
     var commandName = $("input[name='command']").val();
     var format = $("input[name='format']").val();
 
-    setTimeout(commands, 50);
-    $.post("insertCommand", {command: commandName, format: format});
+    $.post("insertCommand", {command: commandName, format: format}).done(function () {
+        initHelpEdit();
+    });
 
 };
 
 var deleteCommand = function (id) {
-    setTimeout(commands, 50);
-    $.post("deleteCommand", {id:id});
+    $.post("deleteCommand", {id:id}).done(function () {
+        initHelpEdit();
+    });
 };

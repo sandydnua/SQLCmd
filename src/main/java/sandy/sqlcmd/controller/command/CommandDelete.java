@@ -1,7 +1,7 @@
 package sandy.sqlcmd.controller.command;
 
 import sandy.sqlcmd.model.DataSet;
-import sandy.sqlcmd.model.Exceptions.CantExecuteNoConnectionException;
+import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.SQLConstructor;
@@ -51,12 +51,12 @@ public class CommandDelete extends Command {
     }
 
     @Override
-    protected void canExecute() throws CantExecuteNoConnectionException {
+    protected void canExecute() throws CantExecuteOrNoConnectionException {
 
         checkConnectAndMinQuantityParameters(MIN_QUANTITY_PARMETERS);
 
         if(params.length > MIN_QUANTITY_PARMETERS && params.length%2 != 0) {
-            throw new CantExecuteNoConnectionException("Неверное число параметров.");
+            throw new CantExecuteOrNoConnectionException("Неверное число параметров.");
         }
     }
 }
