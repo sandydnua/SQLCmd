@@ -1,7 +1,6 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.controller.web.JDBCDatabaseManager;
-import sandy.sqlcmd.controller.web.JDBCDatabaseManagerSpring;
+import sandy.sqlcmd.model.databasemanagement.JDBCDatabaseManager;
 
 import java.io.FileInputStream;
 import java.sql.SQLException;

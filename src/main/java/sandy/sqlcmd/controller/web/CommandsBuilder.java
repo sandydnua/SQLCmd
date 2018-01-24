@@ -2,6 +2,6 @@ package sandy.sqlcmd.controller.web;
 
 import sandy.sqlcmd.model.command.Command;
 
-public interface CommandFactory {
-    Command getCommand(String name);
+public interface CommandsBuilder {
+    Command getCommand(String[] params);
 }

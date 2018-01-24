@@ -3,6 +3,7 @@ package sandy.sqlcmd.model;
 import org.junit.Before;
 import org.junit.Test;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
+import sandy.sqlcmd.model.databasemanagement.SQLConstructorPostgre;
 
 import static org.junit.Assert.assertEquals;
 

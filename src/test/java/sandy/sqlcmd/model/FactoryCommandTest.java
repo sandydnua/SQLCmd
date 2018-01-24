@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import sandy.sqlcmd.controller.command.*;
+import sandy.sqlcmd.model.command.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -53,8 +53,6 @@ public class FactoryCommandTest extends TestCase {
     @Test
     public void testGetCommand(){
 
-//        params = this.params;
-//        expCommand = this.expCommand;
         assertTrue( expCommand.getClass() == AllCommands.getCommand(params).getClass() );
     }
 

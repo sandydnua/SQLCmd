@@ -1,7 +1,6 @@
 package sandy.sqlcmd.model;
 
-import sandy.sqlcmd.controller.command.*;
-import sandy.sqlcmd.controller.web.BuilderCommands;
+import sandy.sqlcmd.model.command.*;
 
 public class AllCommands {
 

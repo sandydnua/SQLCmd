@@ -21,7 +21,7 @@
 
     <bean id="emf"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="packagesToScan" value="sandy.sqlcmd.model.entity"/>
+        <property name="packagesToScan" value="sandy.sqlcmd.model.databasemanagement.entity"/>
         <property name="dataSource" ref="dataSourceServiceHelp"/>
         <property name="jpaProperties">
             <props>
@@ -55,7 +55,7 @@
 
     <!--//////////////////-->
 
-    <bean id="commandFactorySpring" class="sandy.sqlcmd.controller.web.CommandsFactorySpring">
+    <bean id="commandFactorySpring" class="sandy.sqlcmd.controller.web.CommandsBuilderSpring">
         <property name="commandFactoryBean" ref="commandFactory"/>
     </bean>
 
@@ -80,22 +80,22 @@
     </bean>
 
 
-    <bean id="commandClear" class="sandy.sqlcmd.controller.command.CommandClear" scope="prototype"/>
-    <bean id="commandConnect" class="sandy.sqlcmd.controller.command.CommandConnect" scope="prototype"/>
-    <bean id="commandCreate" class="sandy.sqlcmd.controller.command.CommandCreate" scope="prototype"/>
-    <bean id="commandDelete" class="sandy.sqlcmd.controller.command.CommandDelete" scope="prototype"/>
-    <bean id="commandDisconnect" class="sandy.sqlcmd.controller.command.CommandDisconnect" scope="prototype"/>
-    <bean id="commandDrop" class="sandy.sqlcmd.controller.command.CommandDrop" scope="prototype"/>
-    <bean id="commandExit" class="sandy.sqlcmd.controller.command.CommandExit" scope="prototype"/>
-    <bean id="commandFind" class="sandy.sqlcmd.controller.command.CommandFind" scope="prototype"/>
-    <bean id="commandHelp" class="sandy.sqlcmd.controller.command.CommandHelp" scope="prototype"/>
-    <bean id="commandInsert" class="sandy.sqlcmd.controller.command.CommandInsert" scope="prototype"/>
-    <bean id="commandTables" class="sandy.sqlcmd.controller.command.CommandTables" scope="prototype"/>
-    <bean id="commandUpdate" class="sandy.sqlcmd.controller.command.CommandUpdate" scope="prototype"/>
-    <bean id="commandUnknown" class="sandy.sqlcmd.controller.command.UnknownCommand" scope="prototype"/>
+    <bean id="commandClear" class="sandy.sqlcmd.model.command.CommandClear" scope="prototype"/>
+    <bean id="commandConnect" class="sandy.sqlcmd.model.command.CommandConnect" scope="prototype"/>
+    <bean id="commandCreate" class="sandy.sqlcmd.model.command.CommandCreate" scope="prototype"/>
+    <bean id="commandDelete" class="sandy.sqlcmd.model.command.CommandDelete" scope="prototype"/>
+    <bean id="commandDisconnect" class="sandy.sqlcmd.model.command.CommandDisconnect" scope="prototype"/>
+    <bean id="commandDrop" class="sandy.sqlcmd.model.command.CommandDrop" scope="prototype"/>
+    <bean id="commandExit" class="sandy.sqlcmd.model.command.CommandExit" scope="prototype"/>
+    <bean id="commandFind" class="sandy.sqlcmd.model.command.CommandFind" scope="prototype"/>
+    <bean id="commandHelp" class="sandy.sqlcmd.model.command.CommandHelp" scope="prototype"/>
+    <bean id="commandInsert" class="sandy.sqlcmd.model.command.CommandInsert" scope="prototype"/>
+    <bean id="commandTables" class="sandy.sqlcmd.model.command.CommandTables" scope="prototype"/>
+    <bean id="commandUpdate" class="sandy.sqlcmd.model.command.CommandUpdate" scope="prototype"/>
+    <bean id="commandUnknown" class="sandy.sqlcmd.model.command.UnknownCommand" scope="prototype"/>
 
 
-    <bean id="datasource" class="sandy.sqlcmd.controller.web.ImprovedBasicDataSource" destroy-method="close" scope="prototype">
+    <bean id="datasource" class="sandy.sqlcmd.model.databasemanagement.ImprovedBasicDataSource" destroy-method="close" scope="prototype">
         <constructor-arg index="0" value="${driverClassName}"/>
         <constructor-arg index="1" value="${url}"/>
         <constructor-arg index="2" value="${username}"/>

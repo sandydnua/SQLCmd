@@ -2,8 +2,8 @@ package sandy.sqlcmd.model;
 
 import org.junit.Test;
 import org.mockito.Mock;
-import sandy.sqlcmd.controller.command.Command;
-import sandy.sqlcmd.controller.command.UnknownCommand;
+import sandy.sqlcmd.model.command.Command;
+import sandy.sqlcmd.model.command.UnknownCommand;
 
 import static org.junit.Assert.*;
 

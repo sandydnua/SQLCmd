@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import sandy.sqlcmd.controller.command.Command;
+import sandy.sqlcmd.model.command.Command;
 import sandy.sqlcmd.model.*;
+import sandy.sqlcmd.model.databasemanagement.entity.AdministratorRepository;
+import sandy.sqlcmd.model.databasemanagement.DatabaseManager;
 import sandy.sqlcmd.services.Services;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,16 +24,16 @@ public class MainController {
 
     @Autowired
     @Qualifier(value = "commandFactorySpring")
-    BuilderCommands builderCommands;
+    CommandsBuilder commandsBuilder;
 
     @GetMapping("edithelp")
     public String editHelp(HttpSession session) {
-        return authorizedUserIsAdmin(session) ? "edithelp" : "login";
+        String loginAuthorizedUser = (String) session.getAttribute("administratorLogin");
+        return authorizedUserIsAdmin(loginAuthorizedUser) ? "edithelp" : "login";
     }
 
-    private boolean authorizedUserIsAdmin(HttpSession session) {
-        String loginauthorizedUser = (String) session.getAttribute("administratorLogin");
-        return administratorRepository.findByLogin(loginauthorizedUser) !=null ? true : false;
+    private boolean authorizedUserIsAdmin(String loginAuthorizedUser) {
+        return administratorRepository.findByLogin(loginAuthorizedUser) !=null ? true : false;
     }
 
     @GetMapping("login")
@@ -106,7 +108,7 @@ public class MainController {
     private DataSet executeCommand(String action, HttpServletRequest request) throws Exception {
 
         String[] params = Services.BuilCommandString(action, request);
-        Command command = builderCommands.getCommand(params);
+        Command command = commandsBuilder.getCommand(params);
         command.setDbManager(dbManager);
 
         return command.execute();

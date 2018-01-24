@@ -1,9 +1,8 @@
 package sandy.sqlcmd.model;
 
 import org.junit.*;
-import sandy.sqlcmd.controller.web.DatabaseManager;
-import sandy.sqlcmd.controller.web.JDBCDatabaseManager;
-import sandy.sqlcmd.controller.web.JDBCDatabaseManagerSpring;
+import sandy.sqlcmd.model.databasemanagement.DatabaseManager;
+import sandy.sqlcmd.model.databasemanagement.JDBCDatabaseManager;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import static org.junit.Assert.*;
 
@@ -25,9 +24,6 @@ public class JDBCDatabaseManagerTest {
 
     @Test
     public void connectToSpecificDatabase() throws Exception {
-
-        // TODO тесты должны проходить на всех реализациях DatabaseManager
-        // подумать, как это автоматизировать
 
         DatabaseManager dbManager = new JDBCDatabaseManager();
 
