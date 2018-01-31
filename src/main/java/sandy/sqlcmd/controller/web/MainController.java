@@ -49,8 +49,8 @@ public class MainController {
 
     @PostMapping("login")
     public String login(HttpServletRequest request, HttpSession session,
-                   @RequestParam(value = "login") String login,
-                   @RequestParam(value = "password") String password) {
+                   @RequestParam(name = "login") String login,
+                   @RequestParam(name = "password") String password) {
         if( administratorRepository.findByLoginAndPassword(login, password) != null) {
             session.setAttribute("administratorLogin", login);
             return "redirect:edithelp";

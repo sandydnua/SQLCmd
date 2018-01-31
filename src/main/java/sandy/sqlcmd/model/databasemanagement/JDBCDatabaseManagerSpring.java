@@ -32,7 +32,7 @@ public class JDBCDatabaseManagerSpring implements DatabaseManager {
     @Override
     public void connect(String address, String database, String userName, String password)  {
 
-        ApplicationContext context = new FileSystemXmlApplicationContext("src/main/webapp/application-context.xml");
+        ApplicationContext context = new FileSystemXmlApplicationContext("src/main/webapp/datasource-context.xml");
 
         String driverClassName = "org.postgresql.Driver";
         String url = String.format("jdbc:postgresql://%s/%s?loggerLevel=OFF", address, database);

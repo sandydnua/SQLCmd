@@ -1,66 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context-3.2.xsd
-                           http://www.springframework.org/schema/tx
-                           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
                            http://www.springframework.org/schema/data/jpa
                            http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
-
     <context:annotation-config/>
     <context:component-scan base-package="sandy.sqlcmd"/>
-    <!--доп для spring data-->
-    <jpa:repositories base-package="sandy.sqlcmd.model"
-                      entity-manager-factory-ref="emf"/>
-
-    <bean id="emf"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="packagesToScan" value="sandy.sqlcmd.model.databasemanagement.entity"/>
-        <property name="dataSource" ref="dataSourceServiceHelp"/>
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.show_sql">false</prop>
-                <prop key="hibernate.hbm2ddl.auto">validate</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-            </props>
-        </property>
-        <property name="persistenceProvider">
-            <bean class="org.hibernate.jpa.HibernatePersistenceProvider"></bean>
-        </property>
-
-    </bean>
-
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="dataSource" ref="dataSourceServiceHelp"/>
-    </bean>
-
-    <bean id="templateHelpDao" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSourceServiceHelp"/>
-    </bean>
-
-    <bean id="dataSourceServiceHelp" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://localhost:5432/service?loggerLevel=OF"/>
-        <property name="username" value="postgres"/>
-        <property name="password" value="7561"/>
-    </bean>
-
-    <!--//////////////////-->
 
     <bean id="commandFactorySpring" class="sandy.sqlcmd.controller.web.CommandsBuilderSpring">
         <property name="commandFactoryBean" ref="commandFactory"/>
     </bean>
 
     <bean id="commandFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
-        <property name="serviceLocatorInterface" value="sandy.sqlcmd.controller.web.CommandFactory" />
+        <property name="serviceLocatorInterface" value="sandy.sqlcmd.controller.web.CommandFactory"/>
         <property name="serviceMappings">
             <props>
                 <prop key="connect">commandConnect</prop>
@@ -94,15 +51,61 @@
     <bean id="commandUpdate" class="sandy.sqlcmd.model.command.CommandUpdate" scope="prototype"/>
     <bean id="commandUnknown" class="sandy.sqlcmd.model.command.UnknownCommand" scope="prototype"/>
 
+    <jpa:repositories base-package="sandy.sqlcmd.model.databasemanagement.entity"
+                      entity-manager-factory-ref="emf"/>
 
-    <bean id="datasource" class="sandy.sqlcmd.model.databasemanagement.ImprovedBasicDataSource" destroy-method="close" scope="prototype">
-        <constructor-arg index="0" value="${driverClassName}"/>
-        <constructor-arg index="1" value="${url}"/>
-        <constructor-arg index="2" value="${username}"/>
-        <constructor-arg index="3" value="${password}"/>
+    <bean id="emf"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="sandy.sqlcmd.model.databasemanagement.entity"/>
+        <property name="dataSource" ref="dataSourceServiceHelp"/>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+            </props>
+        </property>
+        <property name="persistenceProvider">
+            <bean class="org.hibernate.jpa.HibernatePersistenceProvider"></bean>
+        </property>
+
     </bean>
 
 
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="dataSource" ref="dataSourceServiceHelp"/>
+    </bean>
+
+    <context:property-placeholder
+            location="classpath:/*.properties"/>
+
+    <bean id="dataSourceServiceHelp" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <bean id="logService" class="sandy.sqlcmd.model.databasemanagement.mongo.MongoDBLoggerServiceImpl">
+    <property name="dao" ref="logDao"/>
+    </bean>
+    <bean id="logDao" class="sandy.sqlcmd.model.databasemanagement.mongo.LogItemDaoImpl">
+        <property name="mongoTemplate" ref="mongoTemplate"/>
+    </bean>
+
+
+    <bean id="mongoClientURI" class="com.mongodb.MongoClientURI">
+        <constructor-arg value="mongodb://localhost:27017/sqlcmd"/>
+    </bean>
+
+    <bean id="mongoDbFactory" class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
+        <constructor-arg index="0" ref="mongoClientURI"/>
+    </bean>
+
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg index="0" ref="mongoDbFactory"/>
+    </bean>
 </beans>
 
 

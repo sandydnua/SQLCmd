@@ -1,7 +1,6 @@
 package sandy.sqlcmd.model.databasemanagement.entity;
 
 import org.springframework.data.repository.CrudRepository;
-import sandy.sqlcmd.model.databasemanagement.entity.Commands;
 
 import java.util.List;
 

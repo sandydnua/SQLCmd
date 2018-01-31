@@ -1,10 +1,7 @@
 package sandy.sqlcmd.controller.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sandy.sqlcmd.model.databasemanagement.entity.*;
 import java.util.List;
 import static org.hibernate.sql.InFragment.NULL;
@@ -21,15 +18,15 @@ public class HelpEditorRestController {
     private LanguagesRepository languagesRepository;
 
     @PostMapping("updateHelpTranslation")
-    public void updateHelpTranslation(@RequestParam(name = "id") int id,
-                                      @RequestParam(name = "description") String description) {
+    public void updateHelpTranslation(@RequestParam( value = "id") int id,
+                                      @RequestParam(value = "description") String description) {
         HelpTranslation translation = helpTranslationRepository.findOne(id);
         translation.setDescription(description);
         helpTranslationRepository.save(translation);
     }
 
     @GetMapping("getHelpTranslations")
-    public List<HelpTranslation> getHelpTranslations(@RequestParam(name = "language") int languageId) {
+    public List<HelpTranslation> getHelpTranslations(@RequestParam(value = "language") int languageId) {
         List<HelpTranslation> list = helpTranslationRepository.findAllByLanguageId(languageId);
         list.sort((leftParam, rightParam) -> leftParam.getId() - rightParam.getId());
         return list;
@@ -39,19 +36,20 @@ public class HelpEditorRestController {
     public List<Language> languages() {
         return (List<Language>) languagesRepository.findAll();
     }
+
     @PostMapping("deleteLanguage")
-    public void deleteLanguage(@RequestParam(name = "id") int id) {
+    public void deleteLanguage(@RequestParam(value = "id") int id) {
 // TODO тут напрашивается что-то с транзакциями
         helpTranslationRepository.delete(helpTranslationRepository.findAllByLanguageId(id));
         languagesRepository.delete(id);
     }
 
     @PostMapping("insertLanguage")
-    public void insertLanguage(@RequestParam(name = "language") String languageName,
-                               @RequestParam(name = "shortName") String shortName) {
-        Language language = new Language(languageName, shortName);
+    public void insertLanguage(@RequestParam(value = "language") String languagevalue,
+                               @RequestParam(value = "shortvalue") String shortvalue) {
+        Language language = new Language(languagevalue, shortvalue);
         languagesRepository.save(language);
-        int newId = languagesRepository.findByLanguage(languageName).getId();
+        int newId = languagesRepository.findByLanguage(languagevalue).getId();
 
         List<Commands> commands = (List<Commands>) commandsRepository.findAll();
         for (Commands command : commands) {
@@ -61,9 +59,9 @@ public class HelpEditorRestController {
     }
 
     @PostMapping("insertCommand")
-    public void insertCommand(@RequestParam(name = "command") String commandName,
-                              @RequestParam(name = "format") String format) {
-        Commands command = new Commands(commandName, format);
+    public void insertCommand(@RequestParam(value = "command") String commandvalue,
+                              @RequestParam(value = "format") String format) {
+        Commands command = new Commands(commandvalue, format);
         commandsRepository.save(command);
 
         List<Language> languages = (List<Language>) languagesRepository.findAll();
@@ -74,7 +72,7 @@ public class HelpEditorRestController {
     }
 
     @PostMapping("deleteCommand")
-    public void deleteCommand(@RequestParam(name = "id") int idForDelete) {
+    public void deleteCommand(@RequestParam(value = "id") int idForDelete) {
         Commands commandForDelete = commandsRepository.findById(idForDelete);
         helpTranslationRepository.delete(helpTranslationRepository.findAllByCommand(commandForDelete));
         commandsRepository.delete(idForDelete);
