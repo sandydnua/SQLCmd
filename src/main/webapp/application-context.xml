@@ -45,7 +45,6 @@
     <bean id="commandDrop" class="sandy.sqlcmd.model.command.CommandDrop" scope="prototype"/>
     <bean id="commandExit" class="sandy.sqlcmd.model.command.CommandExit" scope="prototype"/>
     <bean id="commandFind" class="sandy.sqlcmd.model.command.CommandFind" scope="prototype"/>
-    <bean id="commandHelp" class="sandy.sqlcmd.model.command.CommandHelp" scope="prototype"/>
     <bean id="commandInsert" class="sandy.sqlcmd.model.command.CommandInsert" scope="prototype"/>
     <bean id="commandTables" class="sandy.sqlcmd.model.command.CommandTables" scope="prototype"/>
     <bean id="commandUpdate" class="sandy.sqlcmd.model.command.CommandUpdate" scope="prototype"/>

@@ -3,7 +3,6 @@ package sandy.sqlcmd.model.command;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
-import sandy.sqlcmd.model.databasemanagement.SQLConstructor;
 
 import java.util.Arrays;
 

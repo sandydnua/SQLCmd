@@ -56,7 +56,7 @@ public class MongoDatabaseManager implements DatabaseManager {
         } catch (Exception e) {
             throw new MainProcessException( "К Mongo не подключился! " + e.getMessage());
         }
-        if ( !existTable("db_info")) {
+        if ( !existTable(SERVICE_TABLE)) {
             mongoTemplate.createCollection(SERVICE_TABLE);
         }
     }

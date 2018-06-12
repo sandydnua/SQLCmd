@@ -4,7 +4,6 @@ import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
-import sandy.sqlcmd.model.databasemanagement.SQLConstructor;
 
 public class CommandClear extends Command {
 
