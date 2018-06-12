@@ -21,17 +21,10 @@ public class CommandFind extends Command {
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {
 
-        SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
-        String sqlQuery;
-
-        sqlConstructor.addTables(params[1]);
-        sqlQuery = sqlConstructor.getQueryFind();
-
         if( !dbManager.existTable(params[INDEX_OF_TABLE_NAME]) ){
             throw new MainProcessException( "Нет такой таблицы" );
         }
-
-        DataSet data = dbManager.executeQuery(sqlQuery);
+        DataSet data = dbManager.find(params[INDEX_OF_TABLE_NAME]);
         if( data.quantityRows() <= 1 ){
             data.addString("Таблица пуста. Содержит следующие поля:");
         }

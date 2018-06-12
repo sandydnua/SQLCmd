@@ -14,8 +14,8 @@ public class CommandConnectTest {
 
     @Before
     public void setup() {
-        dbManager = mock(DatabaseManager.class);
-        when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());
+     /*   dbManager = mock(DatabaseManager.class);
+        when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());*/
     }
 
     @Test

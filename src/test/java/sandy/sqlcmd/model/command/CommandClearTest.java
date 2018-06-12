@@ -15,13 +15,11 @@ public class CommandClearTest {
     @Before
     public void setup(){
         dbManager = mock(DatabaseManager.class);
-        when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());
     }
 
     @Test
     public void executeMainProcess() throws Exception {
         String[] params = {"clear","tableName"};
-        String sqlQuery = "DELETE FROM tableName";
 
         Command command = new CommandClear(params);
         command.setDbManager(dbManager);
@@ -34,6 +32,5 @@ public class CommandClearTest {
         result = command.execute();
 
         assertTrue( expected.equals(result));
-        verify(dbManager,times(1)).executeUpdate(sqlQuery);
     }
 }

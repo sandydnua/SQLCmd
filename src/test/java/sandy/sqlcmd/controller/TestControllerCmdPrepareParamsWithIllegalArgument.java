@@ -35,7 +35,7 @@ public class TestControllerCmdPrepareParamsWithIllegalArgument {
 
     @Test ( expected = IllegalArgumentException.class )
     public void prepareParams() throws Exception {
-        Preparer.split( strParams );
+        Preparer.splitToCommands( strParams );
     }
 
 }

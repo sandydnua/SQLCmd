@@ -42,7 +42,7 @@ public class TestControllerCmdPrepareParams {
     @Test
     public void prepareParams() throws Exception {
 
-        String[] actual = Preparer.split( strParams );
+        String[] actual = Preparer.splitToCommands( strParams );
         assertArrayEquals( paramsExpected, actual );
     }
 

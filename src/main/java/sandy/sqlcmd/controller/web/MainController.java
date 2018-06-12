@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 public class MainController {
 
     @Autowired
+    @Qualifier(value = "mongoDatabaseManager")
     private DatabaseManager dbManager;
 
     @Autowired

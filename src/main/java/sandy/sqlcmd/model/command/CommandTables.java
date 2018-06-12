@@ -19,9 +19,7 @@ public class CommandTables extends Command {
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
 
-        SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
-        String sql = sqlConstructor.getQueryTables();
-        return dbManager.executeQuery(sql);
+        return dbManager.getTables();
     }
 
     @Override

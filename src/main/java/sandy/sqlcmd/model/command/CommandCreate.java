@@ -20,13 +20,7 @@ public class CommandCreate extends Command {
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
-
-        SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
-        sqlConstructor.addTables(params[INDEX_OF_TABLE_NAME]);
-        sqlConstructor.addColumnForSelectInsertCreate( Arrays.copyOfRange( params, FIRST_INDEX_OF_COLUMNS, params.length));
-
-        String sqlQuery = sqlConstructor.getQueryCreateTable();
-        dbManager.executeUpdate( sqlQuery );
+        dbManager.createTable(params[INDEX_OF_TABLE_NAME], Arrays.copyOfRange( params, FIRST_INDEX_OF_COLUMNS, params.length) );
 
         return new DataSet("Таблица создана");
     }

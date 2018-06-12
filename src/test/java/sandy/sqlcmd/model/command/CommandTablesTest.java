@@ -13,10 +13,8 @@ public class CommandTablesTest{
 
     @Before
     public void setup(){
-
         dbManager = mock(DatabaseManager.class);
         when(dbManager.isConnect()).thenReturn(true);
-        when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());
     }
 
     @Test
@@ -27,7 +25,7 @@ public class CommandTablesTest{
         command.setDbManager(dbManager);
 
         command.execute();
-        verify(dbManager,times(1)).executeQuery(anyString());
+        verify(dbManager,times(1)).getTables();
     }
 
 }

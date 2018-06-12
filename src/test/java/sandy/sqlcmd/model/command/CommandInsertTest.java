@@ -5,6 +5,12 @@ import org.junit.Test;
 import sandy.sqlcmd.model.databasemanagement.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 import sandy.sqlcmd.model.databasemanagement.SQLConstructorPostgre;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -16,25 +22,27 @@ public class CommandInsertTest {
 
     @Before
     public void setup() {
-
         dbManager = mock(DatabaseManager.class);
-        when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());
         when(dbManager.isConnect()).thenReturn(true);
     }
 
     @Test
     public void executeMainProcess() throws Exception {
-
         String[] params = {"insert", "tableName", "id", "1", "title", "MyName"};
-        String sqlQuery = "INSERT INTO tableName ( id, title ) VALUES ( '1', 'MyName' )";
-
+        String tableName = params[1];
+        Map<String, String> data = new HashMap<>();
+        data.put( "id", "1");
+        data.put( "title", "MyName");
+        Set<String> columns = new HashSet<>();
+        columns.add("id");
+        columns.add("title");
         Command command = new CommandInsert(params);
         command.setDbManager(dbManager);
-        when(dbManager.existTable(params[1])).thenReturn(true);
-        when(dbManager.existColumns(params[1], DatabaseManager.FULL_COVERAGES, "id", "title")).thenReturn(true);
+        when(dbManager.existTable(tableName)).thenReturn(true);
+        when(dbManager.existColumns(tableName, DatabaseManager.FULL_COVERAGES, columns)).thenReturn(true);
 
         command.execute();
-        verify(dbManager, times(1)).executeUpdate(sqlQuery);
+        verify(dbManager, times(1)).insert(tableName, data);
     }
     @Test ( expected = CantExecuteOrNoConnectionException.class)
     public void testIncorrectQuantityParameters() throws Exception {

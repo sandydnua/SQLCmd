@@ -2,9 +2,15 @@ package sandy.sqlcmd.model.databasemanagement;
 
 import sandy.sqlcmd.model.Exceptions.IncorrectParametersQuery;
 
+import java.util.Map;
+
 public interface SQLConstructor {
 
+    void addForColumnNewValue(Map<String, String> entry);
+
     void setColumnAndValueForWhere(String column, String values);
+
+    void addColumnAndValueForWhere(Map<String, String> condition);
 
     void addColumnAndValueForWhere(String column, String value);
 

@@ -9,7 +9,7 @@ public class Preparer {
     private static int lengthOfInputString;
     private static String inputString;
 
-    static public String[] split(String inputStr) {
+    static public String[] splitToCommands(String inputStr) {
 
         inputString = inputStr.trim();
         lengthOfInputString = inputString.length();

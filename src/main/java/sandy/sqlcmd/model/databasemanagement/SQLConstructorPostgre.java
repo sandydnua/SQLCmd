@@ -66,10 +66,23 @@ public class SQLConstructorPostgre implements SQLConstructor {
     public void setForColumnNewValue(String column, String value) {
         coupleForSet = String.format("%s = '%s'", column, value);
     }
+
     @Override
     public void addForColumnNewValue(String column, String value) {
-        coupleForSet = String.format("%s , %s = '%s'", coupleForSet, column, value);
+        if(coupleForSet.isEmpty()) {
+            coupleForSet = String.format("%s = '%s'", column, value);
+        } else {
+            coupleForSet = String.format("%s , %s = '%s'", coupleForSet, column, value);
+        }
     }
+
+    @Override
+    public void addForColumnNewValue(Map<String, String> entry) {
+        entry.forEach(
+                (k,v)->addForColumnNewValue(k,v)
+        );
+    }
+    /////
 
     @Override
     public void setColumnAndValueForWhere(String column, String value){
@@ -78,9 +91,19 @@ public class SQLConstructorPostgre implements SQLConstructor {
     }
 
     @Override
-    public void addColumnAndValueForWhere(String column, String value){
+    public void addColumnAndValueForWhere(Map<String, String> condition){
+        condition.forEach(
+                (k,v)->setColumnAndValueForWhere(k,v)
+        );
+    }
 
-        coupleForWhere = String.format("%s AND %s = '%s'", coupleForWhere, column, value);
+    @Override
+    public void addColumnAndValueForWhere(String column, String value){
+        if(coupleForWhere.isEmpty()) {
+            setColumnAndValueForWhere(column, value);
+        } else {
+            coupleForWhere = String.format("%s AND %s = '%s'", coupleForWhere, column, value);
+        }
     }
 
     @Override

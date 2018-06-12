@@ -21,11 +21,7 @@ public class CommandDrop extends Command {
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {
 
-        SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
-        sqlConstructor.addTables(params[INDEX_OF_TABLE_NAME]);
-
-        String sqlQuery = sqlConstructor.getQueryDrop();
-        dbManager.executeUpdate(sqlQuery);
+        dbManager.dropTable(params[INDEX_OF_TABLE_NAME]);
 
         return new DataSet("Таблица " + params[INDEX_OF_TABLE_NAME] + " удалена");
     }

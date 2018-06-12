@@ -18,12 +18,12 @@ public class CommandDisconnectTest {
     @Before
     public void setup() {
 
-        String[] params = new String[]{"disconnect"};
+     /*   String[] params = new String[]{"disconnect"};
 
         dbManager = mock(DatabaseManager.class);
         when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());
         command = new CommandDisconnect(params);
-        command.setDbManager(dbManager);
+        command.setDbManager(dbManager);*/
     }
 
     @Test

@@ -45,11 +45,11 @@ public class HelpEditorRestController {
     }
 
     @PostMapping("insertLanguage")
-    public void insertLanguage(@RequestParam(value = "language") String languagevalue,
-                               @RequestParam(value = "shortvalue") String shortvalue) {
-        Language language = new Language(languagevalue, shortvalue);
+    public void insertLanguage(@RequestParam(value = "language") String languageValue,
+                               @RequestParam(value = "shortName") String shortName) {
+        Language language = new Language(languageValue, shortName);
         languagesRepository.save(language);
-        int newId = languagesRepository.findByLanguage(languagevalue).getId();
+        int newId = languagesRepository.findByLanguage(languageValue).getId();
 
         List<Commands> commands = (List<Commands>) commandsRepository.findAll();
         for (Commands command : commands) {

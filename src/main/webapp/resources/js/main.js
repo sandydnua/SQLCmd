@@ -31,6 +31,10 @@ function showTables() {
 function disconnect() {
     $.post('disconnect');
 }
+function clearTable(tableName) {
+    $.post('clear',{table: tableName}).done(showRowsFromTable(tableName));
+}
+
 function delRow(index) {
     changeRow(index, 'delete');
 }
@@ -48,6 +52,7 @@ function changeRow(index, mode) {
     });
 }
 
+
 function showRowsFromTable(tableName) {
     hideAll();
     $.get("find", {table: tableName}, function (data) {
@@ -62,12 +67,6 @@ function showRowsFromTable(tableName) {
         $('#findTmpl').tmpl(table).appendTo('#find');
         $('#find').show();
     });
-}
-
-
-function clearTable(tableName) {
-    var data = $('#clear').serialize();
-    $.post('clear',{data:data}).done(showRowsFromTable(tableName));
 }
 function insertRow(tableName) {
     var data = $('#newRow').serialize();
@@ -95,9 +94,7 @@ function clearFieldsList() {
     $('#fieldsList').empty();
     addField();
 }
-/*function deleteRow() {
-    $(this).empty();
-};*/
+
 function deleteTable(tableName) {
     $.post('dropTable',{table:tableName}).done(function(){
         showTables();

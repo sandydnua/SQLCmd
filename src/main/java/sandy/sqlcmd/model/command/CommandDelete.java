@@ -7,6 +7,9 @@ import sandy.sqlcmd.model.Exceptions.MainProcessException;
 import sandy.sqlcmd.model.databasemanagement.SQLConstructor;
 import sandy.sqlcmd.model.databasemanagement.SQLConstructorPostgre;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CommandDelete extends Command {
     private static final int INDEX_OF_TABLE_NAME = 1;
     private static final int INDEX_OF_COLUMN_FOR_WHERE = 2;
@@ -22,31 +25,28 @@ public class CommandDelete extends Command {
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {
 
-        SQLConstructor sqlConstructor = new SQLConstructorPostgre();
-        sqlConstructor.addTables( params[INDEX_OF_TABLE_NAME]);
-        sqlConstructor.setColumnAndValueForWhere( params[INDEX_OF_COLUMN_FOR_WHERE], params[INDEX_OF_VALUE_FOR_WHERE] );
+        Map<String, String> condition = new HashMap();
+        condition.put( params[INDEX_OF_COLUMN_FOR_WHERE], params[INDEX_OF_VALUE_FOR_WHERE] );
 
         if(params.length > MIN_QUANTITY_PARMETERS) {
             for (int i = 0; i < (params.length-MIN_QUANTITY_PARMETERS) / 2; i++) {
-                String field = params[MIN_QUANTITY_PARMETERS + i*2];
-                String value = params[MIN_QUANTITY_PARMETERS + 1 + i*2];
-                sqlConstructor.addColumnAndValueForWhere(field, value);
+                condition.put(
+                            params[MIN_QUANTITY_PARMETERS + i*2],
+                            params[MIN_QUANTITY_PARMETERS + 1 + i*2]
+                        );
             }
         }
 
-        String sqlQuerySelect = sqlConstructor.getQuerySelect();
-        String sqlQuery = sqlConstructor.getQueryDelete();
-
-        DataSet data = dbManager.executeQuery(sqlQuerySelect);
+        String tableName =  params[INDEX_OF_TABLE_NAME];
+        DataSet data = dbManager.find(tableName, condition);
 
         if(data.quantityRows() > 1){
-            dbManager.executeUpdate(sqlQuery);
+            dbManager.delete(tableName, condition);
             data.addString("Удалены следующие строки");
         }else{
             data = new DataSet();
             data.addString("Нечего удалять");
         }
-
         return data;
     }
 

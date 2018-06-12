@@ -71,5 +71,6 @@
                 </th>
             </tr>
         </table>
+        <br><button onclick=clearTable("{%= $data.tableName %}")>Очистить таблицу</button>
 
 </script>

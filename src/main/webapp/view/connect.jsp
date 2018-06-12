@@ -36,15 +36,18 @@
                 </tr>
                 <tr>
                     <td>Порт</td>
-                    <td><input type="text" name="port" value="5432"/></td>
+                    <td><input type="text" name="port" value="27017"/></td>
+                    <%--<td><input type="text" name="port" value="5432"/></td>--%>
                 </tr>
                 <tr>
                     <td>Имя БД</td>
-                    <td><input type="text" name="dbName" value="postgres"/></td>
+                    <td><input type="text" name="dbName" value="sqlcmd"/></td>
+                    <%--<td><input type="text" name="dbName" value="postgres"/></td>--%>
                 </tr>
                 <tr>
                     <td>Логин</td>
-                    <td><input type="text" name="login" value="postgres"/></td>
+                    <td><input type="text" name="login" value="admin"/></td>
+                    <%--<td><input type="text" name="login" value="postgres"/></td>--%>
                 </tr>
                 <tr>
                     <td>Пароль</td>

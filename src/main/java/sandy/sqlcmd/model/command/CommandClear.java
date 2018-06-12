@@ -20,13 +20,7 @@ public class CommandClear extends Command {
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {
-
-
-        SQLConstructor sqlConstructor = dbManager.getSQLConstructor();
-        sqlConstructor.addTables(params[INDEX_OF_TABLE_NAME]);
-
-        String sqlQuery = sqlConstructor.getQueryClear();
-        dbManager.executeUpdate(sqlQuery);
+        dbManager.clearTable(params[INDEX_OF_TABLE_NAME]);
 
         String strMessage = "Таблица "+params[INDEX_OF_TABLE_NAME]+" очищена";
 
