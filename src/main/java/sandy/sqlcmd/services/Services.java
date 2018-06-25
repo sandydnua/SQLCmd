@@ -20,66 +20,72 @@ public class Services {
         return table;
     }
 
-    public static String[] BuilCommandString(String action, HttpServletRequest req) {
-        if (action.equals("connect")) {
-            return new String[]{action,
-                                req.getParameter("addres") + ":" + req.getParameter("port"),
-                                req.getParameter("dbName"),
-                                req.getParameter("login"),
-                                req.getParameter("pass")
-                                };
-        } if (action.equals("tables") || action.equals("disconnect")) {
-            return new String[]{action};
-        } else if(action.equals("find") || action.equals("drop") || action.equals("clear")) {
-            return new String[]{action, req.getParameter("table")};
-        } if(action.equals("update")) {
-            String[] fields = req.getParameterValues("fields");
-            String[] values = req.getParameterValues("values");
-            String[] valuesNew = req.getParameterValues("valuesNew");
-            String table = req.getParameter("table");
+    public static String[] BuildStringOfCommand(String action, HttpServletRequest req) {
+        switch (action){
+            case "connect" :
+                return new String[]{action,
+                        req.getParameter("addres") + ":" + req.getParameter("port"),
+                        req.getParameter("dbName"),
+                        req.getParameter("login"),
+                        req.getParameter("pass")};
+            case "tables":
+            case "disconnect":
+                return new String[]{action};
+            case "find":
+            case "drop":
+            case "clear":
+                return new String[]{action, req.getParameter("table")};
+            case "update":{
+                String[] fields = req.getParameterValues("fields");
+                String[] values = req.getParameterValues("values");
+                String[] valuesNew = req.getParameterValues("valuesNew");
+                String table = req.getParameter("table");
 
-            String[] result = new String[fields.length*4+2];
-            result[0] = action;
-            result[1] = table;
+                String[] result = new String[fields.length * 4 + 2];
+                result[0] = action;
+                result[1] = table;
 
-            for (int i = 0; i < fields.length; i++) {
-                result[2+i*4] = fields[i];
-                result[3+i*4] = values[i];
+                for (int i = 0; i < fields.length; i++) {
+                    result[2 + i * 4] = fields[i];
+                    result[3 + i * 4] = values[i];
 
-                result[4+i*4] = fields[i];
-                result[5+i*4] = valuesNew[i];
+                    result[4 + i * 4] = fields[i];
+                    result[5 + i * 4] = valuesNew[i];
+                }
+                return result;
             }
-            return result;
-        } else if(action.equals("insert") || action.equals("delete")) {
-            String[] fields = req.getParameterValues("fields");
-            String[] values = req.getParameterValues("values");
-            String table = req.getParameter("table");
-            String[] result = new String[fields.length*2+2];
-            result[0] = action;
-            result[1] = table;
-            for (int i = 0; i < fields.length; i++) {
-                result[2+i*2] = fields[i];
-                result[3+i*2] = values[i];
+            case "insert":
+            case "delete": {
+                String[] fields = req.getParameterValues("fields");
+                String[] values = req.getParameterValues("values");
+                String table = req.getParameter("table");
+                String[] result = new String[fields.length * 2 + 2];
+                result[0] = action;
+                result[1] = table;
+                for (int i = 0; i < fields.length; i++) {
+                    result[2 + i * 2] = fields[i];
+                    result[3 + i * 2] = values[i];
+                }
+                return result;
             }
-            return result;
-        } else if(action.equals("create")) {
+            case "create":
+                String[] fields = req.getParameterValues("fields");
+                String table = req.getParameter("table");
 
-            String[] fields = req.getParameterValues("fields");
-            String table = req.getParameter("table");
-
-            String[] result;
-            if (null == fields) {
-                result = new String[2];
-            } else {
-                result = new String[fields.length + 2];
-            }
-            result[0] = action;
-            result[1] = table;
-            if (null != fields) for (int i = 0; i < fields.length; i++) {
-                result[i + 2] = fields[i];
-            }
-            return result;
+                String[] result;
+                if (null == fields) {
+                    result = new String[2];
+                } else {
+                    result = new String[fields.length + 2];
+                    for (int i = 0; i < fields.length; i++) {
+                        result[i + 2] = fields[i];
+                    }
+                }
+                result[0] = action;
+                result[1] = table;
+                return result;
+            default:
+                return null;
         }
-        return null;
     }
 }

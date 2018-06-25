@@ -1,6 +1,7 @@
 package sandy.sqlcmd.controller.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import sandy.sqlcmd.model.databasemanagement.entity.*;
 import java.util.List;
@@ -38,8 +39,8 @@ public class HelpEditorRestController {
     }
 
     @PostMapping("deleteLanguage")
+    @Transactional
     public void deleteLanguage(@RequestParam(value = "id") int id) {
-// TODO тут напрашивается что-то с транзакциями
         helpTranslationRepository.delete(helpTranslationRepository.findAllByLanguageId(id));
         languagesRepository.delete(id);
     }
@@ -72,6 +73,7 @@ public class HelpEditorRestController {
     }
 
     @PostMapping("deleteCommand")
+    @Transactional
     public void deleteCommand(@RequestParam(value = "id") int idForDelete) {
         Commands commandForDelete = commandsRepository.findById(idForDelete);
         helpTranslationRepository.delete(helpTranslationRepository.findAllByCommand(commandForDelete));

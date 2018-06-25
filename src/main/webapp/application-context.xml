@@ -27,7 +27,6 @@
                 <prop key="find">commandFind</prop>
                 <prop key="disconnect">commandDisconnect</prop>
                 <prop key="drop">commandDrop</prop>
-                <prop key="help">commandHelp</prop>
                 <prop key="insert">commandInsert</prop>
                 <prop key="tables">commandTables</prop>
                 <prop key="update">commandUpdate</prop>

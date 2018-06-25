@@ -108,7 +108,7 @@ public class MainController {
 
     private DataSet executeCommand(String action, HttpServletRequest request) throws Exception {
 
-        String[] params = Services.BuilCommandString(action, request);
+        String[] params = Services.BuildStringOfCommand(action, request);
         Command command = commandsBuilder.getCommand(params);
         command.setDbManager(dbManager);
 

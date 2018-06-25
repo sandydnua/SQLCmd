@@ -55,25 +55,45 @@ function changeRow(index, mode) {
 
 function showRowsFromTable(tableName) {
     hideAll();
-    $.get("find", {table: tableName}, function (data) {
-        $('#find').empty();
-        var header = data[0];
-        data.splice(0,1);
-        table =  {
-                header: header,
-                tableName: tableName,
-                body: data
+    $.ajax({
+        type: 'get',
+        url: "find",
+        data: {table: tableName},
+        success: function (data) {
+                $('#find').empty();
+                var header = data[0];
+                data.splice(0,1);
+                table =  {
+                    header: header,
+                    tableName: tableName,
+                    body: data
                 };
-        $('#findTmpl').tmpl(table).appendTo('#find');
-        $('#find').show();
+                $('#findTmpl').tmpl(table).appendTo('#find');
+                $('#find').show();
+        },
+        statusCode: {
+            404: function(request, status, error) {
+               alert("Table Not Found");
+            }
+        }
     });
 }
 function insertRow(tableName) {
     var data = $('#newRow').serialize();
     data += '&' + $("#fields").serialize();
 
-    $.post('insert',data).done( function(){
-        showRowsFromTable(tableName);
+    $.ajax({
+        type: 'post',
+        url: 'insert',
+        data: data,
+        success: function () {
+            showRowsFromTable(tableName);
+        },
+        statusCode:{
+            500: function () {
+                alert("Error! Not inserted!");
+            }
+        }
     });
 }
 
@@ -83,8 +103,18 @@ function createTable() {
     $("input[name='fields']").each(function(){
         dataPOST += '&' + 'fields=' + $(this).val();
     });
-    $.post('createTable',dataPOST).done( function () {
-        showTables();
+    $.ajax({
+        type: 'post',
+        url: 'createTable',
+        data: dataPOST,
+        success: function () {
+            showTables();
+        },
+        statusCode:{
+            500: function () {
+                alert("Error! Not created!");
+            }
+        }
     });
 };
 function addField() {
