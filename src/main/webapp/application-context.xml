@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.2.xsd
+                           http://www.springframework.org/schema/data/jpa
+                           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+    <context:annotation-config/>
+    <context:component-scan base-package="sandy.sqlcmd"/>
+
+    <bean id="commandFactorySpring" class="sandy.sqlcmd.controller.web.CommandsBuilderSpring">
+        <property name="commandFactoryBean" ref="commandFactory"/>
+    </bean>
+
+    <bean id="commandFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+        <property name="serviceLocatorInterface" value="sandy.sqlcmd.controller.web.CommandFactory"/>
+        <property name="serviceMappings">
+            <props>
+                <prop key="connect">commandConnect</prop>
+                <prop key="clear">commandClear</prop>
+                <prop key="create">commandCreate</prop>
+                <prop key="delete">commandDelete</prop>
+                <prop key="find">commandFind</prop>
+                <prop key="disconnect">commandDisconnect</prop>
+                <prop key="drop">commandDrop</prop>
+                <prop key="insert">commandInsert</prop>
+                <prop key="tables">commandTables</prop>
+                <prop key="update">commandUpdate</prop>
+                <prop key="unknown">commandUnknown</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <bean id="commandClear" class="sandy.sqlcmd.model.command.CommandClear" scope="prototype"/>
+    <bean id="commandConnect" class="sandy.sqlcmd.model.command.CommandConnect" scope="prototype"/>
+    <bean id="commandCreate" class="sandy.sqlcmd.model.command.CommandCreate" scope="prototype"/>
+    <bean id="commandDelete" class="sandy.sqlcmd.model.command.CommandDelete" scope="prototype"/>
+    <bean id="commandDisconnect" class="sandy.sqlcmd.model.command.CommandDisconnect" scope="prototype"/>
+    <bean id="commandDrop" class="sandy.sqlcmd.model.command.CommandDrop" scope="prototype"/>
+    <bean id="commandExit" class="sandy.sqlcmd.model.command.CommandExit" scope="prototype"/>
+    <bean id="commandFind" class="sandy.sqlcmd.model.command.CommandFind" scope="prototype"/>
+    <bean id="commandInsert" class="sandy.sqlcmd.model.command.CommandInsert" scope="prototype"/>
+    <bean id="commandTables" class="sandy.sqlcmd.model.command.CommandTables" scope="prototype"/>
+    <bean id="commandUpdate" class="sandy.sqlcmd.model.command.CommandUpdate" scope="prototype"/>
+    <bean id="commandUnknown" class="sandy.sqlcmd.model.command.UnknownCommand" scope="prototype"/>
+
+    <jpa:repositories base-package="sandy.sqlcmd.model.databasemanagement.entity"
+                      entity-manager-factory-ref="emf"/>
+
+    <bean id="emf"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="sandy.sqlcmd.model.databasemanagement.entity"/>
+        <property name="dataSource" ref="dataSourceServiceHelp"/>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+            </props>
+        </property>
+        <property name="persistenceProvider">
+            <bean class="org.hibernate.jpa.HibernatePersistenceProvider"></bean>
+        </property>
+
+    </bean>
+
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="dataSource" ref="dataSourceServiceHelp"/>
+    </bean>
+
+    <context:property-placeholder
+            location="classpath:/*.properties"/>
+
+    <bean id="dataSourceServiceHelp" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+
+</beans>
+
+
