@@ -11,11 +11,7 @@ public class CommandCreate extends Command {
     private static final int FIRST_INDEX_OF_COLUMNS = 2;
     private static final int MIN_QUANTITY_PARAMETERS = 3;
 
-    public CommandCreate(String[] params) {
-        super(params);
-    }
-    public CommandCreate() {
-    }
+    public CommandCreate() {  }
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {

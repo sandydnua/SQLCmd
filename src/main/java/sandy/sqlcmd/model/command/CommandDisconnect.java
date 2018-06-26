@@ -11,9 +11,6 @@ public class CommandDisconnect extends Command {
     public CommandDisconnect() {
     }
 
-    public CommandDisconnect(String[] params) {
-        super(params);
-    }
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
 

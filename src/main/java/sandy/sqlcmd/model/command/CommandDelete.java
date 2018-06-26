@@ -14,11 +14,7 @@ public class CommandDelete extends Command {
     private static final int INDEX_OF_VALUE_FOR_WHERE = 3;
     private static final int MIN_QUANTITY_PARMETERS = 4;
 
-    public CommandDelete(String[] params) {
-        super(params);
-    }
-    public CommandDelete() {
-    }
+    public CommandDelete() {  }
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {

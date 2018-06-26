@@ -7,13 +7,7 @@ import sandy.sqlcmd.model.Exceptions.MainProcessException;
 
 public class CommandExit extends Command {
 
-    public CommandExit(String[] params){
-
-        super(params);
-    }
-    public CommandExit(){
-    }
-
+    public CommandExit(){}
 
     @Override
     protected DataSet executeMainProcess() throws CompletionOfWorkException {

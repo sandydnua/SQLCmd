@@ -1,7 +1,6 @@
 package sandy.sqlcmd.model.databasemanagement;
 
 import com.mongodb.*;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Update;
@@ -17,34 +16,6 @@ public class MongoDatabaseManager implements DatabaseManager {
     private MongoTemplate mongoTemplate;
     private static final String SERVICE_TABLE = "db_info";
 
-    private class TableInfo {
-        public String getTableName() {
-            return tableName;
-        }
-
-        public void setTableName(String tableName) {
-            this.tableName = tableName;
-        }
-
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public TableInfo(String id, String tableName, Set<String> fields) {
-            this.id = id;
-            this.tableName = tableName;
-        }
-
-        @Id
-        private String id;
-        public String tableName;
-    }
-
     @Override
     public void connect(String address, String database, String userName, String password) throws MainProcessException {
         String uri = String.format("mongodb://%s:%s@%s/%s", userName, password, address, database);
@@ -52,12 +23,11 @@ public class MongoDatabaseManager implements DatabaseManager {
             MongoClientURI mongoClientURI = new MongoClientURI(uri);
             MongoClient mongoClient = new MongoClient(mongoClientURI);
             mongoTemplate = new MongoTemplate(mongoClient, database);
-
+            if ( !existTable(SERVICE_TABLE)) {
+                mongoTemplate.createCollection(SERVICE_TABLE);
+            }
         } catch (Exception e) {
-            throw new MainProcessException( "К Mongo не подключился! " + e.getMessage());
-        }
-        if ( !existTable(SERVICE_TABLE)) {
-            mongoTemplate.createCollection(SERVICE_TABLE);
+            throw new MainProcessException( "Can't connect to Mongo! " + e.getMessage());
         }
     }
 
@@ -72,7 +42,7 @@ public class MongoDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public boolean existTable(String tableName)/* throws MainProcessException*/ {
+    public boolean existTable(String tableName) {
               return mongoTemplate.collectionExists(tableName);
     }
 
@@ -83,12 +53,10 @@ public class MongoDatabaseManager implements DatabaseManager {
 
         int diffSize = 0;
         if( mode == FULL_COVERAGES) {
-
             fieldsFromDb.removeAll(fields);
             diffSize = fieldsFromDb.size();
         }
         if( mode == EXISTENCE_THESE_FIELDS ) {
-
             fields.removeAll(fieldsFromDb);
             diffSize = fields.size();
         }
@@ -102,12 +70,9 @@ public class MongoDatabaseManager implements DatabaseManager {
         dataSet.addField(0, "tables_name");
 
         Set<String> tables = mongoTemplate.getCollectionNames();
-        for(String tableName : tables) {
-            if ( !tableName.equals(SERVICE_TABLE) ) {
-                int index = dataSet.addRow();
-                dataSet.addField(index, tableName);
-            }
-        }
+        tables.remove(SERVICE_TABLE);
+        tables.forEach(item-> dataSet.addField(dataSet.addRow(), item) );
+
         return dataSet;
     }
 
@@ -115,8 +80,8 @@ public class MongoDatabaseManager implements DatabaseManager {
     public void dropTable(String collectionName) {
         Query query = new Query();
         query.addCriteria(Criteria.where("tableName").is(collectionName));
-        mongoTemplate.remove(query, SERVICE_TABLE);
 
+        mongoTemplate.remove(query, SERVICE_TABLE);
         mongoTemplate.dropCollection(collectionName);
     }
 
@@ -179,9 +144,7 @@ public class MongoDatabaseManager implements DatabaseManager {
     private Query getQueryWhithCondition(Map<String, String> condition) {
         Criteria criteria = new Criteria();
         List<Criteria> criteriaWhere = new ArrayList<>(condition.size());
-        condition.forEach(
-                (k,v) ->criteriaWhere.add(Criteria.where(k).is(v))
-        );
+        condition.forEach((k,v) ->criteriaWhere.add(Criteria.where(k).is(v)));
         criteria.andOperator(criteriaWhere.toArray(new Criteria[condition.size()]));
         return new Query(criteria);
     }
@@ -190,9 +153,8 @@ public class MongoDatabaseManager implements DatabaseManager {
         Set<String> fields = getFieldsTable(tableName);
         DataSet result = new DataSet();
         result.addRow();
-        for ( String field : fields) {
-            result.addField(0, field);
-        }
+
+        fields.forEach(field->result.addField(0,field));
 
         for ( Object item : table) {
             int i = result.addRow();
@@ -212,9 +174,7 @@ public class MongoDatabaseManager implements DatabaseManager {
         BasicDBList fieldsReference =  (BasicDBList) tableInfo.get("fields");
         Set<String> fieldsFromDb = new HashSet<>();
 
-        for(Object item: fieldsReference) {
-            fieldsFromDb.add((String) item);
-        }
+        fieldsReference.forEach(item->fieldsFromDb.add((String) item) );
         return fieldsFromDb;
     }
 }

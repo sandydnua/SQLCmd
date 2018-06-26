@@ -4,13 +4,8 @@ import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
 
 public class UnknownCommand extends Command {
-    public UnknownCommand(String[] params){
 
-        super(params);
-    }
-
-    public UnknownCommand() {
-    }
+    public UnknownCommand() { }
 
     @Override
     protected DataSet executeMainProcess() {

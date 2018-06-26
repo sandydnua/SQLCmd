@@ -12,10 +12,11 @@ public class CommandConnect extends Command {
     private static final int INDEX_PASSWORD = 4;
     private static final int EXPECTED_QUANTITY_OF_PARAMETERS = 5;
 
-    public CommandConnect(String[] params){
-        super(params);
-    }
+//    public CommandConnect(String[] params){
+//        super(params);
+//    }
     public CommandConnect(){
+
     }
 
     @Override

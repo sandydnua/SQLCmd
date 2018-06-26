@@ -13,13 +13,8 @@ public class CommandInsert extends Command {
     private Map<String, String> newRecord = new HashMap();
     private static final int INDEX_OF_TABLE_NAME = 1;
     private static final int MIN_QUANTITY_PARAMETERS = 4;
-    public CommandInsert(String[] params) {
-        super(params);
-    }
 
-    public CommandInsert() {
-    }
-
+    public CommandInsert() { }
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {
 

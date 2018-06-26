@@ -10,12 +10,7 @@ public class CommandFind extends Command {
     private static final int INDEX_OF_TABLE_NAME = 1;
     private static final int EXPECTED_QUANTITY_OF_PARAMETERS = 2;
 
-    public CommandFind() {
-    }
-
-    public CommandFind(String[] params){
-        super(params);
-    }
+    public CommandFind() { }
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {

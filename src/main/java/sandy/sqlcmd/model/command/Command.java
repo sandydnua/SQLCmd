@@ -10,11 +10,10 @@ public abstract class Command {
     String[] params;
     DatabaseManager dbManager;
 
-    protected Command(String[] params){
-        setParams(params);
-    }
-    protected Command(){
-    }
+//    protected Command(String[] params){
+//        setParams(params);
+//    }
+    protected Command(){ }
 
     public void setParams(String[] params){
         this.params = params;

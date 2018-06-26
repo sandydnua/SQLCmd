@@ -17,12 +17,7 @@ public class CommandUpdate extends Command {
     private static final int INDEX_OF_COLUMN_FOR_WHERE = 2;
     private static final int MIN_QUANTITY_PARAMETERS = 6;
 
-    public CommandUpdate(String[] params) {
-        super(params);
-    }
-
-    public CommandUpdate() {
-    }
+    public CommandUpdate() { }
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {

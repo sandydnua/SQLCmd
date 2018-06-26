@@ -8,12 +8,7 @@ public class CommandTables extends Command {
 
     private static final int EXPECTED_QUANTITY_OF_PARAMETERS = 1;
 
-    public CommandTables(String[] params) {
-        super(params);
-    }
-
-    public CommandTables() {
-    }
+    public CommandTables() { }
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
