@@ -19,7 +19,10 @@ public class CommandCreate extends Command {
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
-        dbManager.createTable(params[INDEX_OF_TABLE_NAME], Arrays.copyOfRange( params, FIRST_INDEX_OF_COLUMNS, params.length) );
+        dbManager.createTable(params[INDEX_OF_TABLE_NAME],
+                              Arrays.copyOfRange(params,
+                                                 FIRST_INDEX_OF_COLUMNS,
+                                                 params.length) );
 
         return new DataSet("Таблица создана");
     }

@@ -61,10 +61,8 @@ public class MainRestController {
     }
     private String[][] executeCommand(String action, HttpServletRequest request, HttpSession session) throws ErrorExecutionOfCommandException {
 
-        Command command = commandsBuilder.createCommand(
-                                                        Services.BuildStringOfCommand(action, request),
-                                                        (DatabaseManager) session.getAttribute("dbManager")
-                                                       );
+        Command command = commandsBuilder.createCommand(Services.BuildStringOfCommand(action, request),
+                                                        (DatabaseManager) session.getAttribute("dbManager"));
         try {
             return Services.toTable(command.execute());
         } catch (Exception e) {

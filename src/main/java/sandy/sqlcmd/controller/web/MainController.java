@@ -107,10 +107,8 @@ public class MainController {
     }
 
     private DataSet executeCommand(String action, HttpServletRequest request) throws Exception {
-        Command command = commandsBuilder.createCommand(
-                                                            Services.BuildStringOfCommand(action, request),
-                                                            dbManager
-                                                       );
+        Command command = commandsBuilder.createCommand(Services.BuildStringOfCommand(action, request),
+                                                        dbManager);
         return command.execute();
     }
 
