@@ -23,11 +23,12 @@ public abstract class Command {
     protected abstract DataSet executeMainProcess() throws Exception;
 
     public DataSet execute() throws Exception {
-        DataSet data;
-        canExecute();
-        data = executeMainProcess();
-
-        return data;
+        try{
+            canExecute();
+            return executeMainProcess();
+        } catch ( Exception e){
+            throw e;
+        }
     }
     public void setDbManager(DatabaseManager dbManager) {
         this.dbManager = dbManager;
