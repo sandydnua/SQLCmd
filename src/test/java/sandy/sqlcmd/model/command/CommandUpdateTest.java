@@ -5,7 +5,6 @@ import org.junit.Test;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.databasemanagement.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.MainProcessException;
-import sandy.sqlcmd.model.databasemanagement.SQLConstructorPostgre;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,7 +28,8 @@ public class CommandUpdateTest {
                                                   "column_", "value_", "columnName_", "columnValueNew_"};
 
         dbManager = mock(DatabaseManager.class);
-        command = new CommandUpdate(params);
+        command = new CommandUpdate();
+        command.setParams(params);
         command.setDbManager(dbManager);
 
         when(dbManager.isConnect()).thenReturn(true);

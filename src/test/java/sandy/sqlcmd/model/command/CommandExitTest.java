@@ -16,7 +16,8 @@ public class CommandExitTest {
     public void testExecuteExpectedException() throws Exception {
 
         String[] params = {"exit"};
-        Command command = new CommandExit(params);
+        Command command = new CommandExit();
+        command.setParams(params);
         command.execute();
     }
 
@@ -30,7 +31,8 @@ public class CommandExitTest {
         when(dbManager.isConnect()).thenReturn(true);
         doThrow( MainProcessException.class ).when(dbManager).disconnect();
 
-        Command command = new CommandExit(params);
+        Command command = new CommandExit();
+        command.setParams(params);
         command.setDbManager( dbManager );
         command.execute();
     }

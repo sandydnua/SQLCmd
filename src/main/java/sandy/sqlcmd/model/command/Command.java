@@ -10,9 +10,6 @@ public abstract class Command {
     String[] params;
     DatabaseManager dbManager;
 
-//    protected Command(String[] params){
-//        setParams(params);
-//    }
     protected Command(){ }
 
     public void setParams(String[] params){
@@ -21,12 +18,12 @@ public abstract class Command {
 
     protected abstract DataSet executeMainProcess() throws Exception;
 
-    public DataSet execute() throws Exception {
+    public DataSet execute() throws MainProcessException {
         try{
             canExecute();
             return executeMainProcess();
         } catch ( Exception e){
-            throw e;
+            throw new MainProcessException(e.getMessage());
         }
     }
     public void setDbManager(DatabaseManager dbManager) {
@@ -35,44 +32,27 @@ public abstract class Command {
 
     protected abstract void canExecute() throws CantExecuteOrNoConnectionException, MainProcessException;
 
-    void checkConnectAndParameters(int quantity) throws CantExecuteOrNoConnectionException {
-        String errorMessages = "";
-
-        try{
-            checkConnect();
-        }catch (CantExecuteOrNoConnectionException ex){
-            errorMessages = ex.getMessage();
-        }
+    protected void checkConnectAndParameters(int quantity) throws CantExecuteOrNoConnectionException {
+        checkConnect();
         if(params.length != quantity){
-            errorMessages += "Неверное число парметров; | ";
+            throw new CantExecuteOrNoConnectionException("Incorrect number of parameters!");
         }
-        if( !"".equals(errorMessages))  throw new CantExecuteOrNoConnectionException(errorMessages);
     }
 
-    void checkConnectAndMinQuantityParameters(int minQuantity) throws CantExecuteOrNoConnectionException {
-
-        String errorMessages = "";
-        try{
-            checkConnect();
-        }catch (CantExecuteOrNoConnectionException ex){
-            errorMessages = ex.getMessage();
-        }
-        // TODO тут можно сделать элегантнее
+    protected void checkConnectAndMinQuantityParameters(int minQuantity) throws CantExecuteOrNoConnectionException {
+        checkConnect();
         if(params.length < minQuantity){
-            errorMessages += "Неверное число парметров; |";
+            throw new CantExecuteOrNoConnectionException("Incorrect number of parameters!");
         }
-        if( !"".equals(errorMessages))  throw new CantExecuteOrNoConnectionException(errorMessages);
-
     }
 
     private void checkConnect() throws CantExecuteOrNoConnectionException {
-
-        String errorMessages = "";
         if( null == dbManager){
-            errorMessages += "Не передан DatabaseManager; |";
+           String errorMessages = "DatabaseManager does not exist. No connection to the database!";
+           throw new CantExecuteOrNoConnectionException(errorMessages);
         }else if( !dbManager.isConnect()){
-            errorMessages += "Нет подключения к базе; |";
+            String errorMessages = "No connection to the database!";
+           throw new CantExecuteOrNoConnectionException(errorMessages);
         }
-        if( !"".equals(errorMessages))  throw new CantExecuteOrNoConnectionException(errorMessages);
     }
 }

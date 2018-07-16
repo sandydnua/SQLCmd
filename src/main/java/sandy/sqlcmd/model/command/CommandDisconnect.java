@@ -13,7 +13,6 @@ public class CommandDisconnect extends Command {
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
-
         dbManager.disconnect();
         return new DataSet("Подключение закрыто");
     }

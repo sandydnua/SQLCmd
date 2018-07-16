@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import sandy.sqlcmd.model.databasemanagement.entity.*;
+
+import java.util.Comparator;
 import java.util.List;
 import static org.hibernate.sql.InFragment.NULL;
 
@@ -29,7 +31,7 @@ public class HelpEditorRestController {
     @GetMapping("getHelpTranslations")
     public List<HelpTranslation> getHelpTranslations(@RequestParam(value = "language") int languageId) {
         List<HelpTranslation> list = helpTranslationRepository.findAllByLanguageId(languageId);
-        list.sort((leftParam, rightParam) -> leftParam.getId() - rightParam.getId());
+        list.sort(Comparator.comparingInt(HelpTranslation::getId));
         return list;
     }
 

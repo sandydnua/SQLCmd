@@ -66,9 +66,7 @@ public class DataSet {
     }
 
     public int addRow() {
-
-        table.add(new ArrayList<String>());
-
+        table.add(new ArrayList<>());
         return table.size() - 1;
     }
 

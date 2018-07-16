@@ -15,9 +15,9 @@ public class CommandFind extends Command {
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {
 
-        if( !dbManager.existTable(params[INDEX_OF_TABLE_NAME]) ){
+       /* if( !dbManager.existTable(params[INDEX_OF_TABLE_NAME]) ){
             throw new MainProcessException( "Нет такой таблицы" );
-        }
+        }*/
         DataSet data = dbManager.find(params[INDEX_OF_TABLE_NAME]);
         if( data.quantityRows() <= 1 ){
             data.addString("Таблица пуста. Содержит следующие поля:");
@@ -28,7 +28,9 @@ public class CommandFind extends Command {
 
     @Override
     protected void canExecute() throws CantExecuteOrNoConnectionException {
-
+        if( !dbManager.existTable(params[INDEX_OF_TABLE_NAME]) ){
+            throw new CantExecuteOrNoConnectionException( "Нет такой таблицы" );
+        }
         checkConnectAndParameters(EXPECTED_QUANTITY_OF_PARAMETERS);
     }
 }

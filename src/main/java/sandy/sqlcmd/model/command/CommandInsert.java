@@ -17,9 +17,7 @@ public class CommandInsert extends Command {
     public CommandInsert() { }
     @Override
     protected DataSet executeMainProcess() throws MainProcessException, IncorrectParametersQuery {
-
         dbManager.insert(params[INDEX_OF_TABLE_NAME], newRecord);
-
         return new DataSet("Операция прошла успешно");
     }
 

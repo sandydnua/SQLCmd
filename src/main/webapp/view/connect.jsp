@@ -1,6 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link href='resources/css/bootstrap.css' rel='stylesheet' type='text/css'>
+    <link href='resources/css/bootstrap-grid.css' rel='stylesheet' type='text/css'>
+    <style href="resources/css/bootstrap.css"></style>
+    <style href="resources/css/bootstrap-grid.css"></style>
+    <script src="resources/js/jquery.js"></script>
+    <script src="resources/js/main.js"></script>
     <style>
         #mainDiv {
             width: 100%;
@@ -27,37 +33,56 @@
             %><%=ErrorConnect%><%
         }
     %>
+
+
     <div id="mainDiv">
-        <form action="connect" method="post">
-            <table>
-                <tr>
-                    <td>Адрес</td>
-                    <td><input type="text" name="addres" value="localhost"/></td>
-                </tr>
-                <tr>
-                    <td>Порт</td>
-                    <td><input type="text" name="port" value="27017"/></td>
-                    <%--<td><input type="text" name="port" value="5432"/></td>--%>
-                </tr>
-                <tr>
-                    <td>Имя БД</td>
-                    <td><input type="text" name="dbName" value="sqlcmd"/></td>
-                    <%--<td><input type="text" name="dbName" value="postgres"/></td>--%>
-                </tr>
-                <tr>
-                    <td>Логин</td>
-                    <td><input type="text" name="login" value="admin"/></td>
-                    <%--<td><input type="text" name="login" value="postgres"/></td>--%>
-                </tr>
-                <tr>
-                    <td>Пароль</td>
-                    <td><input type="password" name="pass" value="7561"/></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Connect"/></td>
-                </tr>
-            </table>
+        <form id="dataForConnect" class="form-horizontal" role="form">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Address</label>
+                    <input form="dataForConnect" class="form-control" type="text" name="address" value="localhost"/>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Port</label>
+                    <input form="dataForConnect" class="form-control col-md-5" type="text" name="port" value="27017"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Name Database</label>
+                    <input form="dataForConnect" class="form-control" type="text" name="dbName" value="sqlcmd"/>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Login</label>
+                    <input form="dataForConnect" class="form-control" type="text" name="login" value="admin"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label >Password</label>
+                    <td><input form="dataForConnect" class="form-control" type="password" type="text" name="password" value="7561"/></td>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <button  type="button" class="btn btn-primary" onclick="connect()">Connect</button>
+                </div>
+             </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <a href="help" >
+                    <span class="badge badge-info">
+                        Cool Help
+                    </span>
+                    </a>
+                </div>
+             </div>
+
         </form>
     </div>
 </body>

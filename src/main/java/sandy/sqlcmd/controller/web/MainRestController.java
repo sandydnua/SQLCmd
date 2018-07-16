@@ -6,8 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import sandy.sqlcmd.model.Exceptions.ErrorExecutionOfCommandException;
 import sandy.sqlcmd.model.command.Command;
@@ -20,66 +18,50 @@ import javax.servlet.http.HttpSession;
 public class MainRestController {
 
     @Autowired
+    @Qualifier(value = "mongoDatabaseManager")
+    private DatabaseManager dbManager;
+
+    @Autowired
     @Qualifier(value = "commandFactorySpring")
     CommandsBuilder commandsBuilder;
-
-    @GetMapping("find")
-    public ResponseEntity<String[][]> find(HttpServletRequest request, HttpSession session) {
-        return formResponse("find", request, session, HttpStatus.NOT_FOUND);
+    @GetMapping({"find","tables"})
+    public ResponseEntity<String[][]> getRequest(HttpServletRequest request, HttpSession session) {
+        return formResponse(request, session, HttpStatus.NOT_FOUND);
+    }
+    @PostMapping({"insert","clear","create","update","delete","drop"})
+    public ResponseEntity<String[][]> postRequest(HttpServletRequest request, HttpSession session) {
+        return formResponse(request, session, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @PostMapping({"connect"})
+    public ResponseEntity<String[][]> connect(HttpServletRequest request, HttpSession session) {
+        session.setAttribute("dbManager", dbManager);
+        return formResponse(request, session, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @RequestMapping(value = "tables", method = RequestMethod.GET)
-    public ResponseEntity<String[][]> tables(HttpServletRequest request, HttpSession session) {
-        return formResponse("tables", request, session, HttpStatus.NOT_FOUND);
+    @PostMapping("disconnect")
+    public ResponseEntity<String[][]> disconnect(HttpServletRequest request, HttpSession session) {
+        ResponseEntity<String[][]> response = formResponse(request, session, HttpStatus.INTERNAL_SERVER_ERROR);
+        session.removeAttribute("dbManager");
+        return response;
     }
 
-    @PostMapping("dropTable")
-    public ResponseEntity<String[][]> dropTable(HttpServletRequest request, HttpSession session) {
-        return formResponse("drop", request, session, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    private String[][] executeCommand(HttpServletRequest request, HttpSession session) throws ErrorExecutionOfCommandException {
 
-    @PostMapping("delete")
-    public ResponseEntity<String[][]> delete(HttpServletRequest request, HttpSession session) {
-        return formResponse("delete", request, session, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    @PostMapping("update")
-    public ResponseEntity<String[][]> update(HttpServletRequest request, HttpSession session) {
-        return formResponse("update", request, session, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    @PostMapping("createTable")
-    public ResponseEntity<String[][]> createTable(HttpServletRequest request, HttpSession session) {
-        return formResponse("create", request, session, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @PostMapping("insert")
-    public ResponseEntity<String[][]> insert(HttpServletRequest request, HttpSession session) {
-        return formResponse("insert", request, session, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    @PostMapping("clear")
-    public ResponseEntity<String[][]> clear(HttpServletRequest request, HttpSession session) {
-        return formResponse("clear", request, session, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    private String[][] executeCommand(String action, HttpServletRequest request, HttpSession session) throws ErrorExecutionOfCommandException {
-
-        Command command = commandsBuilder.createCommand(Services.BuildStringOfCommand(action, request),
+        Command command = commandsBuilder.createCommand(Services.buildStringOfCommand(request),
                                                         (DatabaseManager) session.getAttribute("dbManager"));
         try {
             return Services.toTable(command.execute());
         } catch (Exception e) {
-            String msg = String.format("Error execution of command '%s', Exception: %s: %s",
-                                            action,
-                                            e.getClass().getName(),
-                                            e.getMessage());
-            throw new ErrorExecutionOfCommandException(msg);
+            throw new ErrorExecutionOfCommandException(e.getMessage());
         }
     }
-    private ResponseEntity<String[][]> formResponse(String action, HttpServletRequest request, HttpSession session, HttpStatus statusError) {
+    private ResponseEntity<String[][]> formResponse(HttpServletRequest request, HttpSession session, HttpStatus statusError) {
         try {
-            return new ResponseEntity<String[][]>(
-                    executeCommand(action, request, session),
-                    HttpStatus.OK);
+            return new ResponseEntity<>(executeCommand(request, session),
+                                        HttpStatus.OK);
         } catch (ErrorExecutionOfCommandException e) {
-            return new ResponseEntity(statusError);
+            String[][] msg = {{e.getMessage()}};
+            return new ResponseEntity<>(msg,statusError);
         }
     }
 }

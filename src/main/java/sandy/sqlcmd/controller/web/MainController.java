@@ -3,22 +3,14 @@ package sandy.sqlcmd.controller.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import sandy.sqlcmd.model.command.Command;
-import sandy.sqlcmd.model.*;
 import sandy.sqlcmd.model.databasemanagement.entity.AdministratorRepository;
 import sandy.sqlcmd.model.databasemanagement.DatabaseManager;
-import sandy.sqlcmd.services.Services;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class MainController {
-
-    @Autowired
-    @Qualifier(value = "mongoDatabaseManager")
-    private DatabaseManager dbManager;
 
     @Autowired
     private AdministratorRepository administratorRepository;
@@ -57,7 +49,7 @@ public class MainController {
             return "redirect:edithelp";
         } else {
             session.removeAttribute("administratorLogin");
-            request.setAttribute("ErrorLogin", "Неверный логин или пароль ");
+            request.setAttribute("ErrorLogin", "Incorrect login or password");
             return "login";
         }
     }
@@ -80,36 +72,6 @@ public class MainController {
     @GetMapping("help")
     public String help() {
           return "help";
-    }
-
-    @PostMapping("connect")
-    public String connect(HttpServletRequest request, HttpSession session){
-        try {
-            executeCommand("connect", request);
-            session.setAttribute("dbManager", dbManager);
-           return "redirect:/";
-        } catch (Exception e) {
-            request.setAttribute("ErrorConnect", "Не удалось подключиться. " + e.getMessage() + ". " + e.getClass());
-            return "connect";
-        }
-    }
-
-    @PostMapping("disconnect")
-    public String disconnect(HttpServletRequest request, HttpSession session, Model model) {
-        try {
-            executeCommand("disconnect", request);
-            session.removeAttribute("dbManager");
-            return "redirect:/";
-        } catch (Exception e) {
-            model.addAttribute("Error", "Disconnect" + e.getMessage() + " " + e.getClass().getName());
-            return "error";
-        }
-    }
-
-    private DataSet executeCommand(String action, HttpServletRequest request) throws Exception {
-        Command command = commandsBuilder.createCommand(Services.BuildStringOfCommand(action, request),
-                                                        dbManager);
-        return command.execute();
     }
 
     private boolean isConnect(HttpSession session) {

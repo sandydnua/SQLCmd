@@ -9,7 +9,7 @@ public class UnknownCommand extends Command {
 
     @Override
     protected DataSet executeMainProcess() {
-
+//TODO
         DataSet data = new DataSet("Что Ты ввёл?!");
         data.addString("Введи Help для справки.");
         return data;

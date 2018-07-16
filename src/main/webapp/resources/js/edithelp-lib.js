@@ -30,13 +30,12 @@ function insertLanguage() {
     });
 };
 
-var deleteLanguage = function (id) {
+function deleteLanguage (id) {
     $.post("deleteLanguage", {id:id}).done(function () {
         initHelpEdit();
     });
 };
-
-var selectTranstationForEdit = function ( idLanguage ) {
+function selectTranstationForEdit ( idLanguage ) {
     $.getJSON("getHelpTranslations" , {language: idLanguage}).done( function ( data) {
 
         var table = $("#translations-for-edit").empty();

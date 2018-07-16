@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.databasemanagement.DatabaseManager;
-import sandy.sqlcmd.model.databasemanagement.SQLConstructorPostgre;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -14,17 +13,18 @@ public class CommandConnectTest {
 
     @Before
     public void setup() {
-     /*   dbManager = mock(DatabaseManager.class);
-        when(dbManager.getSQLConstructor()).thenReturn( new SQLConstructorPostgre());*/
+        dbManager = mock(DatabaseManager.class);
+        when(dbManager.isConnect()).thenReturn(true);
     }
 
     @Test
     public void executeMainProcessToLocalDB() throws Exception {
 
         String[] params = {"connect", "localhost:5432","dbName", "userName", "password"};
-        Command command = new CommandConnect(params);
+        Command command = new CommandConnect();
+        command.setParams(params);
         command.setDbManager(dbManager);
-        DataSet expected = new DataSet("Подключился к базе");
+        DataSet expected = new DataSet("Connected to the database");
         DataSet result = command.execute();
 
         assertTrue( expected.equals(result) );

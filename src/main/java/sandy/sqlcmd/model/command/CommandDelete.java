@@ -52,5 +52,8 @@ public class CommandDelete extends Command {
         if(params.length > MIN_QUANTITY_PARMETERS && params.length%2 != 0) {
             throw new CantExecuteOrNoConnectionException("Неверное число параметров.");
         }
+        if(!dbManager.existTable(params[INDEX_OF_TABLE_NAME])) {
+            throw new CantExecuteOrNoConnectionException("Table not exist");
+        }
     }
 }

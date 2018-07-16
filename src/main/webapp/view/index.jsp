@@ -2,22 +2,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link href='resources/css/bootstrap.css' rel='stylesheet' type='text/css'>
+    <link href='resources/css/bootstrap-grid.css' rel='stylesheet' type='text/css'>
+    <style href="resources/css/bootstrap.css"></style>
+    <style href="resources/css/bootstrap-grid.css"></style>
     <title>Ajax</title>
-    <style>
-        td#find  {
-            border-collapse: collapse;
-        }
-        td, th {
-            vertical-align: top;
-            border: 0px;
-            padding: 0px;
-        }
-        th {
-            text-align: center;
-            padding-left: 10px;
-            background-color: rgba(212, 226, 226, 0.23);
-            color: rgba(116, 116, 116, 0.72);
-        }
+    <style type="text/css">
+
     </style>
     <script src="resources/js/jquery.js"></script>
     <script src="resources/js/jquery.tmpl.js"></script>
@@ -25,31 +16,67 @@
 
     <script type="text/javascript">
         $(window).on('load', function(){
-            init();
+            showTables();
         });
     </script>
 
 </head>
 <body>
-<p> Main Page</p>
-
-    <div id="mainDiv" >
-        <div id="menu">
-            <p><button  onclick="showTables()">Таблицы</button></p>
+    <div id="mainContainer" class="container-fluid" >
+        <div style="height: 30px" class="row">
         </div>
-        <%@ include file="tablesajax.jsp"%>
-        <%@ include file="createtableajax.jsp"%>
-        <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-        <div id="find"></div>
+        <div class="row">
+            <div class="col-md-2 row"></div>
+            <div class="col-md-1"  style="background-color: #FFFFFF">
+                    <div class="row">
+                        <button type="button" class="btn btn-outline-info btn-lg btn-block" onclick="showTables()">
+                            Show Tables
+                        </button>
+                    </div>
+                    <p>
+                    <div class="row">
+                        <button type="button" class="btn btn-outline-info btn-lg btn-block" onclick="show('createtable')">
+                            Create Table
+                        </button>
+                    </div>
+                    <p>
+                    <div class="row">
+                        <a href="help" class="btn btn-outline-info btn-lg btn-block">
+                            Cool Help
+                        </a>
+                    </div>
+                    <p>
+                    <div class="row">
+                        <a href="edithelp" class="btn btn-outline-info btn-lg btn-block">
+                            Edit Cool Help
+                        </a>
+                    </div>
+                    <p>
+                    <div class="row">
+                        <button type="button" class="btn btn-outline-danger btn-lg btn-block" onclick="disconnect()">
+                            Disconnect
+                        </button>
+                    </div>
+            </div>
+            <div class="col-md-1 row"></div>
+            <div class="col-md-4">
+                <div id="tables">
+                    <%@ include file="tables.jsp"%>
+                </div>
+                <%@ include file="createtableajax.jsp"%>
+                <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+            </div>
+        </div>
+        <div style="height: 20px" class="row">
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div >
+                <div id="find"></div>
+            </div>
+        </div>
+        <br>
     </div>
-    <p>
-    <form action="disconnect" method="post">
-        <input type="submit" value="Disconnect">
-    </form>
-    <a href="help">Справка</a><br>
-    <a href="" onclick="hideAll()">Главное меню</a>
-
 </body>
 
 </html>

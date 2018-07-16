@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import sandy.sqlcmd.model.DataSet;
 import sandy.sqlcmd.model.databasemanagement.DatabaseManager;
-import sandy.sqlcmd.model.databasemanagement.SQLConstructorPostgre;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Mockito.*;
@@ -21,7 +20,8 @@ public class CommandClearTest {
     public void executeMainProcess() throws Exception {
         String[] params = {"clear","tableName"};
 
-        Command command = new CommandClear(params);
+        Command command = new CommandClear();
+        command.setParams(params);
         command.setDbManager(dbManager);
 
         DataSet expected = new DataSet();

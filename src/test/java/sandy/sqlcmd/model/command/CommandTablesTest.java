@@ -3,7 +3,6 @@ package sandy.sqlcmd.model.command;
 import org.junit.Before;
 import org.junit.Test;
 import sandy.sqlcmd.model.databasemanagement.DatabaseManager;
-import sandy.sqlcmd.model.databasemanagement.SQLConstructorPostgre;
 
 import static org.mockito.Mockito.*;
 
@@ -20,7 +19,8 @@ public class CommandTablesTest{
     @Test
     public void validateRequestInCommand() throws Exception {
         String[] params = {"tables"};
-        Command command = new CommandTables(params);
+        Command command = new CommandTables();
+        command.setParams(params);
 
         command.setDbManager(dbManager);
 

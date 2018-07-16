@@ -1,6 +1,21 @@
-function init(){
-    hideAll();
+function connect() {
+    var data = $('#dataForConnect').serialize();
+    $.ajax({
+        type: 'post',
+        url: "connect",
+        data: data,
+        success: function (data) {
+            document.location.href = '/sqlcmd/';
+        },
+        statusCode: {
+            500: function(request, status, error) {
+                alert(extractMessageFromResponse(data));
+                document.location.href = '/sqlcmd/';
+            }
+        }
+    });
 }
+
 function show(namePart, tableName) {
     $('#menu').hide();
     switch (namePart) {
@@ -23,16 +38,22 @@ function showTables() {
     $.get("tables").done( function (tables) {
         tables.splice(0,1);
         $('#tablesList').empty();
-        $('#tablesTmpl').tmpl(tables).appendTo('#tablesList');
+        for(i=0;i<tables.length;i=i+2){
+            var arr = [];
+            arr[0] = tables[i];
+            if(i<tables.length-1){
+                arr[1] = tables[i+1];
+            }
+            var couple = { couple : arr};
+            $('#tablesTmpl').tmpl(couple).appendTo('#tablesList');
+        }
         $('#tables').show();
     });
 }
 
-function disconnect() {
-    $.post('disconnect');
-}
 function clearTable(tableName) {
     $.post('clear',{table: tableName}).done(showRowsFromTable(tableName));
+    showTables();
 }
 
 function delRow(index) {
@@ -52,9 +73,23 @@ function changeRow(index, mode) {
     });
 }
 
+function disconnect() {
+    $.ajax({
+        type: 'post',
+        url: "disconnect",
+        success: function (data) {
+            document.location.href = '/sqlcmd/';
+        },
+        statusCode: {
+            404: function(request, status, error) {
+                alert("Disconnect Error!!!");
+            }
+        }
+    });
+
+}
 
 function showRowsFromTable(tableName) {
-    hideAll();
     $.ajax({
         type: 'get',
         url: "find",
@@ -91,7 +126,7 @@ function insertRow(tableName) {
         },
         statusCode:{
             500: function () {
-                alert("Error! Not inserted!");
+                alert(extractMessageFromResponse(data));
             }
         }
     });
@@ -105,28 +140,40 @@ function createTable() {
     });
     $.ajax({
         type: 'post',
-        url: 'createTable',
+        url: 'create',
         data: dataPOST,
-        success: function () {
+        success: function (data) {
             showTables();
         },
         statusCode:{
-            500: function () {
-                alert("Error! Not created!");
+            500: function (data) {
+                alert(extractMessageFromResponse(data));
             }
         }
     });
 };
-function addField() {
+
+function extractMessageFromResponse(data) {
+    var json = jQuery.parseJSON(JSON.stringify(data));
+    var msg = jQuery.parseJSON(json["responseText"]);
+    return msg[0][0];
+}
+function addFirstField() {
     $('#fieldsList').append("<input type='text' name='fields'/><br>");
 }
-function clearFieldsList() {
-    $('#fieldsList').empty();
-    addField();
+function addField() {
+    var id = Math.floor(Math.random() );
+    $('#fieldsList').append("<div id='newField_" + id + "'>" +
+                                "<input class='form-control' type='text' name='fields'/>&nbsp" +
+                                    "<button type='button' class='btn btn-danger btn-sm' onClick='deleteField(" +id+ ")'>Delete Field</button>" +
+                            "</div><br>");
+}
+function deleteField(id) {
+    $('#newField_' + id).remove();
 }
 
 function deleteTable(tableName) {
-    $.post('dropTable',{table:tableName}).done(function(){
+    $.post('drop',{table:tableName}).done(function(){
         showTables();
     });
 };

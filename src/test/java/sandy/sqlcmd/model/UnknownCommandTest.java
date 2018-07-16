@@ -20,7 +20,8 @@ public class UnknownCommandTest {
         expected.addString("Что Ты ввёл?!");
         expected.addString("Введи Help для справки.");
 
-        Command command = new UnknownCommand(params);
+        Command command = new UnknownCommand();
+        command.setParams(params);
 
         DataSet actual = command.execute();
         assertTrue( expected.equals(actual) );

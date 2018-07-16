@@ -18,7 +18,7 @@ public interface DatabaseManager{
     void disconnect() throws MainProcessException;
 
     boolean isConnect();
-    boolean existTable(String tableName) throws MainProcessException;
+    boolean existTable(String tableName);
     boolean existColumns(String tableName, int mode,  Set<String> fields);
 
     DataSet getTables();

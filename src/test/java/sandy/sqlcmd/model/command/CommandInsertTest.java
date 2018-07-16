@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import sandy.sqlcmd.model.databasemanagement.DatabaseManager;
 import sandy.sqlcmd.model.Exceptions.CantExecuteOrNoConnectionException;
-import sandy.sqlcmd.model.databasemanagement.SQLConstructorPostgre;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,7 +35,8 @@ public class CommandInsertTest {
         Set<String> columns = new HashSet<>();
         columns.add("id");
         columns.add("title");
-        Command command = new CommandInsert(params);
+        Command command = new CommandInsert();
+        command.setParams(params);
         command.setDbManager(dbManager);
         when(dbManager.existTable(tableName)).thenReturn(true);
         when(dbManager.existColumns(tableName, DatabaseManager.FULL_COVERAGES, columns)).thenReturn(true);
@@ -48,7 +48,8 @@ public class CommandInsertTest {
     public void testIncorrectQuantityParameters() throws Exception {
 
         String[] params = {"insert", "tableName", "id", "1", "title"};
-        Command command = new CommandInsert(params);
+        Command command = new CommandInsert();
+        command.setParams(params);
         command.setDbManager(dbManager);
 
         command.execute();
@@ -57,7 +58,8 @@ public class CommandInsertTest {
     public void testIncorrectFewParameters() throws Exception {
 
         String[] params = {"insert", "tableName", "id"};
-        Command command = new CommandInsert(params);
+        Command command = new CommandInsert();
+        command.setParams(params);
         command.setDbManager(dbManager);
 
         command.execute();

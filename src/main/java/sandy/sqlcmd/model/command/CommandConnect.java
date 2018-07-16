@@ -12,23 +12,15 @@ public class CommandConnect extends Command {
     private static final int INDEX_PASSWORD = 4;
     private static final int EXPECTED_QUANTITY_OF_PARAMETERS = 5;
 
-//    public CommandConnect(String[] params){
-//        super(params);
-//    }
-    public CommandConnect(){
-
-    }
+    public CommandConnect(){ }
 
     @Override
     protected DataSet executeMainProcess() throws MainProcessException {
-
-        String address = params[INDEX_ADDRESS_AND_PORT];
-        String database = params[INDEX_DATABASE_NAME];
-        String userName = params[INDEX_USERNAME];
-        String password = params[INDEX_PASSWORD];
-
-        dbManager.connect( address, database, userName, password );
-        return new DataSet( "Подключился к базе" );
+        dbManager.connect( params[INDEX_ADDRESS_AND_PORT],
+                           params[INDEX_DATABASE_NAME],
+                           params[INDEX_USERNAME],
+                           params[INDEX_PASSWORD]);
+        return new DataSet( "Connected to the database" );
     }
 
     @Override

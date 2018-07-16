@@ -14,18 +14,19 @@ public class CommandCreate extends Command {
     public CommandCreate() {  }
 
     @Override
-    protected DataSet executeMainProcess() throws MainProcessException {
+    protected DataSet executeMainProcess() {
         dbManager.createTable(params[INDEX_OF_TABLE_NAME],
                               Arrays.copyOfRange(params,
                                                  FIRST_INDEX_OF_COLUMNS,
                                                  params.length) );
-
         return new DataSet("Таблица создана");
     }
 
     @Override
-    protected void canExecute() throws CantExecuteOrNoConnectionException {
-
+    protected void canExecute() throws CantExecuteOrNoConnectionException, MainProcessException {
+        if ( dbManager.existTable(params[INDEX_OF_TABLE_NAME]) ) {
+            throw new MainProcessException("A table with this name already exists!");
+        }
         checkConnectAndMinQuantityParameters(MIN_QUANTITY_PARAMETERS);
     }
 
